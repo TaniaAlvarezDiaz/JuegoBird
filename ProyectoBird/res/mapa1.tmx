@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="20" tilewidth="32" tileheight="32" nextobjectid="94">
+ <tileset firstgid="1" name="tiles32" tilewidth="32" tileheight="32" tilecount="98" columns="14">
+  <image source="tiles32.png" width="448" height="224"/>
+ </tileset>
+ <layer name="PatronesFondo" width="500" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKEL9f2zDZZDwVVTVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/ATgo76o=
+  </data>
+ </layer>
+ <layer name="PatronesTerreno" width="500" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt2cFywyAMRVHvmm3+/2c7WTBx0hpjMJIeumdGGyYLhydQ3WwbAAAAAAAAAABreO4KAABoYp4DAKCPeQ4AgD7mOQAA+pjnAADoY55jxGP77KGe+jF/agCezu4E9GEP4xiZjR4z8Y5ZzkwH8mGez8EexqD2nnvnLGemA8jgyr3Zcx+qzPOyD8XR33M9e9G6v7OovefOmOXM9HEzcyEfYEzP+bx63hTm+X4firN5fmUvPOe52nsuM6POo4deLHJZIZ8VjGbdm59Xb6/A6rfU6Hl870Nx1EtKd4/aey4z45zHnWeZi3o+6u7KevR/uVa9vQLL31Ij5/HfPhSt61HvHrX3XGZGTB65kI+Pu7NeJT/PMxDtvO0/H8lRRkXresTezdJ/Vj2clXIf1dA7f83KWn2PlM/AjLxaz5ilWkZF63q03s3WfxY9nJF6H9XQO59mZ626R+pnYEZerWfMyllGRet6pN7N2n+zezibFfqoht55WyFryqesjTxj6zqVu2q8ny1zZc0l6/em7MvayDO2rlO5q8b72TJX1lyyfm/Kvqz9Aiugn50=
+  </data>
+ </layer>
+ <layer name="Decoracion" width="500" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt2cEJgEAMBMArRy1A7b8y08DBKUjMOQP7zyPsI2kNAAAAAAAAAAAAAAAAAHjTElkjW/YgAMBje+SInNmDAAAAABTmZ8KM7DXwN34mzMheAwDZ3BcA+nQkVbgvAPTpSAAAuMdNDGCczuSr3MQAxulMAAAAAKq4AHiSB+E=
+  </data>
+ </layer>
+ <objectgroup name="Suelos">
+  <object id="1" x="4" y="578">
+   <polyline points="0,0 155,-2 381,-227 412,-226 412,59"/>
+  </object>
+  <object id="2" x="480" y="639">
+   <polyline points="0,0 0,-287 129,-287 128,0"/>
+  </object>
+  <object id="4" x="1089" y="416">
+   <polyline points="0,0 0,-62 320,-63 319,0 1,1"/>
+  </object>
+  <object id="45" x="5792" y="446">
+   <polyline points="0,0 0,-58 252,-62 252,4 8,4"/>
+  </object>
+  <object id="49" x="12256" y="318">
+   <polyline points="0,0 0,-60 256,-62 256,2 4,0"/>
+  </object>
+  <object id="50" x="11646" y="450">
+   <polyline points="0,0 0,-62 256,-62 256,-4 4,-2"/>
+  </object>
+  <object id="66" x="10368" y="638">
+   <polyline points="0,0 2,-58 158,-60 348,-256 834,-256 988,-94 2434,-94 2528,-192 3778,-192 3906,-320 4224,-320 4448,-94 4642,-96 4640,-572 4732,-572 4736,2"/>
+  </object>
+  <object id="69" x="8384" y="640">
+   <polyline points="0,0 0,-160 576,-162 666,-66 1762,-66 1760,0"/>
+  </object>
+  <object id="85" x="674" y="642">
+   <polyline points="0,0 -2,-290 62,-290 284,-64 1246,-68 1534,-356 1982,-354 2170,-162 2752,-162 2976,-388 3486,-388 3806,-68 4220,-68 4220,-2"/>
+  </object>
+  <object id="86" x="5122" y="640">
+   <polyline points="0,0 0,-62 1470,-64 1694,-288 2462,-288 2586,-160 3038,-160 3036,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Monedas">
+  <object id="13" x="522" y="268" width="40" height="40"/>
+  <object id="15" x="1078" y="490" width="40" height="40"/>
+  <object id="16" x="1472" y="486" width="40" height="40"/>
+  <object id="19" x="2996" y="392" width="40" height="40"/>
+  <object id="21" x="3772" y="190" width="40" height="40"/>
+  <object id="22" x="5896" y="494" width="40" height="40"/>
+  <object id="24" x="6628" y="388" width="40" height="40"/>
+  <object id="25" x="7922" y="412" width="40" height="40"/>
+  <object id="28" x="9384" y="486" width="40" height="40"/>
+  <object id="87" x="4674" y="510" width="40" height="40"/>
+  <object id="88" x="10430" y="512" width="40" height="40"/>
+  <object id="89" x="11848" y="328" width="40" height="40"/>
+  <object id="90" x="13024" y="378" width="40" height="40"/>
+ </objectgroup>
+ <objectgroup name="Enemigos">
+  <object id="32" x="6202" y="506" width="46" height="34"/>
+  <object id="33" x="1228" y="302" width="46" height="34"/>
+  <object id="70" x="2402" y="236" width="46" height="34"/>
+  <object id="71" x="3946" y="200" width="46" height="34"/>
+  <object id="72" x="5828" y="340" width="46" height="34"/>
+  <object id="73" x="7206" y="294" width="46" height="34"/>
+  <object id="74" x="8642" y="422" width="46" height="34"/>
+  <object id="75" x="10804" y="332" width="46" height="34"/>
+  <object id="76" x="14414" y="264" width="46" height="34"/>
+  <object id="77" x="12350" y="202" width="46" height="34"/>
+ </objectgroup>
+ <objectgroup name="Vidas">
+  <object id="56" x="2000" y="372" width="40" height="40"/>
+  <object id="57" x="3474" y="294" width="40" height="40"/>
+  <object id="58" x="5410" y="484" width="40" height="40"/>
+  <object id="59" x="7444" y="262" width="40" height="40"/>
+  <object id="91" x="11476" y="474" width="40" height="40"/>
+  <object id="92" x="13522" y="376" width="40" height="40"/>
+ </objectgroup>
+ <objectgroup name="Pinchos">
+  <object id="34" x="3290" y="416" width="72" height="40"/>
+  <object id="40" x="6286" y="512" width="72" height="40"/>
+  <object id="41" x="9144" y="512" width="72" height="40"/>
+  <object id="61" x="8786" y="416" width="72" height="40"/>
+  <object id="62" x="12670" y="480" width="72" height="40"/>
+  <object id="63" x="13808" y="384" width="72" height="40"/>
+  <object id="81" x="10968" y="320" width="72" height="40"/>
+ </objectgroup>
+</map>
