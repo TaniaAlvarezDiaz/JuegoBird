@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>Animación-Nube-Ataque_01.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,31},{39,30}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{39,30}}</string>
+				<key>sourceSize</key>
+				<string>{39,30}</string>
+			</dict>
+
+			<key>Animación-Nube-Ataque_02.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{35,92},{34,27}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{34,27}}</string>
+				<key>sourceSize</key>
+				<string>{34,27}</string>
+			</dict>
+
+			<key>Animación-Nube-Ataque_03.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{39,62},{31,25}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{31,25}}</string>
+				<key>sourceSize</key>
+				<string>{31,25}</string>
+			</dict>
+
+			<key>Animación-Nube-Ataque_04.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{40,26},{28,22}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{28,22}}</string>
+				<key>sourceSize</key>
+				<string>{28,22}</string>
+			</dict>
+
+			<key>Animación-Nube-Ataque_05.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{40,0},{31,25}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{31,25}}</string>
+				<key>sourceSize</key>
+				<string>{31,25}</string>
+			</dict>
+
+			<key>Animación-Nube-Ataque_06.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,92},{34,27}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{34,27}}</string>
+				<key>sourceSize</key>
+				<string>{34,27}</string>
+			</dict>
+
+			<key>Animación-Nube-Ataque_07.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{39,30}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{39,30}}</string>
+				<key>sourceSize</key>
+				<string>{39,30}</string>
+			</dict>
+
+			<key>Animación-Nube-Ataque_08.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,62},{38,29}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{38,29}}</string>
+				<key>sourceSize</key>
+				<string>{38,29}</string>
+			</dict>
+
+		</dict>
+
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>size</key>
+			<string>{128,128}</string>
+			<key>textureFileName</key>
+			<string>nubeNegra.png</string>
+			</dict>
+		</dict>
+</plist>

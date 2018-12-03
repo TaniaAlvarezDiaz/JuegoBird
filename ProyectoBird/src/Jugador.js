@@ -1,4 +1,3 @@
-var estadoCaminando = 1;
 var estadoSaltando = 2;
 var estadoImpactado = 3;
 
@@ -7,10 +6,10 @@ var Jugador = cc.Class.extend({
         this.gameLayer = gameLayer;
         this.vidas = 3; // Empieza con 3 vidas
         this.turbos = 3;
-        this.estado = estadoCaminando;
+        this.estado = estadoSaltando;
 
         // Crear Sprite - Cuerpo y forma
-        this.sprite = new cc.PhysicsSprite("#jugador_caminar1.png");
+        this.sprite = new cc.PhysicsSprite("#bird_01.png");
 
         // Cuerpo dinámico, SI le afectan las fuerzas
         this.body = new cp.Body(5, cp.momentForBox(1,
@@ -49,43 +48,30 @@ var Jugador = cc.Class.extend({
         // Añadir sprite a la capa
         gameLayer.addChild(this.sprite, 10);
 
-        // Animación caminar
-        var framesAnimacionCaminar = [];
-        for (var i = 1; i <= 4; i++) {
-            var str = "jugador_caminar" + i + ".png";
-            var frame = cc.spriteFrameCache.getSpriteFrame(str);
-            framesAnimacionCaminar.push(frame);
-        }
-        var animacionCaminar = new cc.Animation(framesAnimacionCaminar, 0.2);
-        this.aCaminar = new cc.RepeatForever(new cc.Animate(animacionCaminar));
-        this.aCaminar.retain();
-
         //Animación saltar
         var framesAnimacionSaltar = [];
-        for (var i = 1; i <= 4; i++) {
-            var str = "jugador_saltar" + i + ".png";
+        for (var i = 1; i <= 3; i++) {
+            var str = "bird_0" + i + ".png";
             var frame = cc.spriteFrameCache.getSpriteFrame(str);
             framesAnimacionSaltar.push(frame);
         }
         var animacionSaltar = new cc.Animation(framesAnimacionSaltar, 0.2);
-        this.aSaltar =
-            new cc.RepeatForever(new cc.Animate(animacionSaltar));
+        this.aSaltar = new cc.RepeatForever(new cc.Animate(animacionSaltar));
         this.aSaltar.retain();
 
         //Animación impactado
         var framesAnimacionImpactado = [];
-        for (var i = 1; i <= 4; i++) {
-            var str = "jugador_impactado" + i + ".png";
+        for (var i = 1; i <= 3; i++) {
+            var str = "bird_0" + i + ".png";
             var frame = cc.spriteFrameCache.getSpriteFrame(str);
             framesAnimacionImpactado.push(frame);
         }
         var animacionImpactado = new cc.Animation(framesAnimacionImpactado, 0.4);
-        this.aImpactado =
-            new cc.Repeat(new cc.Animate(animacionImpactado), 1);
+        this.aImpactado = new cc.Repeat(new cc.Animate(animacionImpactado), 1);
         this.aImpactado.retain();
 
         // Animaión actual
-        this.animacion = this.aCaminar;
+        this.animacion = this.aSaltar;
 
         // Ejecutar la animación actual
         this.sprite.runAction(this.animacion);
@@ -96,8 +82,7 @@ var Jugador = cc.Class.extend({
     },
     saltar: function () {
         // solo salta si está caminando
-        if (this.estado == estadoCaminando) {
-            this.estado = estadoSaltando;
+        if (this.estado == estadoSaltando) {
             this.body.applyImpulse(cp.v(0, 1300), cp.v(0, 0));
         }
     },
@@ -105,7 +90,6 @@ var Jugador = cc.Class.extend({
         switch (this.estado) {
             case estadoImpactado:
                 if (this.animacion != this.aImpactado) {
-                    //console.log("Impactado");
                     this.animacion = this.aImpactado;
                     this.sprite.stopAllActions();
                     this.sprite.runAction(
@@ -122,24 +106,17 @@ var Jugador = cc.Class.extend({
                     this.sprite.runAction(this.animacion);
                 }
                 break;
-            case estadoCaminando:
-                if (this.animacion != this.aCaminar) {
-                    this.animacion = this.aCaminar;
-                    this.sprite.stopAllActions();
-                    this.sprite.runAction(this.animacion);
-                }
-                break;
         }
     },
     tocaSuelo: function () {
-        if (this.estado === estadoSaltando) {
+        /*if (this.estado === estadoSaltando) {
             this.estado = estadoCaminando;
-        }
+        }*/
     },
     dejaDeTocarSuelo: function () {
-        if (this.estado === estadoCaminando) {
+       /* if (this.estado === estadoCaminando) {
             this.estado = estadoSaltando;
-        }
+        }*/
     },
     impactado: function () {
         if (this.estado !== estadoImpactado) {
@@ -148,7 +125,7 @@ var Jugador = cc.Class.extend({
     },
     finAnimacionImpactado: function () {
         if (this.estado === estadoImpactado) {
-            this.estado = estadoCaminando;
+            this.estado = estadoSaltando;
         }
     },
     sumarVida: function () {

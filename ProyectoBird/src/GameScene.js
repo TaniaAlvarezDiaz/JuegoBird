@@ -1,6 +1,6 @@
 var tipoSuelo = 1;
 var tipoJugador = 2;
-var tipoMoneda = 3;
+var tipoNube = 3;
 var tipoEnemigo = 4;
 var tipoEnemigoDerecha = 5;
 var tipoEnemigoIzquierda = 6;
@@ -8,14 +8,19 @@ var tipoPieJugador = 7;
 var tipoVida = 8;
 var tipoPincho = 9;
 
+var nivel = 1;
+
 var GameLayer = cc.Layer.extend({
     ctor: function () {
         this._super();
         var size = cc.winSize;
 
         // Zona de cache
-        cc.spriteFrameCache.addSpriteFrames(res.moneda_plist);
-        cc.spriteFrameCache.addSpriteFrames(res.jugador_caminar_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.jugador_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.nubeBlanca_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.nubeNegra_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.huevoOro_plist);
+        //cc.spriteFrameCache.addSpriteFrames(res.jugador_caminar_plist);
         cc.spriteFrameCache.addSpriteFrames(res.jugador_saltar_plist);
         cc.spriteFrameCache.addSpriteFrames(res.jugador_impactado_plist);
         cc.spriteFrameCache.addSpriteFrames(res.animacion_cuervo_plist);
@@ -30,9 +35,10 @@ var GameLayer = cc.Layer.extend({
         //this.addChild(this.depuracion, 10);
 
         this.vidas = [];
-        this.monedas = [];
         this.enemigos = [];
-        this.pinchos = [];
+        this.nubesBlancas = [];
+        this.nubesNegras = [];
+        this.huevosOro = [];
         this.monedasEliminar = [];
         this.vidasEliminar = [];
         this.enemigosEliminar = [];
@@ -57,8 +63,8 @@ var GameLayer = cc.Layer.extend({
 
         // Jugador y moneda
         // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión por la propiedad SENSOR de la Moneda).
-        this.space.addCollisionHandler(tipoJugador, tipoMoneda,
-            null, this.collisionJugadorConMoneda.bind(this), null, null);
+        /*this.space.addCollisionHandler(tipoJugador, tipoMoneda,
+            null, this.collisionJugadorConMoneda.bind(this), null, null);*/
 
         // Jugador y vida
         this.space.addCollisionHandler(tipoJugador, tipoVida,
@@ -215,7 +221,15 @@ var GameLayer = cc.Layer.extend({
 
     },
     cargarMapa: function () {
-        this.mapa = new cc.TMXTiledMap(res.mapa1_tmx);
+        if(nivel == 1){
+            this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
+        }
+        else if(nivel == 2){
+
+        }
+        else if(nivel == 3){
+
+        }
         // Añadirlo a la Layer
         this.addChild(this.mapa);
         // Ancho del mapa
@@ -223,7 +237,7 @@ var GameLayer = cc.Layer.extend({
         this.mapaAlto = this.mapa.getContentSize().height;
 
         // Solicitar los objeto dentro de la capa Suelos
-        var grupoSuelos = this.mapa.getObjectGroup("Suelos");
+        /*var grupoSuelos = this.mapa.getObjectGroup("Suelos");
         var suelosArray = grupoSuelos.getObjects();
 
         // Los objetos de la capa suelos se transforman a formas estáticas de Chipmunk ( SegmentShape ).
@@ -232,7 +246,6 @@ var GameLayer = cc.Layer.extend({
             var puntos = suelo.polylinePoints;
             for (var j = 0; j < puntos.length - 1; j++) {
                 var bodySuelo = new cp.StaticBody();
-
                 var shapeSuelo = new cp.SegmentShape(bodySuelo,
                     cp.v(parseInt(suelo.x) + parseInt(puntos[j].x),
                         parseInt(suelo.y) - parseInt(puntos[j].y)),
@@ -240,40 +253,29 @@ var GameLayer = cc.Layer.extend({
                         parseInt(suelo.y) - parseInt(puntos[j + 1].y)),
                     10);
                 shapeSuelo.setCollisionType(tipoSuelo);
-
                 this.space.addStaticShape(shapeSuelo);
             }
+        }*/
+        // Cargar nubes blancas
+        var grupoNubesBlancas = this.mapa.getObjectGroup("NubesBlancas");
+        var nubesBlancasArray = grupoNubesBlancas.getObjects();
+        for (var i = 0; i < nubesBlancasArray.length; i++) {
+            var nube = new NubeBlanca(this, cc.p(nubesBlancasArray[i]["x"], nubesBlancasArray[i]["y"]));
+            this.nubesBlancas.push(nube);
         }
-        // Cargar las monedas
-        var grupoMonedas = this.mapa.getObjectGroup("Monedas");
-        var monedasArray = grupoMonedas.getObjects();
-        for (var i = 0; i < monedasArray.length; i++) {
-            var moneda = new Moneda(this, cc.p(monedasArray[i]["x"], monedasArray[i]["y"]));
-            this.monedas.push(moneda);
+        // Cargar nubes negras
+        var grupoNubesNegra = this.mapa.getObjectGroup("NubesNegras");
+        var nubesNegrasArray = grupoNubesNegra.getObjects();
+        for (var i = 0; i < nubesNegrasArray.length; i++) {
+            var nube = new NubeNegra(this, cc.p(nubesNegrasArray[i]["x"], nubesNegrasArray[i]["y"]));
+            this.nubesNegras.push(nube);
         }
-
-        // Cargar enemigos
-        var grupoEnemigos = this.mapa.getObjectGroup("Enemigos");
-        var enemigosArray = grupoEnemigos.getObjects();
-        for (var i = 0; i < enemigosArray.length; i++) {
-            var enemigo = new Enemigo(this, cc.p(enemigosArray[i]["x"], enemigosArray[i]["y"]));
-            this.enemigos.push(enemigo);
-        }
-
-        // Cargar vidas
-        var grupoVidas = this.mapa.getObjectGroup("Vidas");
-        var vidasArray = grupoVidas.getObjects();
-        for (var i = 0; i < vidasArray.length; i++) {
-            var vida = new Vida(this, cc.p(vidasArray[i]["x"], vidasArray[i]["y"]));
-            this.vidas.push(vida);
-        }
-
-        // Cargar pinchos
-        var grupoPinchos = this.mapa.getObjectGroup("Pinchos");
-        var pinchosArray = grupoPinchos.getObjects();
-        for (var i = 0; i < pinchosArray.length; i++) {
-            var pincho = new Pincho(this, cc.p(pinchosArray[i]["x"], pinchosArray[i]["y"]));
-            this.pinchos.push(pincho);
+        // Cargar huevos de oro
+        var grupohuevos = this.mapa.getObjectGroup("Huevos");
+        var huevosArray = grupohuevos.getObjects();
+        for (var i = 0; i < huevosArray.length; i++) {
+            var huevo = new HuevoOro(this, cc.p(huevosArray[i]["x"], huevosArray[i]["y"]));
+            this.huevosOro.push(huevo);
         }
 
     },
@@ -354,14 +356,13 @@ var GameLayer = cc.Layer.extend({
         var capaControles = this.getParent().getChildByTag(idCapaControles);
         capaControles.actualizarInterfazVidas();
         capaControles.actualizarInterfazTurbos();
-        this.jugador.estado = estadoCaminando;
+        this.jugador.estado = estadoSaltando;
         this.tiempoTurbo = 0;
     },
     collisionJugadorConPincho: function () {
         // Al pincharse, el jugador pierde directamente
         this.restaurarJugador();
     }
-
 
 });
 

@@ -20,7 +20,23 @@ var res = {
     vida_png: "res/vida.png",
     vida_plist: "res/vida.plist",
     boton_turbo_png: "res/boton_turbo.png",
-    pincho: "res/pincho.png"
+    pincho: "res/pincho.png",
+
+    //Nivel cielo//
+    jugador_png: "res/NivelCielo/pajaro.png",
+    jugador_plist: "res/NivelCielo/pajaro.plist",
+    tilesNido_png: "res/NivelCielo/nido_tiles.png",
+    tilesCielo_png: "res/NivelCielo/cielo_tiles.png",
+    huevoNido_png: "res/NivelCielo/huevoNido.png",
+    mapaCielo_tmx: "res/NivelCielo/CieloMapa.tmx",
+    nubeNegra_png: "res/NivelCielo/nubeNegra.png",
+    nubeNegra_plist: "res/NivelCielo/nubeNegra.plist",
+    nubeBlanca_png: "res/NivelCielo/nubeBlanca.png",
+    nubeBlanca_plist: "res/NivelCielo/nubeBlanca.plist",
+    huevoOro_png: "res/NivelCielo/huevoOro.png",
+    huevoOro_plist: "res/NivelCielo/huevoOro.plist",
+    rayo_png: "res/NivelCielo/rayo.png",
+    rayo_plist: "res/NivelCielo/rayo.plist",
 
 };
 

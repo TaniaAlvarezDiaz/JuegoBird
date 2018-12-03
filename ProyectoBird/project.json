@@ -19,10 +19,10 @@
         "src/ControlesLayer.js",
         "src/Enemigo.js",
         "src/Vida.js",
-        "src/Pincho.js"
-
-
-
+        "src/Pincho.js",
+        "src/NubeBlanca.js",
+        "src/NubeNegra.js",
+        "src/HuevoOro.js"
 
     ]
 }
