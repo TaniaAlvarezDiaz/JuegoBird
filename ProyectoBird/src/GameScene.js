@@ -138,6 +138,10 @@ var GameLayer = cc.Layer.extend({
             camaraEjeX = 0;
         }
 
+        if ( camaraEjeX > this.mapaAncho - this.getContentSize().width ){
+            camaraEjeX = this.mapaAncho - this.getContentSize().width;
+        }
+
         //Eje Y
         var camaraEjeY = this.jugador.body.p.y - this.getContentSize().height / 2;
 
