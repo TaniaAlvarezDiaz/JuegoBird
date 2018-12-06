@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="20" tilewidth="32" tileheight="32" nextobjectid="38">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="15" tilewidth="32" tileheight="32" nextobjectid="23">
  <tileset firstgid="1" name="cielo_tiles" tilewidth="32" tileheight="32" tilecount="55" columns="5">
   <image source="cielo_tiles.png" width="160" height="352"/>
  </tileset>
@@ -9,57 +9,51 @@
  <tileset firstgid="101" name="huevoNido" tilewidth="32" tileheight="32" tilecount="1" columns="1">
   <image source="huevoNido.png" width="32" height="35"/>
  </tileset>
- <layer name="Fondo" width="500" height="20">
+ <layer name="Fondo" width="500" height="15">
   <data encoding="base64" compression="zlib">
-   eJztzsVqRTEARdH76u4u1N3l/7+tZ/AKpaMMmpTAGiySwA6c0TAMIwAAAAAAAAAAAAAAAAAAAAAAAAAAAP7UREzGVEzHTMxWakr6lns0Go1Go+m5mYv5WIjFWIrl8fmtRlPSt9yj0Wg0Gk3PzUqs/mjWYv3XvxpNSd9yj0aj0Wg0PTcbsRlbsR07sRt7sR8HlZqSvuUejUaj0Wh6bg7jKI7H95M4jbM4j4uKTUnfco9Go9FoNL02l3EV13ETt3EX9/EQj5Wakr7lHo1Go9Foem6e4jle4jXexu/3+IjPSk1J33KPRqPRaDS9NwAAAMD/+gL5eBK+
+   eJzty1dKZQEURcH3zDm1OWdttds4/7G5PhTECXiF+ig2B9YZj0ajMQAAAAAAAAAAAAAADMhEJjOV6cxkVqPRaDQazeCbucxnIYtZyvLHftJoNBqNRjPsZiWrX5q1rH/702g0Go1GM+xmI3+yma1sZye72cu+RqPRaDSawTcHOcxRjnOS05zlPBcajUaj0WgG31zmKte5yW3+5i73edBoNBqNRjP45l/+5zFPef64X/KaN41Go9FoNL+iAQAAAH7WO2RwCaI=
   </data>
  </layer>
- <layer name="Nido" width="500" height="20">
+ <layer name="FondoNido" width="500" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt1bdtAwAUQ0Gt5Zxzztmw91/CXMH6BSHgDng9Oy4WAMCqWUvraSNtlrcAADNbabs9AgAY22kPAADGDtsDAIB/2017aT8dLPw5AKyio3ScTtJpOuvOAQCWcJ4u0mW6StfdOQDAEm7SbbpL9+mhOwcAGHpMT+0RAMDYc3sAADD20h4AAIy9tgcAAGNv7QEAwNh7ewAAMPbRHgAAjH22BwAAY1/tAQDA2Hd7AAAw9tMeAACM/aY/V64MOw==
+   eJzt1UlOQgEURNG/LQWUVuxAFBAN+98HtQbe4OUn5yR3XrMaBgBgbB7SY5qkafMWAKBmlp66RwAAZc/dAwCAsnX3AACgzJ8DwPjM0yIt02rw5wAwRpv0krbpNb31zgEA7vCePtJn2qV97xwA4A5f6ZC+00869s4BAIpO6dw9AgAo++0eAACUXboHAABlf90DAICy/+4BAEDZNd0AXbMKTQ==
   </data>
  </layer>
- <layer name="HuevoNido" width="500" height="20">
+ <layer name="HuevoNido" width="500" height="15">
   <data encoding="base64" compression="zlib">
-   eJztzjEBAAAMAiDLrn+FFfD3gQQkAAAAAAAAAAAAAACwcesAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA8cphAGY=
+   eJztzjEBAAAIA6CVtX8FO+zRAxKQAAAAAAAAAAAAAAAAAEBnrgMAAAAAAAAAAAAAAAAAAAC8syPjAGY=
   </data>
  </layer>
- <objectgroup name="NidoSuelo">
-  <object id="3" x="15970.7" y="640">
-   <polyline points="0,0 5.33333,-144 9.33333,-305.333 8,-366.667 -29.3333,-400 -61.3333,-408 -93.3333,-405.333 -126.667,-413.333 -133.333,-436 -134.667,-460 -78.6667,-460 -21.3333,-457.333 8,-456 8,-506.667 13.3333,-588 6.66667,-602.667 -21.3333,-594.667 -44,-613.333 -70.6667,-628 -76,-637.333"/>
+ <objectgroup name="Limites">
+  <object id="22" x="0" y="480">
+   <polyline points="0,0 0,-480 15840,-480 15872,-480 15890.7,-480 15897.3,-469.333 15924,-466.667 15929.3,-448 15945.3,-438.667 15966.7,-437.333 15984,-441.333 15984,-396 15981.3,-332 15982.7,-265.333 15978.7,-233.333 15964,-240 15972,-249.333 15970.7,-262.667 15838.7,-265.333 15849.3,-217.333 15894.7,-218.667 15938.7,-209.333 15977.3,-174.667 15980,-126.667 15978.7,-45.3333 15976,0"/>
   </object>
  </objectgroup>
  <objectgroup name="NubesBlancas">
-  <object id="5" x="930" y="535.333" width="42" height="36"/>
-  <object id="9" x="453.667" y="318" width="42" height="36"/>
-  <object id="10" x="627.333" y="209" width="42" height="36"/>
-  <object id="11" x="1052" y="324.667" width="42" height="36"/>
-  <object id="12" x="1486.33" y="426.667" width="42" height="36"/>
-  <object id="13" x="1783.67" y="220.667" width="42" height="36"/>
-  <object id="14" x="2281" y="223.333" width="42" height="36"/>
-  <object id="15" x="2111.33" y="412.333" width="42" height="36"/>
-  <object id="16" x="2432" y="467.667" width="42" height="36"/>
-  <object id="17" x="2935" y="235.333" width="42" height="36"/>
-  <object id="18" x="2780" y="399.333" width="42" height="36"/>
-  <object id="19" x="3396.33" y="291.333" width="42" height="36"/>
-  <object id="20" x="3984.33" y="468.667" width="42" height="36"/>
-  <object id="21" x="3796.33" y="455" width="42" height="36"/>
-  <object id="22" x="3852.33" y="216" width="42" height="36"/>
+  <object id="14" x="1415" y="134" width="42" height="36"/>
+  <object id="15" x="1249" y="76" width="42" height="36"/>
+  <object id="16" x="337" y="420" width="42" height="36"/>
+  <object id="17" x="235" y="6" width="42" height="36"/>
+  <object id="18" x="167" y="326" width="42" height="36"/>
+  <object id="19" x="443" y="264" width="42" height="36"/>
+  <object id="20" x="671" y="386" width="42" height="36"/>
  </objectgroup>
  <objectgroup name="NubesNegras">
-  <object id="23" x="598.333" y="479.333" width="42" height="36"/>
-  <object id="24" x="901" y="210.333" width="42" height="36"/>
-  <object id="25" x="870.67" y="388.333" width="42" height="36"/>
-  <object id="26" x="1130.67" y="513" width="42" height="36"/>
-  <object id="27" x="3114.33" y="456" width="42" height="36"/>
-  <object id="28" x="3613.33" y="351" width="42" height="36"/>
-  <object id="29" x="4285.67" y="435.333" width="42" height="36"/>
-  <object id="30" x="4142.33" y="392" width="42" height="36"/>
+  <object id="6" x="729" y="282" width="42" height="36"/>
+  <object id="7" x="549" y="172" width="42" height="36"/>
+  <object id="8" x="421" y="24" width="42" height="36"/>
+  <object id="9" x="665" y="20" width="42" height="36"/>
+  <object id="10" x="1011" y="64" width="42" height="36"/>
+  <object id="11" x="869" y="386" width="42" height="36"/>
+  <object id="12" x="1191" y="372" width="42" height="36"/>
+  <object id="13" x="1183" y="152" width="42" height="36"/>
  </objectgroup>
  <objectgroup name="Huevos">
-  <object id="31" x="706.333" y="309.667" width="26" height="32"/>
-  <object id="33" x="1401.33" y="260.667" width="26" height="32"/>
-  <object id="34" x="1881" y="534.333" width="26" height="32"/>
-  <object id="35" x="2591" y="235.333" width="26" height="32"/>
+  <object id="1" x="281" y="198" width="42" height="36"/>
+  <object id="2" x="579" y="276" width="42" height="36"/>
+  <object id="3" x="787" y="152" width="42" height="36"/>
+  <object id="4" x="987" y="274" width="42" height="36"/>
+  <object id="5" x="1283" y="264" width="42" height="36"/>
  </objectgroup>
+ <objectgroup name="NidoSuelo"/>
 </map>

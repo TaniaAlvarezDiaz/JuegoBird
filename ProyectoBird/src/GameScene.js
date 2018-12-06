@@ -1,4 +1,4 @@
-var tipoSuelo = 1;
+var tipoLimite = 1;
 var tipoJugador = 2;
 var tipoNube = 3;
 var tipoEnemigo = 4;
@@ -20,7 +20,6 @@ var GameLayer = cc.Layer.extend({
         cc.spriteFrameCache.addSpriteFrames(res.nubeBlanca_plist);
         cc.spriteFrameCache.addSpriteFrames(res.nubeNegra_plist);
         cc.spriteFrameCache.addSpriteFrames(res.huevoOro_plist);
-        //cc.spriteFrameCache.addSpriteFrames(res.jugador_caminar_plist);
         cc.spriteFrameCache.addSpriteFrames(res.jugador_saltar_plist);
         cc.spriteFrameCache.addSpriteFrames(res.jugador_impactado_plist);
         cc.spriteFrameCache.addSpriteFrames(res.animacion_cuervo_plist);
@@ -58,7 +57,7 @@ var GameLayer = cc.Layer.extend({
         // Suelo y pie del jugador
         /*this.space.addCollisionHandler(tipoSuelo, tipoPieJugador,
             null, null, this.collisionSueloConJugador.bind(this), this.finCollisionSueloConJugador.bind(this));*/
-        this.space.addCollisionHandler(tipoSuelo, tipoPieJugador,
+        this.space.addCollisionHandler(tipoLimite, tipoPieJugador,
             null, this.collisionSueloConJugador.bind(this), null, this.finCollisionSueloConJugador.bind(this));
 
         // Jugador y moneda
@@ -83,11 +82,11 @@ var GameLayer = cc.Layer.extend({
         // ya que el manejador se machacaba cada vez que se creaba un nuevo enemigo.
 
         // Pata izquierda del enemigo con el suelo
-        this.space.addCollisionHandler(tipoSuelo, tipoEnemigoIzquierda,
+        this.space.addCollisionHandler(tipoLimite, tipoEnemigoIzquierda,
             null, null, null, this.enemigoNoSueloIzquierda.bind(this));
 
         // Pata deracha del enemigo con el suelo
-        this.space.addCollisionHandler(tipoSuelo, tipoEnemigoDerecha,
+        this.space.addCollisionHandler(tipoLimite, tipoEnemigoDerecha,
             null, null, null, this.enemigoNoSueloDerecha.bind(this));
 
         // Declarar emisor de particulas (parado)
@@ -136,6 +135,10 @@ var GameLayer = cc.Layer.extend({
 
         if (camaraEjeX < 0) {
             camaraEjeX = 0;
+        }
+
+        if ( camaraEjeX > this.mapaAncho - this.getContentSize().width ){
+            camaraEjeX = this.mapaAncho - this.getContentSize().width;
         }
 
         //Eje Y
@@ -237,25 +240,25 @@ var GameLayer = cc.Layer.extend({
         this.mapaAlto = this.mapa.getContentSize().height;
 
         // Solicitar los objeto dentro de la capa Suelos
-        /*var grupoSuelos = this.mapa.getObjectGroup("Suelos");
-        var suelosArray = grupoSuelos.getObjects();
+        var grupoLimites = this.mapa.getObjectGroup("Limites");
+        var limitesArray = grupoLimites.getObjects();
 
         // Los objetos de la capa suelos se transforman a formas estáticas de Chipmunk ( SegmentShape ).
-        for (var i = 0; i < suelosArray.length; i++) {
-            var suelo = suelosArray[i];
-            var puntos = suelo.polylinePoints;
+        for (var i = 0; i < limitesArray.length; i++) {
+            var limite = limitesArray[i];
+            var puntos = limite.polylinePoints;
             for (var j = 0; j < puntos.length - 1; j++) {
-                var bodySuelo = new cp.StaticBody();
-                var shapeSuelo = new cp.SegmentShape(bodySuelo,
-                    cp.v(parseInt(suelo.x) + parseInt(puntos[j].x),
-                        parseInt(suelo.y) - parseInt(puntos[j].y)),
-                    cp.v(parseInt(suelo.x) + parseInt(puntos[j + 1].x),
-                        parseInt(suelo.y) - parseInt(puntos[j + 1].y)),
+                var bodyLimite = new cp.StaticBody();
+                var shapeLimite = new cp.SegmentShape(bodyLimite,
+                    cp.v(parseInt(limite.x) + parseInt(puntos[j].x),
+                        parseInt(limite.y) - parseInt(puntos[j].y)),
+                    cp.v(parseInt(limite.x) + parseInt(puntos[j + 1].x),
+                        parseInt(limite.y) - parseInt(puntos[j + 1].y)),
                     10);
-                shapeSuelo.setCollisionType(tipoSuelo);
-                this.space.addStaticShape(shapeSuelo);
+                shapeLimite.setCollisionType(tipoLimite);
+                this.space.addStaticShape(shapeLimite);
             }
-        }*/
+        }
         // Cargar nubes blancas
         var grupoNubesBlancas = this.mapa.getObjectGroup("NubesBlancas");
         var nubesBlancasArray = grupoNubesBlancas.getObjects();
