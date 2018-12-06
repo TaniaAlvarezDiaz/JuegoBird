@@ -22,7 +22,8 @@
         "src/Pincho.js",
         "src/NubeBlanca.js",
         "src/NubeNegra.js",
-        "src/HuevoOro.js"
+        "src/HuevoOro.js",
+        "src/Disparo.js"
 
     ]
 }

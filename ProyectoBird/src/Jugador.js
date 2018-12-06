@@ -80,10 +80,21 @@ var Jugador = cc.Class.extend({
         this.body.applyImpulse(cp.v(300, 0), cp.v(0, 0));
 
     },
-    saltar: function () {
-        // solo salta si está caminando
-        if (this.estado == estadoSaltando) {
-            this.body.applyImpulse(cp.v(0, 1300), cp.v(0, 0));
+    saltar: function (saltar) {
+        if(saltar == 1){
+            if(this.gameLayer.numVecesSaltar <= 1){
+                if (this.estado == estadoSaltando) {
+                    this.gameLayer.numVecesSaltar++;
+                    this.body.applyImpulse(cp.v(0, 400), cp.v(0, 0));
+                }
+            }
+        }
+    },
+    jetpack: function (jetpack) {
+        if(jetpack == 1){
+            if (this.estado == estadoSaltando) {
+                this.body.applyImpulse(cp.v(0, 100), cp.v(0, 0));
+            }
         }
     },
     actualizar: function () {

@@ -10,6 +10,9 @@ var tipoPincho = 9;
 
 var nivel = 1;
 
+var controles = {};
+var teclas = [];
+
 var GameLayer = cc.Layer.extend({
     ctor: function () {
         this._super();
@@ -42,8 +45,15 @@ var GameLayer = cc.Layer.extend({
         this.vidasEliminar = [];
         this.enemigosEliminar = [];
         this.tiempoTurbo = 0;
+        this.numVecesSaltar = 0;
 
         this.jugador = new Jugador(this, cc.p(50, 150));
+
+        cc.eventManager.addListener({
+            event: cc.EventListener.KEYBOARD,
+            onKeyPressed: this.procesarKeyPressed.bind(this),
+            onKeyReleased: this.procesarKeyReleased.bind(this)
+        }, this);
 
         this.cargarMapa();
         this.scheduleUpdate();
@@ -100,6 +110,7 @@ var GameLayer = cc.Layer.extend({
         return true;
     },
     update: function (dt) {
+        this.procesarControles();
         // Control de emisor de partículas
         if (this.tiempoEfecto > 0) {
             this.tiempoEfecto = this.tiempoEfecto - dt;
@@ -142,7 +153,7 @@ var GameLayer = cc.Layer.extend({
         }
 
         //Eje Y
-        var camaraEjeY = this.jugador.body.p.y - this.getContentSize().height / 2;
+        var camaraEjeY = this.jugador.body.p.y - this.getContentSize().height / 1.25;
 
         if (camaraEjeY < 0) {
             camaraEjeY = 0;
@@ -228,10 +239,10 @@ var GameLayer = cc.Layer.extend({
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
         }
         else if(nivel == 2){
-
+            //this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
         }
         else if(nivel == 3){
-
+            //this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
         }
         // Añadirlo a la Layer
         this.addChild(this.mapa);
@@ -365,6 +376,47 @@ var GameLayer = cc.Layer.extend({
     collisionJugadorConPincho: function () {
         // Al pincharse, el jugador pierde directamente
         this.restaurarJugador();
+    },
+    procesarKeyPressed:function(keyCode){
+        console.log("procesarKeyPressed "+keyCode);
+        var posicion = teclas.indexOf(keyCode);
+        if ( posicion == -1 ) {
+            teclas.push(keyCode);
+            switch (keyCode ){
+                case 32:
+                    // saltar - barra espaciadora
+                    controles.saltar = 1;
+                    break;
+                case 74:
+                    // jetpack - flecha hacia arriba
+                    controles.jetpack = 1;
+                    break;
+            }
+        }
+    },
+    procesarKeyReleased(keyCode){
+        console.log("procesarKeyReleased "+keyCode);
+        var posicion = teclas.indexOf(keyCode);
+        teclas.splice(posicion, 1);
+        switch (keyCode ){
+            case 32:
+                //saltar - barra espaciadora
+                if (controles.saltar == 1){
+                    controles.saltar = 0;
+                    this.numVecesSaltar = 0; //reseteamos variable (para asegurarnos que solo salta una vez)
+                }
+                break;
+            case 74:
+                //jetpack - flecha hacia arriba
+                if (controles.jetpack == 1){
+                    controles.jetpack = 0;
+                }
+                break;
+        }
+    },
+    procesarControles:function(){
+        this.jugador.saltar(controles.saltar);
+        this.jugador.jetpack(controles.jetpack);
     }
 
 });
