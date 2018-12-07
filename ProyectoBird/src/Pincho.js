@@ -31,7 +31,7 @@ var Pincho = cc.Class.extend({
             cp.v(0, 0));
 
         this.shapeRadar.setSensor(true);
-        this.shapeRadar.setCollisionType(tipoPincho);
+        //this.shapeRadar.setCollisionType(tipoPincho);
 
         gameLayer.space.addShape(this.shapeRadar);
 

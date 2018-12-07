@@ -1,5 +1,7 @@
 var estadoSaltando = 2;
 var estadoImpactado = 3;
+var estadoDisparando = 4;
+var estadoSinDisparar = 5;
 
 var Jugador = cc.Class.extend({
     ctor: function (gameLayer, posicion) {
@@ -7,6 +9,7 @@ var Jugador = cc.Class.extend({
         this.vidas = 3; // Empieza con 3 vidas
         this.turbos = 3;
         this.estado = estadoSaltando;
+        this.disparo = estadoSinDisparar;
 
         // Crear Sprite - Cuerpo y forma
         this.sprite = new cc.PhysicsSprite("#bird_01.png");
@@ -95,6 +98,14 @@ var Jugador = cc.Class.extend({
             if (this.estado == estadoSaltando) {
                 this.body.applyImpulse(cp.v(0, 100), cp.v(0, 0));
             }
+        }
+    },
+    disparar: function(disparo){
+        if(disparo == 1){
+            this.disparo = estadoDisparando;
+        }
+        else{
+            this.disparo = estadoSinDisparar;
         }
     },
     actualizar: function () {

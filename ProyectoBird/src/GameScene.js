@@ -6,7 +6,7 @@ var tipoEnemigoDerecha = 5;
 var tipoEnemigoIzquierda = 6;
 var tipoPieJugador = 7;
 var tipoVida = 8;
-var tipoPincho = 9;
+var tipoDisparoJugador = 9;
 
 var nivel = 1;
 
@@ -24,6 +24,7 @@ var GameLayer = cc.Layer.extend({
         cc.spriteFrameCache.addSpriteFrames(res.nubeBlanca_plist);
         cc.spriteFrameCache.addSpriteFrames(res.nubeNegra_plist);
         cc.spriteFrameCache.addSpriteFrames(res.huevoOro_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.rayo_plist);
         cc.spriteFrameCache.addSpriteFrames(res.jugador_saltar_plist);
         cc.spriteFrameCache.addSpriteFrames(res.jugador_impactado_plist);
         cc.spriteFrameCache.addSpriteFrames(res.animacion_cuervo_plist);
@@ -42,11 +43,14 @@ var GameLayer = cc.Layer.extend({
         this.nubesBlancas = [];
         this.nubesNegras = [];
         this.huevosOro = [];
+        this.disparosJugador = [],
         this.monedasEliminar = [];
         this.vidasEliminar = [];
         this.enemigosEliminar = [];
         this.tiempoTurbo = 0;
         this.numVecesSaltar = 0;
+        this.numVecesDisparo = 0;
+        this.imagenDisparoJugador = null;
 
         this.jugador = new Jugador(this, cc.p(50, 150));
 
@@ -85,8 +89,8 @@ var GameLayer = cc.Layer.extend({
             null, null, this.collisionEnemigoConJugador.bind(this), null);
 
         // Jugador y pinchos
-        this.space.addCollisionHandler(tipoJugador, tipoPincho,
-            null, this.collisionJugadorConPincho.bind(this), null, null);
+        /*this.space.addCollisionHandler(tipoJugador, tipoPincho,
+            null, this.collisionJugadorConPincho.bind(this), null, null);*/
 
         // Nota: Las colisiones de las patas las he hecho de manera distinta al guión.
         // En el guión se gestionaba en el Enemigo, pero solamente afectaba al último enemigo que se colocaba,
@@ -140,6 +144,28 @@ var GameLayer = cc.Layer.extend({
         }
 
         this.space.step(dt);
+
+        //Crear disparos enemigo
+
+        //Crear disparos jugador
+        if(this.jugador.disparo == estadoDisparando){
+            if(this.numVecesDisparo < 1){
+                var d = new Disparo(this,cc.p(this.jugador.body.p.x,this.jugador.body.p.y),
+                    tipoDisparoJugador, this.imagenDisparoJugador);
+                this.disparosJugador.push(d);
+                this.numVecesDisparo++;
+            }
+        }
+        //Actualizar disparos jugador
+        var posX1 = this.jugador.body.p.x - this.getContentSize().width/4;
+        var posX2 = posX1 + this.getContentSize().width;
+        for(i=0; i < this.disparosJugador.length; i++){
+            this.disparosJugador[i].actualizar();
+            if(this.disparosJugador[i].body.p.x > posX2 || this.disparosJugador[i].body.p.x < posX1){ //Si esta fuera de la pantalla
+                this.disparosJugador[i].eliminar();
+                this.disparosJugador.splice(i, 1);
+            }
+        }
 
         // Scroll
         // Eje X
@@ -249,12 +275,15 @@ var GameLayer = cc.Layer.extend({
     cargarMapa: function () {
         if(nivel == 1){
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
+            this.imagenDisparoJugador = res.boomerang_png
         }
-        else if(nivel == 2){
+        else if(nivel == 2){ //Cambiar para el nivel 2
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
+            this.imagenDisparoJugador = res.boomerang_png
         }
-        else if(nivel == 3){
+        else if(nivel == 3){ //Cambiar para el nivel 3
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
+            this.imagenDisparoJugador = res.boomerang_png
         }
         // Añadirlo a la Layer
         this.addChild(this.mapa);
@@ -282,26 +311,35 @@ var GameLayer = cc.Layer.extend({
                 this.space.addStaticShape(shapeLimite);
             }
         }
-        // Cargar nubes blancas
-        var grupoNubesBlancas = this.mapa.getObjectGroup("NubesBlancas");
-        var nubesBlancasArray = grupoNubesBlancas.getObjects();
-        for (var i = 0; i < nubesBlancasArray.length; i++) {
-            var nube = new NubeBlanca(this, cc.p(nubesBlancasArray[i]["x"], nubesBlancasArray[i]["y"]));
-            this.nubesBlancas.push(nube);
+        if(nivel == 1){ //Para el nivel cielo
+            // Cargar nubes blancas
+            var grupoNubesBlancas = this.mapa.getObjectGroup("NubesBlancas");
+            var nubesBlancasArray = grupoNubesBlancas.getObjects();
+            for (var i = 0; i < nubesBlancasArray.length; i++) {
+                var nube = new NubeBlanca(this, cc.p(nubesBlancasArray[i]["x"], nubesBlancasArray[i]["y"]));
+                this.nubesBlancas.push(nube);
+            }
+            // Cargar nubes negras
+            var grupoNubesNegra = this.mapa.getObjectGroup("NubesNegras");
+            var nubesNegrasArray = grupoNubesNegra.getObjects();
+            for (var i = 0; i < nubesNegrasArray.length; i++) {
+                var nube = new NubeNegra(this, cc.p(nubesNegrasArray[i]["x"], nubesNegrasArray[i]["y"]));
+                this.nubesNegras.push(nube);
+            }
+            // Cargar huevos de oro
+            var grupohuevos = this.mapa.getObjectGroup("Huevos");
+            var huevosArray = grupohuevos.getObjects();
+            for (var i = 0; i < huevosArray.length; i++) {
+                var huevo = new HuevoOro(this, cc.p(huevosArray[i]["x"], huevosArray[i]["y"]));
+                this.huevosOro.push(huevo);
+            }
+
         }
-        // Cargar nubes negras
-        var grupoNubesNegra = this.mapa.getObjectGroup("NubesNegras");
-        var nubesNegrasArray = grupoNubesNegra.getObjects();
-        for (var i = 0; i < nubesNegrasArray.length; i++) {
-            var nube = new NubeNegra(this, cc.p(nubesNegrasArray[i]["x"], nubesNegrasArray[i]["y"]));
-            this.nubesNegras.push(nube);
+        else if(nivel == 2){
+            //Implementar para el nivel 2
         }
-        // Cargar huevos de oro
-        var grupohuevos = this.mapa.getObjectGroup("Huevos");
-        var huevosArray = grupohuevos.getObjects();
-        for (var i = 0; i < huevosArray.length; i++) {
-            var huevo = new HuevoOro(this, cc.p(huevosArray[i]["x"], huevosArray[i]["y"]));
-            this.huevosOro.push(huevo);
+        else if(nivel == 3){
+            //Implementar para el nivel 3
         }
 
     },
@@ -398,9 +436,13 @@ var GameLayer = cc.Layer.extend({
                     // saltar - barra espaciadora
                     controles.saltar = 1;
                     break;
-                case 74:
-                    // jetpack - flecha hacia arriba
+                case 87:
+                    // jetpack - tecla W
                     controles.jetpack = 1;
+                    break;
+                case 68:
+                    // disparo - tecla D
+                    controles.disparo = 1;
                     break;
             }
         }
@@ -416,17 +458,27 @@ var GameLayer = cc.Layer.extend({
                     this.numVecesSaltar = 0; //reseteamos variable (para asegurarnos que solo salta una vez)
                 }
                 break;
-            case 74:
-                //jetpack - flecha hacia arriba
+            case 87:
+                //jetpack - tecla W
                 if (controles.jetpack == 1){
                     controles.jetpack = 0;
                 }
+                break;
+            case 68:
+                // disparo - tecla D
+                if (controles.disparo == 1){
+                    controles.disparo = 0;
+                    this.numVecesDisparo = 0; //contador para que solo dispare una vez al darle a la tecla
+                }
+
+
                 break;
         }
     },
     procesarControles:function(){
         this.jugador.saltar(controles.saltar);
         this.jugador.jetpack(controles.jetpack);
+        this.jugador.disparar(controles.disparo);
     }
 
 });

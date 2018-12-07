@@ -11,7 +11,7 @@ var Disparo = cc.Class.extend({
         this.sprite.setBody(this.body);
         gameLayer.space.addBody(this.body);
         // Crear forma rectangular
-        this.shape = new cp.BoxShape(body,
+        this.shape = new cp.BoxShape(this.body,
             this.sprite.getContentSize().width,
             this.sprite.getContentSize().height);
         this.shape.setCollisionType(tipoDisparo);
