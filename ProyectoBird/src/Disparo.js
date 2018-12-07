@@ -23,7 +23,7 @@ var Disparo = cc.Class.extend({
         this.gameLayer.space.removeShape(this.shape);
         this.gameLayer.removeChild(this.sprite);
     },
-    actualizar: function(){
-        this.body.applyImpulse(cp.v(100, 0), cp.v(0, 0));
+    actualizar: function(vel){
+        this.body.applyImpulse(cp.v(vel, 0), cp.v(0, 0));
     }
 });

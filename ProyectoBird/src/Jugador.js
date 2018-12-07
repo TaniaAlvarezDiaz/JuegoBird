@@ -63,7 +63,7 @@ var Jugador = cc.Class.extend({
         this.aSaltar.retain();
 
         //Animación impactado
-        var framesAnimacionImpactado = [];
+        /*var framesAnimacionImpactado = [];
         for (var i = 1; i <= 3; i++) {
             var str = "bird_0" + i + ".png";
             var frame = cc.spriteFrameCache.getSpriteFrame(str);
@@ -71,7 +71,7 @@ var Jugador = cc.Class.extend({
         }
         var animacionImpactado = new cc.Animation(framesAnimacionImpactado, 0.4);
         this.aImpactado = new cc.Repeat(new cc.Animate(animacionImpactado), 1);
-        this.aImpactado.retain();
+        this.aImpactado.retain();*/
 
         // Animaión actual
         this.animacion = this.aSaltar;
@@ -109,7 +109,7 @@ var Jugador = cc.Class.extend({
         }
     },
     actualizar: function () {
-        switch (this.estado) {
+        /*switch (this.estado) {
             case estadoImpactado:
                 if (this.animacion != this.aImpactado) {
                     this.animacion = this.aImpactado;
@@ -128,7 +128,7 @@ var Jugador = cc.Class.extend({
                     this.sprite.runAction(this.animacion);
                 }
                 break;
-        }
+        }*/
     },
     tocaSuelo: function () {
         /*if (this.estado === estadoSaltando) {

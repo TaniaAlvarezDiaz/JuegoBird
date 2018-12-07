@@ -4,18 +4,17 @@ var NubeNegra = cc.Class.extend({
     shape:null,
     ctor:function (gameLayer, posicion) {
         this.gameLayer = gameLayer;
-
         // Crear Sprite
         this.sprite = new cc.PhysicsSprite("#Animación-Nube-Ataque_01.png");
         // Cuerpo estatico, no le afectan las fuerzas, gravedad, etc.
-        var body = new cp.StaticBody();
-        body.setPos(posicion);
-        this.sprite.setBody(body);
+        this.body = new cp.StaticBody();
+        this.body.setPos(posicion);
+        this.sprite.setBody(this.body);
         // Los cuerpos estáticos nunca se añaden al Space
 
         // Crear forma circular
         var radio = this.sprite.getContentSize().width / 2;
-        this.shape = new cp.CircleShape(body, radio , cp.vzero);
+        this.shape = new cp.CircleShape(this.body, radio , cp.vzero);
         ///this.shape.setCollisionType(tipoNube);
         // setSensor(true) no genera choques, es como un “fantasma”, nunca genera colisiones reales
         this.shape.setSensor(true);
