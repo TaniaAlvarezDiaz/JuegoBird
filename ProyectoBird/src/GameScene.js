@@ -17,6 +17,7 @@ var GameLayer = cc.Layer.extend({
     ctor: function () {
         this._super();
         var size = cc.winSize;
+        console.log("nivel: " + nivel);
 
         // Zona de cache
         cc.spriteFrameCache.addSpriteFrames(res.jugador_plist);
@@ -210,7 +211,6 @@ var GameLayer = cc.Layer.extend({
         }
         this.vidasEliminar = [];
 
-
         // Controlar el angulo (son radianes) max y min.
         if (this.jugador.body.a > 0.44) {
             this.jugador.body.a = 0.44;
@@ -233,16 +233,28 @@ var GameLayer = cc.Layer.extend({
             this.jugador.body.vy = 450;
         }
 
+        //Pasar al siguiente nivel
+        if(this.jugador.body.p.x >= 0.99 * this.mapaAncho){
+            if(nivel == 3){
+                nivel = 1;
+            }
+            else{
+                nivel++;
+            }
+            cc.director.pause();
+            this.getParent().addChild(new GameNextLayer());
+        }
+
     },
     cargarMapa: function () {
         if(nivel == 1){
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
         }
         else if(nivel == 2){
-            //this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
+            this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
         }
         else if(nivel == 3){
-            //this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
+            this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
         }
         // Añadirlo a la Layer
         this.addChild(this.mapa);
@@ -378,7 +390,6 @@ var GameLayer = cc.Layer.extend({
         this.restaurarJugador();
     },
     procesarKeyPressed:function(keyCode){
-        console.log("procesarKeyPressed "+keyCode);
         var posicion = teclas.indexOf(keyCode);
         if ( posicion == -1 ) {
             teclas.push(keyCode);
@@ -395,7 +406,6 @@ var GameLayer = cc.Layer.extend({
         }
     },
     procesarKeyReleased(keyCode){
-        console.log("procesarKeyReleased "+keyCode);
         var posicion = teclas.indexOf(keyCode);
         teclas.splice(posicion, 1);
         switch (keyCode ){
@@ -428,6 +438,7 @@ var GameScene = cc.Scene.extend({
     onEnter: function () {
         this._super();
         var layer = new GameLayer();
+        cc.director.resume();
         this.addChild(layer, 0, idCapaJuego);
         var controlesLayer = new ControlesLayer();
         this.addChild(controlesLayer, 0, idCapaControles);
