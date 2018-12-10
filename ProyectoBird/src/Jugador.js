@@ -2,6 +2,8 @@ var estadoSaltando = 2;
 var estadoImpactado = 3;
 var estadoDisparando = 4;
 var estadoSinDisparar = 5;
+var estadoPicotazo = 6;
+var estadoSinPicotazo = 7;
 
 var Jugador = cc.Class.extend({
     ctor: function (gameLayer, posicion) {
@@ -10,6 +12,7 @@ var Jugador = cc.Class.extend({
         this.turbos = 3;
         this.estado = estadoSaltando;
         this.disparo = estadoSinDisparar;
+        this.picotazo = estadoSinPicotazo;
 
         // Crear Sprite - Cuerpo y forma
         this.sprite = new cc.PhysicsSprite("#bird_01.png");
@@ -108,10 +111,23 @@ var Jugador = cc.Class.extend({
             this.disparo = estadoSinDisparar;
         }
     },
+    darPicotazo: function(pico){
+        if(pico == 1){
+            if(this.gameLayer.numVecesPicotazo < 1){
+                console.log("DANDO PICOTAZO");
+                this.picotazo = estadoPicotazo;
+                this.gameLayer.numVecesPicotazo++;
+            }
+        }
+        else{
+            this.picotazo = estadoSinPicotazo;
+        }
+    },
     actualizar: function () {
-        /*switch (this.estado) {
+        switch (this.estado) {
             case estadoImpactado:
-                if (this.animacion != this.aImpactado) {
+                this.finAnimacionImpactado();
+                /*if (this.animacion != this.aImpactado) {
                     this.animacion = this.aImpactado;
                     this.sprite.stopAllActions();
                     this.sprite.runAction(
@@ -119,7 +135,7 @@ var Jugador = cc.Class.extend({
                             this.animacion,
                             new cc.CallFunc(this.finAnimacionImpactado, this))
                     );
-                }
+                }*/
                 break;
             case estadoSaltando:
                 if (this.animacion != this.aSaltar) {
@@ -128,7 +144,7 @@ var Jugador = cc.Class.extend({
                     this.sprite.runAction(this.animacion);
                 }
                 break;
-        }*/
+        }
     },
     tocaSuelo: function () {
         /*if (this.estado === estadoSaltando) {

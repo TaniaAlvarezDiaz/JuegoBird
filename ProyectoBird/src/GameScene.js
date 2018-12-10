@@ -52,6 +52,7 @@ var GameLayer = cc.Layer.extend({
         this.tiempoTurbo = 0;
         this.numVecesSaltar = 0;
         this.numVecesDisparo = 0;
+        this.numVecesPicotazo = 0;
         this.imagenDisparoJugador = null;
         this.imagenDisparoEnemigo = null;
         this.numIteracciones = 0;
@@ -92,9 +93,17 @@ var GameLayer = cc.Layer.extend({
         this.space.addCollisionHandler(tipoEnemigo, tipoJugador,
             null, null, this.collisionEnemigoConJugador.bind(this), null);
 
+        // Jugador con picotazo y Enemigo
+        this.space.addCollisionHandler(tipoEnemigo, tipoJugador,
+            null, null, this.collisionPicotazoJugadorConEnemigo.bind(this), null);
+
         //DisparoEnemigo y jugador
         this.space.addCollisionHandler(tipoDisparoEnemigo, tipoJugador,
             null, null, this.collisionDisparoEnemigoConJugador.bind(this), null);
+
+        //DisparoEnemigo y disparoJugador
+        this.space.addCollisionHandler(tipoDisparoEnemigo, tipoDisparoJugador,
+            null, null, this.collisionDisparoEnemigoConDisparoJugador.bind(this), null);
 
         // Jugador y pinchos
         /*this.space.addCollisionHandler(tipoJugador, tipoPincho,
@@ -159,7 +168,7 @@ var GameLayer = cc.Layer.extend({
 
         // Generar disparos enemigo
         this.numIteracciones ++;
-        if (this.numIteracciones > 25) {
+        if (this.numIteracciones > 75) {
             var arrayEnemigosEnPantalla = [];
             for(j=0; j < this.nubesNegras.length; j++){
                 if(this.nubesNegras[j].body.p.x < posX2 && this.nubesNegras[j].body.p.x > posX1){
@@ -183,6 +192,12 @@ var GameLayer = cc.Layer.extend({
                 if (this.disparosEnemigo[j].shape == shape) {
                     this.disparosEnemigo[j].eliminar();
                     this.disparosEnemigo.splice(j, 1);
+                }
+            }
+            for(j=0; j < this.disparosJugador.length; j++){ //Eliminamos los disparos del jugador cuando choca con disparos de enemigo
+                if (this.disparosJugador[j].shape == shape) {
+                    this.disparosJugador[j].eliminar();
+                    this.disparosJugador.splice(j, 1);
                 }
             }
         }
@@ -320,10 +335,12 @@ var GameLayer = cc.Layer.extend({
         else if(nivel == 2){ //Cambiar para el nivel 2
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
             this.imagenDisparoJugador = res.boomerang_png
+            this.imagenDisparoEnemigo = res.rayo_png;
         }
         else if(nivel == 3){ //Cambiar para el nivel 3
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
             this.imagenDisparoJugador = res.boomerang_png
+            this.imagenDisparoEnemigo = res.rayo_png;
         }
         // Añadirlo a la Layer
         this.addChild(this.mapa);
@@ -409,12 +426,10 @@ var GameLayer = cc.Layer.extend({
     },
     collisionEnemigoConJugador: function (arbiter, space) {
         this.jugador.impactado();
-
         // Eliminar al enemigo
         var shapes = arbiter.getShapes();
         this.enemigosEliminar.push(shapes[0]);
         this.jugador.restarVida();
-
         // El jugador vuelve a la posición inicial en caso de perder todas las vidas
         // No se reinicia el nivel, solo lo coloco de nuevo en el principio y le asigno 3 vidas
         if (this.jugador.vidas === 0) {
@@ -434,7 +449,11 @@ var GameLayer = cc.Layer.extend({
         } else {
             this.notificarCambioVidas();
         }
-
+    },
+    collisionDisparoEnemigoConDisparoJugador: function (arbiter, space) {
+        var shapes = arbiter.getShapes();
+        this.disparosEnemigosEliminar.push(shapes[0]);
+        this.disparosEnemigosEliminar.push(shapes[1]);
     },
     enemigoNoSueloDerecha: function (arbiter, space) {
         var shapes = arbiter.getShapes();
@@ -460,6 +479,13 @@ var GameLayer = cc.Layer.extend({
         this.jugador.sumarVida();
         this.notificarCambioVidas();
     },
+    collisionPicotazoJugadorConEnemigo: function (arbiter, space) {
+        if(this.jugador.picotazo == estadoPicotazo){
+            // Eliminar al enemigo
+            var shapes = arbiter.getShapes();
+            this.enemigosEliminar.push(shapes[0]);
+        }
+    },
     notificarCambioVidas: function () {
         var capaControles =
             this.getParent().getChildByTag(idCapaControles);
@@ -481,7 +507,7 @@ var GameLayer = cc.Layer.extend({
     },
     procesarKeyPressed:function(keyCode){
         var posicion = teclas.indexOf(keyCode);
-        if ( posicion == -1 ) {
+        if (posicion == -1 ) {
             teclas.push(keyCode);
             switch (keyCode ){
                 case 32:
@@ -495,6 +521,10 @@ var GameLayer = cc.Layer.extend({
                 case 68:
                     // disparo - tecla D
                     controles.disparo = 1;
+                    break;
+                case 83:
+                    // picotazo - tecla S
+                    controles.picotazo = 1;
                     break;
             }
         }
@@ -522,8 +552,13 @@ var GameLayer = cc.Layer.extend({
                     controles.disparo = 0;
                     this.numVecesDisparo = 0; //contador para que solo dispare una vez al darle a la tecla
                 }
-
-
+                break;
+            case 83:
+                // picotazo - tecla S
+                if (controles.picotazo == 1){
+                    controles.picotazo = 0;
+                    this.numVecesPicotazo = 0; //contador para que solo dispare una vez al darle a la tecla
+                }
                 break;
         }
     },
@@ -531,6 +566,7 @@ var GameLayer = cc.Layer.extend({
         this.jugador.saltar(controles.saltar);
         this.jugador.jetpack(controles.jetpack);
         this.jugador.disparar(controles.disparo);
+        this.jugador.darPicotazo(controles.picotazo);
     }
 
 });
