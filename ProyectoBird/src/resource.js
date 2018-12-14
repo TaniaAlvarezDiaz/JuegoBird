@@ -6,8 +6,6 @@ var res = {
     menu_png: "res/menu.png",
     tiles32_png: "res/tiles32.png",
     mapa1_tmx: "res/mapa1.tmx",
-    moneda_png: "res/moneda.png",
-    moneda_plist: "res/moneda.plist",
     jugador_caminar_png: "res/jugador_caminar.png",
     jugador_caminar_plist: "res/jugador_caminar.plist",
     jugador_saltar_png: "res/jugador_saltar.png",

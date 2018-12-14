@@ -45,7 +45,7 @@ var GameLayer = cc.Layer.extend({
         this.huevosOro = [];
         this.disparosJugador = [];
         this.disparosEnemigo = [];
-        this.monedasEliminar = [];
+        this.huevosEliminar = [];
         this.vidasEliminar = [];
         this.enemigosEliminar = [];
         this.disparosEnemigosEliminar = [];
@@ -80,10 +80,10 @@ var GameLayer = cc.Layer.extend({
         this.space.addCollisionHandler(tipoLimite, tipoPieJugador,
             null, this.collisionSueloConJugador.bind(this), null, this.finCollisionSueloConJugador.bind(this));
 
-        // Jugador y moneda
+        // Jugador y huevo
         // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión por la propiedad SENSOR de la Moneda).
-        /*this.space.addCollisionHandler(tipoJugador, tipoMoneda,
-            null, this.collisionJugadorConMoneda.bind(this), null, null);*/
+        this.space.addCollisionHandler(tipoJugador, tipoMoneda,
+            null, this.collisionJugadorConMoneda.bind(this), null, null);
 
         // Jugador y vida
         this.space.addCollisionHandler(tipoJugador, tipoVida,
@@ -117,7 +117,7 @@ var GameLayer = cc.Layer.extend({
         this.space.addCollisionHandler(tipoLimite, tipoEnemigoIzquierda,
             null, null, null, this.enemigoNoSueloIzquierda.bind(this));
 
-        // Pata deracha del enemigo con el suelo
+        // Pata derecha del enemigo con el suelo
         this.space.addCollisionHandler(tipoLimite, tipoEnemigoDerecha,
             null, null, null, this.enemigoNoSueloDerecha.bind(this));
 
@@ -255,17 +255,17 @@ var GameLayer = cc.Layer.extend({
             this.restaurarJugador();
         }
 
-        // Eliminar monedas
-        for (var i = 0; i < this.monedasEliminar.length; i++) {
-            var shape = this.monedasEliminar[i];
-            for (var j = 0; j < this.monedas.length; j++) {
-                if (this.monedas[j].shape === shape) {
-                    this.monedas[j].eliminar();
-                    this.monedas.splice(j, 1);
+        // Eliminar huevos
+        for (var i = 0; i < this.huevosEliminar.length; i++) {
+            var shape = this.huevosEliminar[i];
+            for (var j = 0; j < this.huevos.length; j++) {
+                if (this.huevos[j].shape === shape) {
+                    this.huevos[j].eliminar();
+                    this.huevos.splice(j, 1);
                 }
             }
         }
-        this.monedasEliminar = [];
+        this.huevosEliminar = [];
 
         // Eliminar vidas
         for (var i = 0; i < this.vidasEliminar.length; i++) {
@@ -418,10 +418,10 @@ var GameLayer = cc.Layer.extend({
         // Marcar la moneda para eliminarla
         var shapes = arbiter.getShapes();
         // shapes[0] es el jugador
-        this.monedasEliminar.push(shapes[1]);
+        this.huevosEliminar.push(shapes[1]);
         var capaControles =
             this.getParent().getChildByTag(idCapaControles);
-        capaControles.agregarMoneda();
+        capaControles.agregarHuevos();
 
     },
     collisionEnemigoConJugador: function (arbiter, space) {
@@ -497,7 +497,6 @@ var GameLayer = cc.Layer.extend({
         this.jugador.turbos = 3;
         var capaControles = this.getParent().getChildByTag(idCapaControles);
         capaControles.actualizarInterfazVidas();
-        capaControles.actualizarInterfazTurbos();
         this.jugador.estado = estadoSaltando;
         this.tiempoTurbo = 0;
     },
