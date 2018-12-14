@@ -16,7 +16,7 @@ var HuevoOro = cc.Class.extend({
         // Crear forma circular
         var radio = this.sprite.getContentSize().width / 2;
         this.shape = new cp.CircleShape(body, radio , cp.vzero);
-        ///this.shape.setCollisionType(tipoNube);
+        this.shape.setCollisionType(tipoHuevo);
         // setSensor(true) no genera choques, es como un “fantasma”, nunca genera colisiones reales
         this.shape.setSensor(true);
         // Añadir forma estática al Space

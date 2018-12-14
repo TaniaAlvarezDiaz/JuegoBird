@@ -8,6 +8,7 @@ var tipoPieJugador = 7;
 var tipoVida = 8;
 var tipoDisparoJugador = 9;
 var tipoDisparoEnemigo = 10;
+var tipoHuevo = 11;
 
 var nivel = 1;
 
@@ -81,9 +82,9 @@ var GameLayer = cc.Layer.extend({
             null, this.collisionSueloConJugador.bind(this), null, this.finCollisionSueloConJugador.bind(this));
 
         // Jugador y huevo
-        // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión por la propiedad SENSOR de la Moneda).
-        this.space.addCollisionHandler(tipoJugador, tipoMoneda,
-            null, this.collisionJugadorConMoneda.bind(this), null, null);
+        // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión por la propiedad SENSOR del Huevo).
+        this.space.addCollisionHandler(tipoJugador, tipoHuevo,
+            null, this.collisionJugadorConHuevo.bind(this), null, null);
 
         // Jugador y vida
         this.space.addCollisionHandler(tipoJugador, tipoVida,
@@ -122,19 +123,19 @@ var GameLayer = cc.Layer.extend({
             null, null, null, this.enemigoNoSueloDerecha.bind(this));
 
         // Declarar emisor de particulas (parado)
-        this._emitter = new cc.ParticleGalaxy.create();
+      /*  this._emitter = new cc.ParticleGalaxy.create();
         this._emitter.setEmissionRate(0);
         //this._emitter.texture = cc.textureCache.addImage(res.fire_png);
         this._emitter.shapeType = cc.ParticleSystem.STAR_SHAPE;
         this.tiempoEfecto = 0;
-        this.addChild(this._emitter, 10);
+        this.addChild(this._emitter, 10);*/
 
         return true;
     },
     update: function (dt) {
         this.procesarControles();
         // Control de emisor de partículas
-        if (this.tiempoEfecto > 0) {
+       /* if (this.tiempoEfecto > 0) {
             this.tiempoEfecto = this.tiempoEfecto - dt;
             this._emitter.x = this.jugador.body.p.x;
             this._emitter.y = this.jugador.body.p.y;
@@ -143,7 +144,7 @@ var GameLayer = cc.Layer.extend({
         if (this.tiempoEfecto < 0) {
             this._emitter.setEmissionRate(0);
             this.tiempoEfecto = 0;
-        }
+        }*/
 
         // Control del tiempo del turbo
         if (this.tiempoTurbo > 0) {
@@ -258,10 +259,10 @@ var GameLayer = cc.Layer.extend({
         // Eliminar huevos
         for (var i = 0; i < this.huevosEliminar.length; i++) {
             var shape = this.huevosEliminar[i];
-            for (var j = 0; j < this.huevos.length; j++) {
-                if (this.huevos[j].shape === shape) {
-                    this.huevos[j].eliminar();
-                    this.huevos.splice(j, 1);
+            for (var j = 0; j < this.huevosOro.length; j++) {
+                if (this.huevosOro[j].shape === shape) {
+                    this.huevosOro[j].eliminar();
+                    this.huevosOro.splice(j, 1);
                 }
             }
         }
@@ -407,15 +408,15 @@ var GameLayer = cc.Layer.extend({
         this.jugador.dejaDeTocarSuelo();
         //this.jugador.estado = estadoSaltando;
     },
-    collisionJugadorConMoneda: function (arbiter, space) {
+    collisionJugadorConHuevo: function (arbiter, space) {
         // Emisión de partículas
-        this._emitter.setEmissionRate(5);
+        /*this._emitter.setEmissionRate(5);
         this.tiempoEfecto = 3;
 
         // Impulso extra
-        this.jugador.body.applyImpulse(cp.v(300, 0), cp.v(0, 0));
+        this.jugador.body.applyImpulse(cp.v(300, 0), cp.v(0, 0));*/
 
-        // Marcar la moneda para eliminarla
+        // Marcar el huevo para eliminarla
         var shapes = arbiter.getShapes();
         // shapes[0] es el jugador
         this.huevosEliminar.push(shapes[1]);
