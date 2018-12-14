@@ -4,7 +4,7 @@ var MenuLayer = cc.Layer.extend({
         var size = cc.winSize;
 
         // Fondo
-        var spriteFondoTitulo = new cc.Sprite(res.menu_titulo_png);
+        var spriteFondoTitulo = new cc.Sprite(res.menu_png);
         // Asigno posición central
         spriteFondoTitulo.setPosition(cc.p(size.width / 2, size.height / 2));
         // Lo escalo porque es más pequeño que la pantalla

@@ -3,7 +3,7 @@ var res = {
     CloseNormal_png: "res/CloseNormal.png",
     CloseSelected_png: "res/CloseSelected.png",
     boton_jugar_png: "res/boton_jugar.png",
-    menu_titulo_png: "res/menu_titulo.png",
+    menu_png: "res/menu.png",
     tiles32_png: "res/tiles32.png",
     mapa1_tmx: "res/mapa1.tmx",
     moneda_png: "res/moneda.png",
