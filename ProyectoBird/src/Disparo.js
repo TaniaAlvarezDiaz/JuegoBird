@@ -10,7 +10,6 @@ var Disparo = cc.Class.extend({
         this.body.setAngle(0);
         this.sprite.setBody(this.body);
         gameLayer.space.addBody(this.body);
-        // Crear forma rectangular
         this.shape = new cp.BoxShape(this.body,
             this.sprite.getContentSize().width,
             this.sprite.getContentSize().height);

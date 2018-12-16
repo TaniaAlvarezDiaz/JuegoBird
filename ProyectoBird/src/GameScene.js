@@ -8,6 +8,7 @@ var tipoPieJugador = 7;
 var tipoVida = 8;
 var tipoDisparoJugador = 9;
 var tipoDisparoEnemigo = 10;
+var tipoModoControl = 11;
 
 var nivel = 1;
 
@@ -39,6 +40,7 @@ var GameLayer = cc.Layer.extend({
         //this.addChild(this.depuracion, 10);
 
         this.vidas = [];
+        this.modosControl = [];
         this.enemigos = [];
         this.nubesBlancas = [];
         this.nubesNegras = [];
@@ -49,6 +51,7 @@ var GameLayer = cc.Layer.extend({
         this.vidasEliminar = [];
         this.enemigosEliminar = [];
         this.disparosEnemigosEliminar = [];
+        this.modosControlEliminar = [];
         this.tiempoTurbo = 0;
         this.numVecesSaltar = 0;
         this.numVecesDisparo = 0;
@@ -58,6 +61,10 @@ var GameLayer = cc.Layer.extend({
         this.numIteracciones = 0;
 
         this.jugador = new Jugador(this, cc.p(50, 150));
+
+        // true = SPACE = SALTANDO
+        // false = W = JetPack
+        this.modoControl = true;
 
         cc.eventManager.addListener({
             event: cc.EventListener.KEYBOARD,
@@ -104,6 +111,10 @@ var GameLayer = cc.Layer.extend({
         //DisparoEnemigo y disparoJugador
         this.space.addCollisionHandler(tipoDisparoEnemigo, tipoDisparoJugador,
             null, null, this.collisionDisparoEnemigoConDisparoJugador.bind(this), null);
+
+        //Cambiar modo de juego
+        this.space.addCollisionHandler(tipoModoControl, tipoJugador,
+            null, null, this.collisionModoControlConJugador.bind(this), null);
 
         // Jugador y pinchos
         /*this.space.addCollisionHandler(tipoJugador, tipoPincho,
@@ -291,6 +302,18 @@ var GameLayer = cc.Layer.extend({
         }
         this.enemigosEliminar = [];
 
+        //Eliminar modo control
+        for (var i = 0; i < this.modosControlEliminar.length; i++) {
+            var shape = this.modosControlEliminar[i];
+            for (var j = 0; j < this.modosControl.length; j++) {
+                if (this.modosControl[j].shape === shape) {
+                    this.modosControl[j].eliminar();
+                    this.modosControl.splice(j, 1);
+                }
+            }
+        }
+        this.modosControlEliminar = [];
+
         // Controlar el angulo (son radianes) max y min.
         if (this.jugador.body.a > 0.44) {
             this.jugador.body.a = 0.44;
@@ -390,6 +413,13 @@ var GameLayer = cc.Layer.extend({
                 var huevo = new HuevoOro(this, cc.p(huevosArray[i]["x"], huevosArray[i]["y"]));
                 this.huevosOro.push(huevo);
             }
+            // Cargar modos de control
+            var grupomodoControl = this.mapa.getObjectGroup("ModoControl");
+            var modoControlArray = grupomodoControl.getObjects();
+            for (var i = 0; i < modoControlArray.length; i++) {
+                var control = new ModoControl(this, cc.p(modoControlArray[i]["x"], modoControlArray[i]["y"]));
+                this.modosControl.push(control);
+            }
 
         }
         else if(nivel == 2){
@@ -486,6 +516,18 @@ var GameLayer = cc.Layer.extend({
             this.enemigosEliminar.push(shapes[0]);
         }
     },
+    collisionModoControlConJugador: function (arbiter, space) {
+        console.log("COLISION");
+        if(this.modoControl == true){
+            this.modoControl = false;
+        }
+        else{
+            this.modoControl = true;
+        }
+        console.log("modoControl: " + this.modoControl);
+        var shapes = arbiter.getShapes();
+        this.modosControlEliminar.push(shapes[0]);
+    },
     notificarCambioVidas: function () {
         var capaControles =
             this.getParent().getChildByTag(idCapaControles);
@@ -512,11 +554,15 @@ var GameLayer = cc.Layer.extend({
             switch (keyCode ){
                 case 32:
                     // saltar - barra espaciadora
-                    controles.saltar = 1;
+                    if(this.modoControl == true){
+                        controles.saltar = 1;
+                    }
                     break;
                 case 87:
                     // jetpack - tecla W
-                    controles.jetpack = 1;
+                    if(this.modoControl  == false){
+                        controles.jetpack = 1;
+                    }
                     break;
                 case 68:
                     // disparo - tecla D

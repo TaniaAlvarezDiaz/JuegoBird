@@ -24,7 +24,8 @@
         "src/NubeNegra.js",
         "src/HuevoOro.js",
         "src/Disparo.js",
-        "src/GameNextLayer.js"
+        "src/GameNextLayer.js",
+        "src/ModoControl.js"
 
     ]
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="15" tilewidth="32" tileheight="32" nextobjectid="148">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="15" tilewidth="32" tileheight="32" nextobjectid="152">
  <tileset firstgid="1" name="cielo_tiles" tilewidth="32" tileheight="32" tilecount="55" columns="5">
   <image source="cielo_tiles.png" width="160" height="352"/>
  </tileset>
@@ -151,4 +151,10 @@
   <object id="147" x="2729" y="391" width="42" height="36"/>
  </objectgroup>
  <objectgroup name="NidoSuelo"/>
+ <objectgroup name="ModoControl">
+  <object id="148" x="1982" y="308" width="42" height="36"/>
+  <object id="149" x="7841" y="80" width="42" height="36"/>
+  <object id="150" x="11917" y="366" width="42" height="36"/>
+  <object id="151" x="14423" y="294" width="42" height="36"/>
+ </objectgroup>
 </map>

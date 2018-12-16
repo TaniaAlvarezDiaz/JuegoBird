@@ -39,6 +39,8 @@ var res = {
     boomerang_png: "res/NivelCielo/Boomerang.png",
     boton_siguiente: "res/boton_siguiente.png",
 
+    modoControl: "res/CambiarModoControl.jpg",
+
 };
 
 var g_resources = [];
