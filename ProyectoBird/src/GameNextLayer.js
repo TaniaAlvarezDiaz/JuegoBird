@@ -9,6 +9,13 @@ var GameNextLayer = cc.LayerColor.extend({
         // Sin color son transparentes.
         this._super(cc.color(0, 0, 0, 180));
         var winSize = cc.director.getWinSize();
+        var size = cc.winSize;
+
+        //Etiqueta de haber superado nivel
+        this.etiquetaNivelSuperado = new cc.LabelTTF("¡Nivel superado!", "Helvetica", 50);
+        this.etiquetaNivelSuperado.setPosition(cc.p(size.width/2, size.height/2+100));
+        this.etiquetaNivelSuperado.fillStyle = new cc.Color(255, 255, 255, 255);
+        this.addChild(this.etiquetaNivelSuperado);
 
         // Creamos los botones - MenuItemSprite
         var botonNext = new cc.MenuItemSprite(

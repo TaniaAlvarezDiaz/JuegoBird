@@ -2,8 +2,6 @@ var tipoLimite = 1;
 var tipoJugador = 2;
 var tipoEnemigoConDisparo = 3;
 var tipoEnemigo = 4;
-var tipoEnemigoConDisparo2 = 3.5;
-var tipoEnemigo2 = 4.5;
 var tipoEnemigoDerecha = 5;
 var tipoEnemigoIzquierda = 6;
 var tipoPieJugador = 7;
@@ -97,17 +95,17 @@ var GameLayer = cc.Layer.extend({
         this.space.addCollisionHandler(tipoJugador, tipoVida,
             null, this.collisionJugadorConVida.bind(this), null, null);
 
-        /*//Enemigo y jugador
+        //Enemigo y jugador
         this.space.addCollisionHandler(tipoEnemigoConDisparo, tipoJugador,
             null, null, this.collisionEnemigoConJugador.bind(this), null);
         this.space.addCollisionHandler(tipoEnemigo, tipoJugador,
-            null, null, this.collisionEnemigoConJugador.bind(this), null);*/
+            null, null, this.collisionEnemigoConJugador.bind(this), null);
 
-        // Jugador con picotazo y Enemigo
+        /*// Jugador con picotazo y Enemigo
         this.space.addCollisionHandler(tipoEnemigoConDisparo, tipoJugador,
             null, null, this.collisionPicotazoJugadorConEnemigo.bind(this), null);
         this.space.addCollisionHandler(tipoEnemigo, tipoJugador,
-            null, null, this.collisionPicotazoJugadorConEnemigo.bind(this), null);
+            null, null, this.collisionPicotazoJugadorConEnemigo.bind(this), null);*/
 
         //DisparoEnemigo y jugador
         this.space.addCollisionHandler(tipoDisparoEnemigo, tipoJugador,
@@ -346,13 +344,15 @@ var GameLayer = cc.Layer.extend({
         //Pasar al siguiente nivel
         if(this.jugador.body.p.x >= 0.99 * this.mapaAncho){
             if(nivel == 3){
-                nivel = 1;
+                //nivel = 1;
+                cc.director.pause();
+                this.getParent().addChild(new EndGameLayer());
             }
             else{
                 nivel++;
+                cc.director.pause();
+                this.getParent().addChild(new GameNextLayer());
             }
-            cc.director.pause();
-            this.getParent().addChild(new GameNextLayer());
         }
 
     },
