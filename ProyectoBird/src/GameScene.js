@@ -1,7 +1,9 @@
 var tipoLimite = 1;
 var tipoJugador = 2;
-var tipoNube = 3;
+var tipoEnemigoConDisparo = 3;
 var tipoEnemigo = 4;
+var tipoEnemigoConDisparo2 = 3.5;
+var tipoEnemigo2 = 4.5;
 var tipoEnemigoDerecha = 5;
 var tipoEnemigoIzquierda = 6;
 var tipoPieJugador = 7;
@@ -42,8 +44,7 @@ var GameLayer = cc.Layer.extend({
         this.vidas = [];
         this.modosControl = [];
         this.enemigos = [];
-        this.nubesBlancas = [];
-        this.nubesNegras = [];
+        this.enemigosConDisparo = [];
         this.huevosOro = [];
         this.disparosJugador = [];
         this.disparosEnemigo = [];
@@ -96,11 +97,15 @@ var GameLayer = cc.Layer.extend({
         this.space.addCollisionHandler(tipoJugador, tipoVida,
             null, this.collisionJugadorConVida.bind(this), null, null);
 
-        // Enemigo y jugador
-        this.space.addCollisionHandler(tipoEnemigo, tipoJugador,
+        /*//Enemigo y jugador
+        this.space.addCollisionHandler(tipoEnemigoConDisparo, tipoJugador,
             null, null, this.collisionEnemigoConJugador.bind(this), null);
+        this.space.addCollisionHandler(tipoEnemigo, tipoJugador,
+            null, null, this.collisionEnemigoConJugador.bind(this), null);*/
 
         // Jugador con picotazo y Enemigo
+        this.space.addCollisionHandler(tipoEnemigoConDisparo, tipoJugador,
+            null, null, this.collisionPicotazoJugadorConEnemigo.bind(this), null);
         this.space.addCollisionHandler(tipoEnemigo, tipoJugador,
             null, null, this.collisionPicotazoJugadorConEnemigo.bind(this), null);
 
@@ -167,10 +172,6 @@ var GameLayer = cc.Layer.extend({
 
         this.jugador.actualizar();
 
-        for (i = 0; i < this.enemigos.length; i++) {
-            this.enemigos[i].actualizar();
-        }
-
         this.space.step(dt);
 
         //Limites de la pantalla
@@ -181,15 +182,15 @@ var GameLayer = cc.Layer.extend({
         this.numIteracciones ++;
         if (this.numIteracciones > 75) {
             var arrayEnemigosEnPantalla = [];
-            for(j=0; j < this.nubesNegras.length; j++){
-                if(this.nubesNegras[j].body.p.x < posX2 && this.nubesNegras[j].body.p.x > posX1){
+            for(j=0; j < this.enemigosConDisparo.length; j++){
+                if(this.enemigosConDisparo[j].body.p.x < posX2 && this.enemigosConDisparo[j].body.p.x > posX1){
                     arrayEnemigosEnPantalla.push(j);
                 }
             }
             if(arrayEnemigosEnPantalla[0] != undefined){
                 var r = Math.floor(Math.random() *(arrayEnemigosEnPantalla.length));
                 var enemigo = arrayEnemigosEnPantalla[r];
-                var d = new Disparo(this,cc.p(this.nubesNegras[enemigo].body.p.x,this.nubesNegras[enemigo].body.p.y),
+                var d = new Disparo(this,cc.p(this.enemigosConDisparo[enemigo].body.p.x,this.enemigosConDisparo[enemigo].body.p.y),
                     tipoDisparoEnemigo, this.imagenDisparoEnemigo);
                 this.disparosEnemigo.push(d);
                 this.numIteracciones = 0;
@@ -299,6 +300,12 @@ var GameLayer = cc.Layer.extend({
                     this.enemigos.splice(j, 1);
                 }
             }
+            for (var j = 0; j < this.enemigosConDisparo.length; j++) {
+                if (this.enemigosConDisparo[j].shape === shape) {
+                    this.enemigosConDisparo[j].eliminar();
+                    this.enemigosConDisparo.splice(j, 1);
+                }
+            }
         }
         this.enemigosEliminar = [];
 
@@ -359,11 +366,15 @@ var GameLayer = cc.Layer.extend({
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
             this.imagenDisparoJugador = res.boomerang_png
             this.imagenDisparoEnemigo = res.rayo_png;
+            //Meter en el array this.enemigosConDisparo los enemigos que tengan disparo
+            //Meter el resto de enemigos en this.enemigos
         }
         else if(nivel == 3){ //Cambiar para el nivel 3
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
             this.imagenDisparoJugador = res.boomerang_png
             this.imagenDisparoEnemigo = res.rayo_png;
+            //Meter en el array this.enemigosConDisparo los enemigos que tengan disparo
+            //Meter el resto de enemigos en this.enemigos
         }
         // Añadirlo a la Layer
         this.addChild(this.mapa);
@@ -397,14 +408,15 @@ var GameLayer = cc.Layer.extend({
             var nubesBlancasArray = grupoNubesBlancas.getObjects();
             for (var i = 0; i < nubesBlancasArray.length; i++) {
                 var nube = new NubeBlanca(this, cc.p(nubesBlancasArray[i]["x"], nubesBlancasArray[i]["y"]));
-                this.nubesBlancas.push(nube);
+                this.enemigos.push(nube);
             }
             // Cargar nubes negras
             var grupoNubesNegra = this.mapa.getObjectGroup("NubesNegras");
             var nubesNegrasArray = grupoNubesNegra.getObjects();
             for (var i = 0; i < nubesNegrasArray.length; i++) {
                 var nube = new NubeNegra(this, cc.p(nubesNegrasArray[i]["x"], nubesNegrasArray[i]["y"]));
-                this.nubesNegras.push(nube);
+                //this.nubesNegras.push(nube);
+                this.enemigosConDisparo.push(nube);
             }
             // Cargar huevos de oro
             var grupohuevos = this.mapa.getObjectGroup("Huevos");
@@ -456,12 +468,10 @@ var GameLayer = cc.Layer.extend({
     },
     collisionEnemigoConJugador: function (arbiter, space) {
         this.jugador.impactado();
-        // Eliminar al enemigo
+        console.log("IMPACTADO");
         var shapes = arbiter.getShapes();
         this.enemigosEliminar.push(shapes[0]);
         this.jugador.restarVida();
-        // El jugador vuelve a la posición inicial en caso de perder todas las vidas
-        // No se reinicia el nivel, solo lo coloco de nuevo en el principio y le asigno 3 vidas
         if (this.jugador.vidas === 0) {
             this.restaurarJugador();
         } else {
@@ -517,14 +527,12 @@ var GameLayer = cc.Layer.extend({
         }
     },
     collisionModoControlConJugador: function (arbiter, space) {
-        console.log("COLISION");
         if(this.modoControl == true){
             this.modoControl = false;
         }
         else{
             this.modoControl = true;
         }
-        console.log("modoControl: " + this.modoControl);
         var shapes = arbiter.getShapes();
         this.modosControlEliminar.push(shapes[0]);
     },
