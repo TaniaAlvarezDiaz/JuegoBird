@@ -22,6 +22,10 @@ var ControlesLayer = cc.Layer.extend({
         this.etiquetaTurbos.fillStyle = new cc.Color(0, 0, 0, 0);
         this.addChild(this.etiquetaTurbos);
 
+        // Picotazo sticker
+        this.picotazoSticker = cc.Sprite.create(res.picotazoSticker);
+        this.picotazoSticker.setPosition(cc.p(size.width * 0.92,  size.height - 80));
+
         // Botón turbo
         this.spriteBotonTurbo = cc.Sprite.create(res.boton_turbo_png);
         this.spriteBotonTurbo.setPosition(cc.p(size.width * 0.92, size.height * 0.35));
@@ -63,7 +67,13 @@ var ControlesLayer = cc.Layer.extend({
     actualizarInterfazTurbos: function () {
         var gameLayer = this.getParent().getChildByTag(idCapaJuego);
         this.etiquetaTurbos.setString("Turbos: " + gameLayer.jugador.turbos);
-    }
+    },
+    addStickerPicotazo: function () {
+        this.addChild(this.picotazoSticker);
+    },
+    removeStickerPicotazo: function () {
+        this.removeChild(this.picotazoSticker);
+    },
 
 
 });

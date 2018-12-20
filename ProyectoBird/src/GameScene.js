@@ -1,6 +1,5 @@
 var tipoLimite = 1;
 var tipoJugador = 2;
-var tipoEnemigoConDisparo = 3;
 var tipoEnemigo = 4;
 var tipoEnemigoDerecha = 5;
 var tipoEnemigoIzquierda = 6;
@@ -95,21 +94,17 @@ var GameLayer = cc.Layer.extend({
         this.space.addCollisionHandler(tipoJugador, tipoVida,
             null, this.collisionJugadorConVida.bind(this), null, null);
 
-        //Enemigo y jugador
-        this.space.addCollisionHandler(tipoEnemigoConDisparo, tipoJugador,
-            null, null, this.collisionEnemigoConJugador.bind(this), null);
+        //Enemigo y jugador (y con pictazo)
         this.space.addCollisionHandler(tipoEnemigo, tipoJugador,
             null, null, this.collisionEnemigoConJugador.bind(this), null);
-
-        /*// Jugador con picotazo y Enemigo
-        this.space.addCollisionHandler(tipoEnemigoConDisparo, tipoJugador,
-            null, null, this.collisionPicotazoJugadorConEnemigo.bind(this), null);
-        this.space.addCollisionHandler(tipoEnemigo, tipoJugador,
-            null, null, this.collisionPicotazoJugadorConEnemigo.bind(this), null);*/
 
         //DisparoEnemigo y jugador
         this.space.addCollisionHandler(tipoDisparoEnemigo, tipoJugador,
             null, null, this.collisionDisparoEnemigoConJugador.bind(this), null);
+
+        //DisparoJugador y enemigo
+        this.space.addCollisionHandler(tipoDisparoJugador, tipoEnemigo,
+            null, null, this.collisionDisparoJugadorConEnemigo.bind(this), null);
 
         //DisparoEnemigo y disparoJugador
         this.space.addCollisionHandler(tipoDisparoEnemigo, tipoDisparoJugador,
@@ -211,7 +206,7 @@ var GameLayer = cc.Layer.extend({
                 }
             }
         }
-        this.enemigosEliminar = [];
+        this.disparosEnemigosEliminar = [];
         for(i=0; i < this.disparosEnemigo.length; i++){
             this.disparosEnemigo[i].actualizar(-100);
             if(this.disparosEnemigo[i].body.p.x > posX2 || this.disparosEnemigo[i].body.p.x < posX1){ //Si esta fuera de la pantalla
@@ -354,7 +349,6 @@ var GameLayer = cc.Layer.extend({
                 this.getParent().addChild(new GameNextLayer());
             }
         }
-
     },
     cargarMapa: function () {
         if(nivel == 1){
@@ -415,7 +409,6 @@ var GameLayer = cc.Layer.extend({
             var nubesNegrasArray = grupoNubesNegra.getObjects();
             for (var i = 0; i < nubesNegrasArray.length; i++) {
                 var nube = new NubeNegra(this, cc.p(nubesNegrasArray[i]["x"], nubesNegrasArray[i]["y"]));
-                //this.nubesNegras.push(nube);
                 this.enemigosConDisparo.push(nube);
             }
             // Cargar huevos de oro
@@ -467,28 +460,38 @@ var GameLayer = cc.Layer.extend({
 
     },
     collisionEnemigoConJugador: function (arbiter, space) {
-        this.jugador.impactado();
-        console.log("IMPACTADO");
-        var shapes = arbiter.getShapes();
-        this.enemigosEliminar.push(shapes[0]);
-        this.jugador.restarVida();
-        if (this.jugador.vidas === 0) {
-            this.restaurarJugador();
-        } else {
-            this.notificarCambioVidas();
+        if(this.jugador.picotazo != estadoPicotazo){
+            this.jugador.impactado();
+            console.log("IMPACTADO");
+            var shapes = arbiter.getShapes();
+            this.enemigosEliminar.push(shapes[0]);
+            if (this.jugador.vidas === 0) {
+                this.restaurarJugador();
+            }
+            else{
+                this.notificarCambioVidas();
+            }
         }
-
+        else if(this.jugador.picotazo == estadoPicotazo){
+            // Eliminar al enemigo
+            var shapes = arbiter.getShapes();
+            this.enemigosEliminar.push(shapes[0]);
+        }
     },
     collisionDisparoEnemigoConJugador: function (arbiter, space) {
         this.jugador.impactado();
         var shapes = arbiter.getShapes();
         this.disparosEnemigosEliminar.push(shapes[0]);
-        this.jugador.restarVida();
         if (this.jugador.vidas == 0) {
             this.restaurarJugador();
         } else {
             this.notificarCambioVidas();
         }
+    },
+    collisionDisparoJugadorConEnemigo: function (arbiter, space) {
+    var shapes = arbiter.getShapes();
+    this.disparosEnemigosEliminar.push(shapes[0]);
+    this.enemigosEliminar.push(shapes[1]);
     },
     collisionDisparoEnemigoConDisparoJugador: function (arbiter, space) {
         var shapes = arbiter.getShapes();
@@ -518,13 +521,6 @@ var GameLayer = cc.Layer.extend({
         this.vidasEliminar.push(shapes[1]);
         this.jugador.sumarVida();
         this.notificarCambioVidas();
-    },
-    collisionPicotazoJugadorConEnemigo: function (arbiter, space) {
-        if(this.jugador.picotazo == estadoPicotazo){
-            // Eliminar al enemigo
-            var shapes = arbiter.getShapes();
-            this.enemigosEliminar.push(shapes[0]);
-        }
     },
     collisionModoControlConJugador: function (arbiter, space) {
         if(this.modoControl == true){
@@ -586,7 +582,7 @@ var GameLayer = cc.Layer.extend({
     procesarKeyReleased(keyCode){
         var posicion = teclas.indexOf(keyCode);
         teclas.splice(posicion, 1);
-        switch (keyCode ){
+        switch (keyCode){
             case 32:
                 //saltar - barra espaciadora
                 if (controles.saltar == 1){
@@ -611,7 +607,7 @@ var GameLayer = cc.Layer.extend({
                 // picotazo - tecla S
                 if (controles.picotazo == 1){
                     controles.picotazo = 0;
-                    this.numVecesPicotazo = 0; //contador para que solo dispare una vez al darle a la tecla
+                    this.numVecesPicotazo = 0; //contador para que solo de picotazo una vez al darle a la tecla
                 }
                 break;
         }

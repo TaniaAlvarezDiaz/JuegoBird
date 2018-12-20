@@ -12,8 +12,6 @@ var res = {
     jugador_caminar_plist: "res/jugador_caminar.plist",
     jugador_saltar_png: "res/jugador_saltar.png",
     jugador_saltar_plist: "res/jugador_saltar.plist",
-    jugador_impactado_png: "res/jugador_impactado.png",
-    jugador_impactado_plist: "res/jugador_impactado.plist",
     boton_saltar_png: "res/boton_saltar.png",
     animacion_cuervo_png: "res/animacion_cuervo.png",
     animacion_cuervo_plist: "res/animacion_cuervo.plist",
@@ -25,6 +23,8 @@ var res = {
     //Nivel cielo//
     jugador_png: "res/NivelCielo/pajaro.png",
     jugador_plist: "res/NivelCielo/pajaro.plist",
+    jugador_impactado_png: "res/pajaro_impactado.png",
+    jugador_impactado_plist: "res/pajaro_impactado.plist",
     tilesNido_png: "res/NivelCielo/nido_tiles.png",
     tilesCielo_png: "res/NivelCielo/cielo_tiles.png",
     huevoNido_png: "res/NivelCielo/huevoNido.png",
@@ -40,6 +40,7 @@ var res = {
     boton_siguiente: "res/boton_siguiente.png",
 
     modoControl: "res/CambiarModoControl.jpg",
+    picotazoSticker: "res/Sticker_Picotazo.png",
 
 };
 

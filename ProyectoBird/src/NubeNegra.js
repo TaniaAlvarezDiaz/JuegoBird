@@ -10,7 +10,7 @@ var NubeNegra = cc.Class.extend({
         this.sprite.setBody(this.body);
         var radio = this.sprite.getContentSize().width / 2;
         this.shape = new cp.CircleShape(this.body, radio , cp.vzero);
-        this.shape.setCollisionType(tipoEnemigoConDisparo);
+        this.shape.setCollisionType(tipoEnemigo);
         gameLayer.space.addStaticShape(this.shape);
         gameLayer.addChild(this.sprite,10);
 
