@@ -218,7 +218,7 @@ var GameLayer = cc.Layer.extend({
         //Crear disparos jugador
         if(this.jugador.disparo == estadoDisparando){
             if(this.numVecesDisparo < 1){
-                var d = new Disparo(this,cc.p(this.jugador.body.p.x,this.jugador.body.p.y),
+                var d = new Disparo(this,cc.p(this.jugador.body.p.x+15,this.jugador.body.p.y),
                     tipoDisparoJugador, this.imagenDisparoJugador);
                 this.disparosJugador.push(d);
                 this.numVecesDisparo++;

@@ -14,6 +14,7 @@ var Jugador = cc.Class.extend({
         this.disparo = estadoSinDisparar;
         this.picotazo = estadoSinPicotazo;
         this.tiempoInvulnerable = 0;
+        this.cadenciaDisparo = 0;
 
         // Crear Sprite - Cuerpo y forma
         this.sprite = new cc.PhysicsSprite("#bird_01.png");
@@ -106,7 +107,10 @@ var Jugador = cc.Class.extend({
     },
     disparar: function(disparo){
         if(disparo == 1){
-            this.disparo = estadoDisparando;
+            if (this.cadenciaDisparo <= 0) {
+                this.cadenciaDisparo = 50;
+                this.disparo = estadoDisparando;
+            }
         }
         else{
             this.disparo = estadoSinDisparar;
@@ -134,6 +138,9 @@ var Jugador = cc.Class.extend({
     actualizar: function () {
         if (this.tiempoInvulnerable > 0 ){
             this.tiempoInvulnerable--;
+        }
+        if (this.cadenciaDisparo > 0 ){
+            this.cadenciaDisparo--;
         }
         switch (this.estado) {
             case estadoImpactado:
