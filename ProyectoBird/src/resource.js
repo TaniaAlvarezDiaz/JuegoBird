@@ -36,6 +36,7 @@ var res = {
     huevoOro_png: "res/NivelCielo/huevoOro.png",
     huevoOro_plist: "res/NivelCielo/huevoOro.plist",
     rayo_png: "res/NivelCielo/rayo.png",
+    pelota: "res/NivelCielo/pelota.png",
     boomerang_png: "res/NivelCielo/Boomerang.png",
     boton_siguiente: "res/boton_siguiente.png",
 

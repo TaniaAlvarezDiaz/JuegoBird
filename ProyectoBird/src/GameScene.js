@@ -56,7 +56,9 @@ var GameLayer = cc.Layer.extend({
         this.numVecesPicotazo = 0;
         this.imagenDisparoJugador = null;
         this.imagenDisparoEnemigo = null;
-        this.numIteracciones = 0;
+        this.imagenEnemigoParabola = null;
+        this.numIteraccionesDisparos = 0;
+        this.numIteraccionesParabolas = 0;
 
         this.jugador = new Jugador(this, cc.p(50, 150));
 
@@ -172,8 +174,8 @@ var GameLayer = cc.Layer.extend({
         var posX2 = posX1 + this.getContentSize().width;
 
         // Generar disparos enemigo
-        this.numIteracciones ++;
-        if (this.numIteracciones > 75) {
+        this.numIteraccionesDisparos ++;
+        if (this.numIteraccionesDisparos > 75) {
             var arrayEnemigosEnPantalla = [];
             for(j=0; j < this.enemigosConDisparo.length; j++){
                 if(this.enemigosConDisparo[j].body.p.x < posX2 && this.enemigosConDisparo[j].body.p.x > posX1){
@@ -186,8 +188,25 @@ var GameLayer = cc.Layer.extend({
                 var d = new Disparo(this,cc.p(this.enemigosConDisparo[enemigo].body.p.x,this.enemigosConDisparo[enemigo].body.p.y),
                     tipoDisparoEnemigo, this.imagenDisparoEnemigo);
                 this.disparosEnemigo.push(d);
-                this.numIteracciones = 0;
+                this.numIteraccionesDisparos = 0;
             }
+        }
+
+        //Generar enemigos con parabolas (escoge aleatoriamente velocidades para X e Y -> diferentes parabolas)
+        this.numIteraccionesParabolas ++;
+        if (this.numIteraccionesParabolas > 175) {
+            //numero random del eje X, entre el limite de la pantalla y el jugador
+            var r = Math.floor(Math.random() *(posX2 - (this.jugador.body.p.x + 150)) + (this.jugador.body.p.x + 150));
+            var arrayVelocidad = [];
+            var velocidadX_menos = Math.floor(Math.random() *(1500 - 600) + 600);
+            var velocidadX_mas = Math.floor(Math.random() *(1500 - 600) + 600);
+            arrayVelocidad.push(-velocidadX_menos);
+            arrayVelocidad.push(velocidadX_mas);
+            var velocidadX = Math.round(Math.random());
+            var velocidadY = Math.floor(Math.random() *(3000 - 2000) + 2000);
+            var enemigoParabola = new EnemigoParabola(this,this.imagenEnemigoParabola,cc.p(r,-20),arrayVelocidad[velocidadX],velocidadY);
+            this.enemigos.push(enemigoParabola);
+            this.numIteraccionesParabolas = 0;
         }
 
         //Actualizar disparos enemigo
@@ -355,11 +374,13 @@ var GameLayer = cc.Layer.extend({
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
             this.imagenDisparoJugador = res.boomerang_png;
             this.imagenDisparoEnemigo = res.rayo_png;
+            this.imagenEnemigoParabola = res.pelota;
         }
         else if(nivel == 2){ //Cambiar para el nivel 2
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
             this.imagenDisparoJugador = res.boomerang_png
             this.imagenDisparoEnemigo = res.rayo_png;
+            this.imagenEnemigoParabola = res.pelota;
             //Meter en el array this.enemigosConDisparo los enemigos que tengan disparo
             //Meter el resto de enemigos en this.enemigos
         }
@@ -367,6 +388,7 @@ var GameLayer = cc.Layer.extend({
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
             this.imagenDisparoJugador = res.boomerang_png
             this.imagenDisparoEnemigo = res.rayo_png;
+            this.imagenEnemigoParabola = res.pelota;
             //Meter en el array this.enemigosConDisparo los enemigos que tengan disparo
             //Meter el resto de enemigos en this.enemigos
         }
