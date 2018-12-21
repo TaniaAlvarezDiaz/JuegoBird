@@ -2,9 +2,9 @@ var EnemigoVolador = cc.Class.extend({
     gameLayer:null,
     sprite:null,
     shape:null,
-    ctor:function (gameLayer, posicion, nombre) {
+    ctor:function (gameLayer, posicion, nomImagenSprite, numTotalAnim) {
         this.gameLayer = gameLayer;
-        this.sprite = new cc.PhysicsSprite("#" + nombre + "1.png");
+        this.sprite = new cc.PhysicsSprite("#" + nomImagenSprite + "1.png");
         this.body = new cp.Body(5,Infinity);
         this.body.setPos(posicion);
         this.body.setAngle(0);
@@ -20,8 +20,8 @@ var EnemigoVolador = cc.Class.extend({
 
         // Crear animación
         var framesAnimacion = [];
-        for (var i = 1; i <= 8; i++) {
-            var str = nombre + i + ".png";
+        for (var i = 1; i <= numTotalAnim; i++) {
+            var str = nomImagenSprite + i + ".png";
             var frame = cc.spriteFrameCache.getSpriteFrame(str);
             framesAnimacion.push(frame);
         }

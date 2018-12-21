@@ -1,10 +1,10 @@
-var NubeNegra = cc.Class.extend({
+var EnemigoDisparador = cc.Class.extend({
     gameLayer:null,
     sprite:null,
     shape:null,
-    ctor:function (gameLayer, posicion) {
+    ctor:function (gameLayer, posicion, imagenSprite, iniImagenAnim, numTotalAnim) {
         this.gameLayer = gameLayer;
-        this.sprite = new cc.PhysicsSprite("#Animación-Nube-Ataque_01.png");
+        this.sprite = new cc.PhysicsSprite(imagenSprite);
         this.body = new cp.StaticBody();
         this.body.setPos(posicion);
         this.sprite.setBody(this.body);
@@ -16,8 +16,8 @@ var NubeNegra = cc.Class.extend({
 
         // Crear animación
         var framesAnimacion = [];
-        for (var i = 1; i <= 8; i++) {
-            var str = "Animación-Nube-Ataque_0" + i + ".png";
+        for (var i = 1; i <= numTotalAnim; i++) {
+            var str = iniImagenAnim + i + ".png";
             var frame = cc.spriteFrameCache.getSpriteFrame(str);
             framesAnimacion.push(frame);
         }

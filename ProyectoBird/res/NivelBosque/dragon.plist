@@ -4,7 +4,7 @@
 	<dict>
 		<key>frames</key>
 		<dict>
-			<key>dragon_05.png</key>
+			<key>dragon_01.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{0,70},{102,65}}</string>
@@ -18,7 +18,7 @@
 				<string>{102,65}</string>
 			</dict>
 
-			<key>dragon_06.png</key>
+			<key>dragon_02.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{0,0},{103,69}}</string>
@@ -32,7 +32,7 @@
 				<string>{103,69}</string>
 			</dict>
 
-			<key>dragon_07.png</key>
+			<key>dragon_03.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{0,70},{102,65}}</string>
@@ -46,7 +46,7 @@
 				<string>{102,65}</string>
 			</dict>
 
-			<key>dragon_08.png</key>
+			<key>dragon_04.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{0,136},{101,76}}</string>
@@ -69,7 +69,7 @@
 			<key>size</key>
 			<string>{128,256}</string>
 			<key>textureFileName</key>
-			<string>dragon_izq.png</string>
+			<string>dragon.png</string>
 			</dict>
 		</dict>
 </plist>

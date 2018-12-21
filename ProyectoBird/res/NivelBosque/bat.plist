@@ -4,7 +4,7 @@
 	<dict>
 		<key>frames</key>
 		<dict>
-			<key>bat_13.png</key>
+			<key>bat_01.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{0,0},{19,15}}</string>
@@ -18,7 +18,7 @@
 				<string>{19,15}</string>
 			</dict>
 
-			<key>bat_14.png</key>
+			<key>bat_02.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{20,0},{17,21}}</string>
@@ -32,7 +32,7 @@
 				<string>{17,21}</string>
 			</dict>
 
-			<key>bat_15.png</key>
+			<key>bat_03.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{0,16},{17,15}}</string>
@@ -46,7 +46,7 @@
 				<string>{17,15}</string>
 			</dict>
 
-			<key>bat_16.png</key>
+			<key>bat_04.png</key>
 			<dict>
 				<key>frame</key>
 				<string>{{38,0},{15,21}}</string>
@@ -69,7 +69,7 @@
 			<key>size</key>
 			<string>{64,32}</string>
 			<key>textureFileName</key>
-			<string>bat_izq.png</string>
+			<string>bat.png</string>
 			</dict>
 		</dict>
 </plist>
