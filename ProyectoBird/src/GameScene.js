@@ -333,7 +333,7 @@ var GameLayer = cc.Layer.extend({
     cargarMapa: function () {
         if(nivel == 1){
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
-            this.imagenDisparoJugador = res.arrow_png;//res.boomerang_png;
+            this.imagenDisparoJugador = res.boomerang_png;
             this.imagenDisparoEnemigo = res.rayo_png;
         }
         else if(nivel == 2){ //Cambiar para el nivel 2
@@ -344,7 +344,7 @@ var GameLayer = cc.Layer.extend({
         else if(nivel == 3){ //Cambiar para el nivel 3
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
             this.imagenDisparoJugador = res.boomerang_png
-            this.imagenDisparoEnemigo = res.rayo_png;
+            this.imagenDisparoEnemigo = res.fire_png;
         }
         // Añadirlo a la Layer
         this.addChild(this.mapa);
@@ -387,20 +387,21 @@ var GameLayer = cc.Layer.extend({
                 var nube = new NubeNegra(this, cc.p(nubesNegrasArray[i]["x"], nubesNegrasArray[i]["y"]));
                 this.nubesNegras.push(nube);
             }
-            // Cargar huevos de oro
-            var grupohuevos = this.mapa.getObjectGroup("Huevos");
-            var huevosArray = grupohuevos.getObjects();
-            for (var i = 0; i < huevosArray.length; i++) {
-                var huevo = new HuevoOro(this, cc.p(huevosArray[i]["x"], huevosArray[i]["y"]));
-                this.huevosOro.push(huevo);
-            }
-
         }
         else if(nivel == 2){
-            //Implementar para el nivel 2
+            //Cargar dragones
+
+            //Cargar murcielagos
         }
         else if(nivel == 3){
             //Implementar para el nivel 3
+        }
+        // Cargar huevos de oro (comun a todos los niveles)
+        var grupohuevos = this.mapa.getObjectGroup("Huevos");
+        var huevosArray = grupohuevos.getObjects();
+        for (var i = 0; i < huevosArray.length; i++) {
+            var huevo = new HuevoOro(this, cc.p(huevosArray[i]["x"], huevosArray[i]["y"]));
+            this.huevosOro.push(huevo);
         }
 
     },

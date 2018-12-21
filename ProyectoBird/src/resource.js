@@ -40,7 +40,10 @@ var res = {
     //Nivel bosque//
     dragon_png : "res/NivelBosque/dragon.png",
     dragon_plist : "res/NivelBosque/dragon.plist",
+    bat_png : "res/NivelBosque/bat.png",
+    bat_plist : "res/NivelBosque/bat.plist",
     arrow_png : "res/NivelBosque/arrow.png",
+    fire_png : "res/NivelBosque/fire.png",
 
 };
 
