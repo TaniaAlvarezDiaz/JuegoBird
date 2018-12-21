@@ -37,6 +37,11 @@ var res = {
     boomerang_png: "res/NivelCielo/Boomerang.png",
     boton_siguiente: "res/boton_siguiente.png",
 
+    //Nivel bosque//
+    dragon_png : "res/NivelBosque/dragon.png",
+    dragon_plist : "res/NivelBosque/dragon.plist",
+    arrow_png : "res/NivelBosque/arrow.png",
+
 };
 
 var g_resources = [];

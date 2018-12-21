@@ -23,13 +23,16 @@ var GameLayer = cc.Layer.extend({
 
         // Zona de cache
         cc.spriteFrameCache.addSpriteFrames(res.jugador_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.vida_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.jugador_saltar_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.jugador_impactado_plist);
+        // nivel cielo
         cc.spriteFrameCache.addSpriteFrames(res.nubeBlanca_plist);
         cc.spriteFrameCache.addSpriteFrames(res.nubeNegra_plist);
         cc.spriteFrameCache.addSpriteFrames(res.huevoOro_plist);
-        cc.spriteFrameCache.addSpriteFrames(res.jugador_saltar_plist);
-        cc.spriteFrameCache.addSpriteFrames(res.jugador_impactado_plist);
         cc.spriteFrameCache.addSpriteFrames(res.animacion_cuervo_plist);
-        cc.spriteFrameCache.addSpriteFrames(res.vida_plist);
+        // nivel bosque
+
 
         // Inicializar Space
         this.space = new cp.Space();
@@ -330,12 +333,12 @@ var GameLayer = cc.Layer.extend({
     cargarMapa: function () {
         if(nivel == 1){
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
-            this.imagenDisparoJugador = res.boomerang_png;
+            this.imagenDisparoJugador = res.arrow_png;//res.boomerang_png;
             this.imagenDisparoEnemigo = res.rayo_png;
         }
         else if(nivel == 2){ //Cambiar para el nivel 2
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
-            this.imagenDisparoJugador = res.boomerang_png
+            this.imagenDisparoJugador = res.arrow_png;
             this.imagenDisparoEnemigo = res.rayo_png;
         }
         else if(nivel == 3){ //Cambiar para el nivel 3
