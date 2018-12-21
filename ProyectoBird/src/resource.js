@@ -35,6 +35,8 @@ var res = {
     nubeBlanca_plist: "res/NivelCielo/nubeBlanca.plist",
     huevoOro_png: "res/NivelCielo/huevoOro.png",
     huevoOro_plist: "res/NivelCielo/huevoOro.plist",
+    buitre_png: "res/NivelCielo/buitre.png",
+    buitre_plist: "res/NivelCielo/buitre.plist",
     rayo_png: "res/NivelCielo/rayo.png",
     pelota: "res/NivelCielo/pelota.png",
     boomerang_png: "res/NivelCielo/Boomerang.png",

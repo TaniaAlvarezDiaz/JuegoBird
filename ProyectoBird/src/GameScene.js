@@ -25,6 +25,7 @@ var GameLayer = cc.Layer.extend({
         cc.spriteFrameCache.addSpriteFrames(res.nubeBlanca_plist);
         cc.spriteFrameCache.addSpriteFrames(res.nubeNegra_plist);
         cc.spriteFrameCache.addSpriteFrames(res.huevoOro_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.buitre_plist);
         cc.spriteFrameCache.addSpriteFrames(res.jugador_saltar_plist);
         cc.spriteFrameCache.addSpriteFrames(res.jugador_impactado_plist);
         cc.spriteFrameCache.addSpriteFrames(res.animacion_cuervo_plist);
@@ -42,6 +43,7 @@ var GameLayer = cc.Layer.extend({
         this.modosControl = [];
         this.enemigos = [];
         this.enemigosConDisparo = [];
+        this.enemigosVoladores = [];
         this.huevosOro = [];
         this.disparosJugador = [];
         this.disparosEnemigo = [];
@@ -57,8 +59,10 @@ var GameLayer = cc.Layer.extend({
         this.imagenDisparoJugador = null;
         this.imagenDisparoEnemigo = null;
         this.imagenEnemigoParabola = null;
+        this.imagenEnemigoVolador = null;
         this.numIteraccionesDisparos = 0;
         this.numIteraccionesParabolas = 0;
+        this.numIteraccionesEnemigosVoladores = 0;
 
         this.jugador = new Jugador(this, cc.p(50, 150));
 
@@ -173,6 +177,9 @@ var GameLayer = cc.Layer.extend({
         var posX1 = this.jugador.body.p.x - this.getContentSize().width/4;
         var posX2 = posX1 + this.getContentSize().width;
 
+        var posY1 = this.jugador.body.p.y - this.getContentSize().height/4;
+        var posY2 = posY1 + this.getContentSize().height;
+
         // Generar disparos enemigo
         this.numIteraccionesDisparos ++;
         if (this.numIteraccionesDisparos > 75) {
@@ -185,7 +192,7 @@ var GameLayer = cc.Layer.extend({
             if(arrayEnemigosEnPantalla[0] != undefined){
                 var r = Math.floor(Math.random() *(arrayEnemigosEnPantalla.length));
                 var enemigo = arrayEnemigosEnPantalla[r];
-                var d = new Disparo(this,cc.p(this.enemigosConDisparo[enemigo].body.p.x,this.enemigosConDisparo[enemigo].body.p.y),
+                var d = new Disparo(this,cc.p(this.enemigosConDisparo[enemigo].body.p.x-35,this.enemigosConDisparo[enemigo].body.p.y),
                     tipoDisparoEnemigo, this.imagenDisparoEnemigo);
                 this.disparosEnemigo.push(d);
                 this.numIteraccionesDisparos = 0;
@@ -207,6 +214,27 @@ var GameLayer = cc.Layer.extend({
             var enemigoParabola = new EnemigoParabola(this,this.imagenEnemigoParabola,cc.p(r,-20),arrayVelocidad[velocidadX],velocidadY);
             this.enemigos.push(enemigoParabola);
             this.numIteraccionesParabolas = 0;
+        }
+
+        //Crear y actualizar enemigos que vuelan
+        this.numIteraccionesEnemigosVoladores ++;
+        if (this.numIteraccionesEnemigosVoladores > 200) {
+            var volador = new EnemigoVolador(this,cc.p(this.jugador.body.p.x +this.getContentSize().width,this.jugador.body.p.y),
+                this.imagenEnemigoVolador);
+            this.enemigosVoladores.push(volador);
+            this.numIteraccionesEnemigosVoladores = 0;
+        }
+        for(i=0; i < this.enemigosVoladores.length; i++) {
+            if (this.numIteraccionesEnemigosVoladores > 50) {
+                this.enemigosVoladores[i].actualizar(0,50);
+            }
+            else{
+                this.enemigosVoladores[i].actualizar(-40, 10);
+            }
+            if(this.enemigosVoladores[i].body.p.x < posX1){ //Si esta fuera de la pantalla
+                this.enemigosVoladores[i].eliminar();
+                this.enemigosVoladores.splice(i, 1);
+            }
         }
 
         //Actualizar disparos enemigo
@@ -318,6 +346,12 @@ var GameLayer = cc.Layer.extend({
                     this.enemigosConDisparo.splice(j, 1);
                 }
             }
+            for (var j = 0; j < this.enemigosVoladores.length; j++) {
+                if (this.enemigosVoladores[j].shape === shape) {
+                    this.enemigosVoladores[j].eliminar();
+                    this.enemigosVoladores.splice(j, 1);
+                }
+            }
         }
         this.enemigosEliminar = [];
 
@@ -375,12 +409,14 @@ var GameLayer = cc.Layer.extend({
             this.imagenDisparoJugador = res.boomerang_png;
             this.imagenDisparoEnemigo = res.rayo_png;
             this.imagenEnemigoParabola = res.pelota;
+            this.imagenEnemigoVolador = "animacion_buitre_0";
         }
         else if(nivel == 2){ //Cambiar para el nivel 2
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
             this.imagenDisparoJugador = res.boomerang_png
             this.imagenDisparoEnemigo = res.rayo_png;
             this.imagenEnemigoParabola = res.pelota;
+            this.imagenEnemigoVolador = "animacion_buitre_0";
             //Meter en el array this.enemigosConDisparo los enemigos que tengan disparo
             //Meter el resto de enemigos en this.enemigos
         }
@@ -389,6 +425,7 @@ var GameLayer = cc.Layer.extend({
             this.imagenDisparoJugador = res.boomerang_png
             this.imagenDisparoEnemigo = res.rayo_png;
             this.imagenEnemigoParabola = res.pelota;
+            this.imagenEnemigoVolador = "animacion_buitre_0";
             //Meter en el array this.enemigosConDisparo los enemigos que tengan disparo
             //Meter el resto de enemigos en this.enemigos
         }

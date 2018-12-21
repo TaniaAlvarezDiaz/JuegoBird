@@ -27,7 +27,8 @@
         "src/GameNextLayer.js",
         "src/ModoControl.js",
         "src/EndGameLayer.js",
-        "src/EnemigoParabola.js"
+        "src/EnemigoParabola.js",
+        "src/EnemigoVolador.js"
 
     ]
 }
