@@ -16,6 +16,10 @@ var ControlesLayer = cc.Layer.extend({
         this.etiquetaVidas.fillStyle = new cc.Color(0, 0, 0, 0);
         this.addChild(this.etiquetaVidas);
 
+        // Picotazo sticker
+        this.picotazoSticker = cc.Sprite.create(res.picotazoSticker);
+        this.picotazoSticker.setPosition(cc.p(size.width * 0.92,  size.height - 80));
+
         this.scheduleUpdate();
         return true;
     },
@@ -29,6 +33,12 @@ var ControlesLayer = cc.Layer.extend({
     actualizarInterfazVidas: function () {
         var gameLayer = this.getParent().getChildByTag(idCapaJuego);
         this.etiquetaVidas.setString("Vidas: " + gameLayer.jugador.vidas);
+    },
+    addStickerPicotazo: function () {
+        this.addChild(this.picotazoSticker);
+    },
+    removeStickerPicotazo: function () {
+        this.removeChild(this.picotazoSticker);
     },
 
 });

@@ -13,6 +13,8 @@ var Jugador = cc.Class.extend({
         this.estado = estadoSaltando;
         this.disparo = estadoSinDisparar;
         this.picotazo = estadoSinPicotazo;
+        this.tiempoInvulnerable = 0;
+        this.cadenciaDisparo = 0;
 
         // Crear Sprite - Cuerpo y forma
         this.sprite = new cc.PhysicsSprite("#bird_01.png");
@@ -66,15 +68,15 @@ var Jugador = cc.Class.extend({
         this.aSaltar.retain();
 
         //Animación impactado
-        /*var framesAnimacionImpactado = [];
-        for (var i = 1; i <= 3; i++) {
+        var framesAnimacionImpactado = [];
+        for (var i = 1; i <= 6; i++) {
             var str = "bird_0" + i + ".png";
             var frame = cc.spriteFrameCache.getSpriteFrame(str);
             framesAnimacionImpactado.push(frame);
         }
-        var animacionImpactado = new cc.Animation(framesAnimacionImpactado, 0.4);
-        this.aImpactado = new cc.Repeat(new cc.Animate(animacionImpactado), 1);
-        this.aImpactado.retain();*/
+        var animacionImpactado = new cc.Animation(framesAnimacionImpactado, 0.2);
+        this.aImpactado = new cc.Repeat(new cc.Animate(animacionImpactado),1);
+        this.aImpactado.retain();
 
         // Animaión actual
         this.animacion = this.aSaltar;
@@ -105,7 +107,10 @@ var Jugador = cc.Class.extend({
     },
     disparar: function(disparo){
         if(disparo == 1){
-            this.disparo = estadoDisparando;
+            if (this.cadenciaDisparo <= 0) {
+                this.cadenciaDisparo = 50;
+                this.disparo = estadoDisparando;
+            }
         }
         else{
             this.disparo = estadoSinDisparar;
@@ -117,19 +122,33 @@ var Jugador = cc.Class.extend({
                 console.log("DANDO PICOTAZO");
                 this.picotazo = estadoPicotazo;
                 this.gameLayer.numVecesPicotazo++;
+                //Colocar sticker picotazo
+                var capaControles =
+                    this.gameLayer.getParent().getChildByTag(idCapaControles);
+                capaControles.addStickerPicotazo();
             }
         }
         else{
             this.picotazo = estadoSinPicotazo;
+            var capaControles =
+                this.gameLayer.getParent().getChildByTag(idCapaControles);
+            capaControles.removeStickerPicotazo();
         }
     },
     actualizar: function () {
+        if (this.tiempoInvulnerable > 0 ){
+            this.tiempoInvulnerable--;
+        }
+        if (this.cadenciaDisparo > 0 ){
+            this.cadenciaDisparo--;
+        }
         switch (this.estado) {
             case estadoImpactado:
                 this.finAnimacionImpactado();
                 /*if (this.animacion != this.aImpactado) {
+                    console.log(this.estado);
                     this.animacion = this.aImpactado;
-                    this.sprite.stopAllActions();
+                    //this.sprite.stopAllActions();
                     this.sprite.runAction(
                         new cc.Sequence(
                             this.animacion,
@@ -157,9 +176,16 @@ var Jugador = cc.Class.extend({
         }*/
     },
     impactado: function () {
-        if (this.estado !== estadoImpactado) {
+        if (this.tiempoInvulnerable <= 0) {
+            this.tiempoInvulnerable = 100;
             this.estado = estadoImpactado;
+            if (this.vidas > 0) {
+                this.restarVida();
+            }
         }
+        /*if (this.estado !== estadoImpactado) {
+            this.estado = estadoImpactado;
+        }*/
     },
     finAnimacionImpactado: function () {
         if (this.estado === estadoImpactado) {

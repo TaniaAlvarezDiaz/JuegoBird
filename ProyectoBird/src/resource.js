@@ -10,8 +10,6 @@ var res = {
     jugador_caminar_plist: "res/jugador_caminar.plist",
     jugador_saltar_png: "res/jugador_saltar.png",
     jugador_saltar_plist: "res/jugador_saltar.plist",
-    jugador_impactado_png: "res/jugador_impactado.png",
-    jugador_impactado_plist: "res/jugador_impactado.plist",
     boton_saltar_png: "res/boton_saltar.png",
     animacion_cuervo_png: "res/animacion_cuervo.png",
     animacion_cuervo_plist: "res/animacion_cuervo.plist",
@@ -20,9 +18,14 @@ var res = {
     boton_turbo_png: "res/boton_turbo.png",
     pincho: "res/pincho.png",
 
+    modoControl: "res/CambiarModoControl.jpg",
+    picotazoSticker: "res/Sticker_Picotazo.png",
+
     //Nivel cielo//
     jugador_png: "res/NivelCielo/pajaro.png",
     jugador_plist: "res/NivelCielo/pajaro.plist",
+    jugador_impactado_png: "res/pajaro_impactado.png",
+    jugador_impactado_plist: "res/pajaro_impactado.plist",
     tilesNido_png: "res/NivelCielo/nido_tiles.png",
     tilesCielo_png: "res/NivelCielo/cielo_tiles.png",
     huevoNido_png: "res/NivelCielo/huevoNido.png",
@@ -33,7 +36,10 @@ var res = {
     nubeBlanca_plist: "res/NivelCielo/nubeBlanca.plist",
     huevoOro_png: "res/NivelCielo/huevoOro.png",
     huevoOro_plist: "res/NivelCielo/huevoOro.plist",
+    buitre_png: "res/NivelCielo/buitre.png",
+    buitre_plist: "res/NivelCielo/buitre.plist",
     rayo_png: "res/NivelCielo/rayo.png",
+    pelota: "res/NivelCielo/pelota.png",
     boomerang_png: "res/NivelCielo/Boomerang.png",
     boton_siguiente: "res/boton_siguiente.png",
 
