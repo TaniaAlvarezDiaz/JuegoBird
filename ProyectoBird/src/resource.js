@@ -50,6 +50,8 @@ var res = {
     bat_plist : "res/NivelBosque/bat.plist",
     arrow_png : "res/NivelBosque/arrow.png",
     fire_png : "res/NivelBosque/fire.png",
+    tronco_png : "res/NivelBosque/tronco.png",
+    kite_png : "res/NivelBosque/kite.png",
 
 };
 

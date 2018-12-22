@@ -394,15 +394,15 @@ var GameLayer = cc.Layer.extend({
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
             this.imagenDisparoJugador = res.boomerang_png;
             this.imagenDisparoEnemigo = res.rayo_png;
-            this.imagenEnemigoParabola = res.pelota;
-            this.imagenEnemigoVolador = "animacion_buitre_0";
-            this.framesEnemigoVolador = 8;
+            this.imagenEnemigoParabola = res.kite_png//res.pelota;
+            this.imagenEnemigoVolador = "bat_0"//"animacion_buitre_0";
+            this.framesEnemigoVolador = 3//8;
         }
         else if(nivel == 2){ //Cambiar para el nivel 2
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
             this.imagenDisparoJugador = res.arrow_png;
             this.imagenDisparoEnemigo = res.fire_png;
-            this.imagenEnemigoParabola = res.pelota;
+            this.imagenEnemigoParabola = res.kite_png;
             this.imagenEnemigoVolador = "bat_0";
             this.framesEnemigoVolador = 3;
             //Meter en el array this.enemigosConDisparo los enemigos que tengan disparo
@@ -449,7 +449,7 @@ var GameLayer = cc.Layer.extend({
             var grupoNubesBlancas = this.mapa.getObjectGroup("NubesBlancas");
             var nubesBlancasArray = grupoNubesBlancas.getObjects();
             for (var i = 0; i < nubesBlancasArray.length; i++) {
-                var nube = new NubeBlanca(this, cc.p(nubesBlancasArray[i]["x"], nubesBlancasArray[i]["y"]));
+                var nube = new Obstaculo(this, cc.p(nubesBlancasArray[i]["x"], nubesBlancasArray[i]["y"], "#Animación-Nube-Est_01.png", "Animación-Nube-Est_0", 7, true));
                 this.enemigos.push(nube);
             }
             // Cargar nubes negras
@@ -461,6 +461,14 @@ var GameLayer = cc.Layer.extend({
             }
         }
         else if(nivel == 2){
+            //Cargar árboles (troncos)
+            var grupoTroncos = this.mapa.getObjectGroup("Troncos");
+            var troncosArray = grupoTroncos.getObjects();
+            for (var i = 0; i < troncosArray.length; i++) {
+                var tronco = new Obstaculo(this, cc.p(troncossArray[i]["x"], troncosArray[i]["y"], res.tronco_png , "", 0, false));
+                this.enemigos.push(tronco);
+            }
+
             //Cargar dragones
             var grupoDragones = this.mapa.getObjectGroup("Dragones");
             var dragonesArray = grupoDragones.getObjects();
@@ -468,9 +476,6 @@ var GameLayer = cc.Layer.extend({
                 var dragon = new EnemigoDisparador(this, cc.p(dragonesArray[i]["x"], dragonesArray[i]["y"]), "#dragon_01.png", "dragon_0", 3);
                 this.enemigosConDisparo.push(dragon);
             }
-
-            //Cargar árboles (troncos)
-
         }
         else if(nivel == 3){
             //Implementar para el nivel 3
