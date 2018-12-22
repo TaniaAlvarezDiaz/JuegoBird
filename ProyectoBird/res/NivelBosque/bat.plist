@@ -7,43 +7,43 @@
 			<key>bat_01.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,68},{109,77}}</string>
+				<string>{{0,29},{46,33}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{109,77}}</string>
+				<string>{{0,0},{46,33}}</string>
 				<key>sourceSize</key>
-				<string>{109,77}</string>
+				<string>{46,33}</string>
 			</dict>
 
 			<key>bat_02.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,0},{148,67}}</string>
+				<string>{{0,0},{63,28}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{148,67}}</string>
+				<string>{{0,0},{63,28}}</string>
 				<key>sourceSize</key>
-				<string>{148,67}</string>
+				<string>{63,28}</string>
 			</dict>
 
 			<key>bat_03.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,146},{106,90}}</string>
+				<string>{{0,63},{45,39}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{106,90}}</string>
+				<string>{{0,0},{45,39}}</string>
 				<key>sourceSize</key>
-				<string>{106,90}</string>
+				<string>{45,39}</string>
 			</dict>
 
 		</dict>
@@ -53,7 +53,7 @@
 			<key>format</key>
 			<integer>2</integer>
 			<key>size</key>
-			<string>{256,256}</string>
+			<string>{64,128}</string>
 			<key>textureFileName</key>
 			<string>bat.png</string>
 			</dict>
