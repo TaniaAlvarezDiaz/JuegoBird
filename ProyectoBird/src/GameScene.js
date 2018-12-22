@@ -394,9 +394,9 @@ var GameLayer = cc.Layer.extend({
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
             this.imagenDisparoJugador = res.boomerang_png;
             this.imagenDisparoEnemigo = res.rayo_png;
-            this.imagenEnemigoParabola = res.kite_png//res.pelota;
-            this.imagenEnemigoVolador = "bat_0"//"animacion_buitre_0";
-            this.framesEnemigoVolador = 3//8;
+            this.imagenEnemigoParabola = res.pelota;
+            this.imagenEnemigoVolador = "animacion_buitre_0";
+            this.framesEnemigoVolador = 8;
         }
         else if(nivel == 2){ //Cambiar para el nivel 2
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
