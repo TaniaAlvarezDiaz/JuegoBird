@@ -449,8 +449,10 @@ var GameLayer = cc.Layer.extend({
             var grupoNubesBlancas = this.mapa.getObjectGroup("NubesBlancas");
             var nubesBlancasArray = grupoNubesBlancas.getObjects();
             for (var i = 0; i < nubesBlancasArray.length; i++) {
-                var nube = new Obstaculo(this, cc.p(nubesBlancasArray[i]["x"], nubesBlancasArray[i]["y"], "#Animación-Nube-Est_01.png", "Animación-Nube-Est_0", 7, true, nivel));
+                var nube = new NubeBlanca(this, cc.p(nubesBlancasArray[i]["x"], nubesBlancasArray[i]["y"]));
                 this.enemigos.push(nube);
+                /*var nube = new Obstaculo(this, cc.p(nubesBlancasArray[i]["x"], nubesBlancasArray[i]["y"], "#Animación-Nube-Est_01.png", "Animación-Nube-Est_0", 7, true, nivel));
+                this.enemigos.push(nube);*/
             }
             // Cargar nubes negras
             var grupoNubesNegra = this.mapa.getObjectGroup("NubesNegras");
@@ -462,12 +464,12 @@ var GameLayer = cc.Layer.extend({
         }
         else if(nivel == 2){
             //Cargar árboles (troncos)
-            var grupoTroncos = this.mapa.getObjectGroup("Troncos");
+           /* var grupoTroncos = this.mapa.getObjectGroup("Troncos");
             var troncosArray = grupoTroncos.getObjects();
             for (var i = 0; i < troncosArray.length; i++) {
                 var tronco = new Obstaculo(this, cc.p(troncossArray[i]["x"], troncosArray[i]["y"], res.tronco_png , "", 0, false, nivel));
                 this.enemigos.push(tronco);
-            }
+            }*/
 
             //Cargar dragones
             var grupoDragones = this.mapa.getObjectGroup("Dragones");
