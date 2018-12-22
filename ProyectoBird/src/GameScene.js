@@ -399,7 +399,7 @@ var GameLayer = cc.Layer.extend({
             this.framesEnemigoVolador = 8;
         }
         else if(nivel == 2){ //Cambiar para el nivel 2
-            this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
+            this.mapa = new cc.TMXTiledMap(res.mapaBosque_tmx);
             this.imagenDisparoJugador = res.arrow_png;
             this.imagenDisparoEnemigo = res.fire_png;
             this.imagenEnemigoParabola = res.kite_png;
@@ -464,10 +464,10 @@ var GameLayer = cc.Layer.extend({
         }
         else if(nivel == 2){
             //Cargar árboles (troncos)
-           /* var grupoTroncos = this.mapa.getObjectGroup("Troncos");
+            var grupoTroncos = this.mapa.getObjectGroup("Troncos");
             var troncosArray = grupoTroncos.getObjects();
-            for (var i = 0; i < troncosArray.length; i++) {
-                var tronco = new Obstaculo(this, cc.p(troncossArray[i]["x"], troncosArray[i]["y"], res.tronco_png , "", 0, false, nivel));
+            /*for (var i = 0; i < troncosArray.length; i++) {
+                var tronco = new Obstaculo(this, cc.p(troncosArray[i]["x"], troncosArray[i]["y"], res.tronco_png , res.tronco_png, 1, false, nivel));
                 this.enemigos.push(tronco);
             }*/
 

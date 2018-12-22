@@ -8,14 +8,14 @@ var Obstaculo = cc.Class.extend({
         var body = new cp.StaticBody();
         body.setPos(posicion);
         this.sprite.setBody(body);
-      //  if (nivel == 1) {
+      /*  if (nivel == 1) {
             var radio = this.sprite.getContentSize().width / 2;
             this.shape = new cp.CircleShape(body, radio , cp.vzero);
-      //  } /*else if (nivel == 2) {
+        }else if (nivel == 2) {*/
             this.shape = new cp.BoxShape(body,
                 this.sprite.getContentSize().width,
                 this.sprite.getContentSize().height);
-     //   }*/
+  //      }
         this.shape.setCollisionType(tipoEnemigo);
         gameLayer.space.addStaticShape(this.shape);
         gameLayer.addChild(this.sprite,10);
