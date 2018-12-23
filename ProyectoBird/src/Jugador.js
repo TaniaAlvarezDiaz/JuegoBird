@@ -8,7 +8,7 @@ var estadoSinPicotazo = 7;
 var Jugador = cc.Class.extend({
     ctor: function (gameLayer, posicion) {
         this.gameLayer = gameLayer;
-        this.vidas = 3; // Empieza con 3 vidas
+        this.vidas = 5; // Empieza con 5 vidas
         this.turbos = 3;
         this.estado = estadoSaltando;
         this.disparo = estadoSinDisparar;

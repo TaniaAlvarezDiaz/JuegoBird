@@ -290,6 +290,8 @@ var GameLayer = cc.Layer.extend({
 
         // Caída, si cae vuelve a la posición inicial
         if (this.jugador.body.p.y < -100) {
+            // Se recargan todos elementos del nivel, para que se juege siempre en las mismas condiciones
+            this.recargarElementos();
             this.restaurarJugador();
         }
 
@@ -497,6 +499,14 @@ var GameLayer = cc.Layer.extend({
             this.modosControl.push(control);
         }
 
+        // Cargar vidas
+        var grupoVidas = this.mapa.getObjectGroup("Vidas");
+        var vidasArray = grupoVidas.getObjects();
+        for (var i = 0; i < vidasArray.length; i++) {
+            var vida = new Vida(this, cc.p(vidasArray[i]["x"], vidasArray[i]["y"]));
+            this.vidas.push(vida);
+        }
+
     },
     collisionSueloConJugador: function (arbiter, space) {
         this.jugador.tocaSuelo();
@@ -602,12 +612,91 @@ var GameLayer = cc.Layer.extend({
     },
     restaurarJugador: function () {
         this.jugador.body.p = cc.p(50, 150);
-        this.jugador.vidas = 3;
+        this.jugador.vidas = 5;
         this.jugador.turbos = 3;
         var capaControles = this.getParent().getChildByTag(idCapaControles);
         capaControles.actualizarInterfazVidas();
         this.jugador.estado = estadoSaltando;
         this.tiempoTurbo = 0;
+    },
+    recargarElementos: function () {
+        if(nivel == 1){ //Para el nivel cielo
+
+            // Elementos a restaurar en el nivel cielo: Nubes blancas, nubes negras, huevos, vidas, modos de control
+
+            // Eliminar nubes blancas
+            for (var i = 0; i < this.enemigos.length; i++) {
+                this.enemigos[i].eliminar();
+            }
+            this.enemigos = [];
+            // Cargar nubes blancas
+            var grupoNubesBlancas = this.mapa.getObjectGroup("NubesBlancas");
+            var nubesBlancasArray = grupoNubesBlancas.getObjects();
+            for (var i = 0; i < nubesBlancasArray.length; i++) {
+                var nube = new NubeBlanca(this, cc.p(nubesBlancasArray[i]["x"], nubesBlancasArray[i]["y"]));
+                this.enemigos.push(nube);
+            }
+
+            // Eliminar nubes negras
+            for (var i = 0; i < this.enemigosConDisparo.length; i++) {
+                this.enemigosConDisparo[i].eliminar();
+            }
+            this.enemigosConDisparo = [];
+            // Cargar nubes negras
+            var grupoNubesNegra = this.mapa.getObjectGroup("NubesNegras");
+            var nubesNegrasArray = grupoNubesNegra.getObjects();
+            for (var i = 0; i < nubesNegrasArray.length; i++) {
+                var nube = new NubeNegra(this, cc.p(nubesNegrasArray[i]["x"], nubesNegrasArray[i]["y"]));
+                this.enemigosConDisparo.push(nube);
+            }
+
+            // Eliminar huevos de oro
+            for (var i = 0; i < this.huevosOro.length; i++) {
+                this.huevosOro[i].eliminar();
+            }
+            this.huevosOro = [];
+            // Cargar huevos de oro
+            var grupohuevos = this.mapa.getObjectGroup("Huevos");
+            var huevosArray = grupohuevos.getObjects();
+            for (var i = 0; i < huevosArray.length; i++) {
+                var huevo = new HuevoOro(this, cc.p(huevosArray[i]["x"], huevosArray[i]["y"]));
+                this.huevosOro.push(huevo);
+            }
+
+
+            // Eliminar modos de control
+            for (var i = 0; i < this.modosControl.length; i++) {
+                this.modosControl[i].eliminar();
+            }
+            this.modosControl= [];
+            // Cargar modos de control
+            var grupomodoControl = this.mapa.getObjectGroup("ModoControl");
+            var modoControlArray = grupomodoControl.getObjects();
+            for (var i = 0; i < modoControlArray.length; i++) {
+                var control = new ModoControl(this, cc.p(modoControlArray[i]["x"], modoControlArray[i]["y"]));
+                this.modosControl.push(control);
+            }
+
+            // Eliminar vidas
+            for (var i = 0; i < this.vidas.length; i++) {
+                this.vidas[i].eliminar();
+            }
+            this.vidas = [];
+            // Cargar vidas
+            var grupoVidas = this.mapa.getObjectGroup("Vidas");
+            var vidasArray = grupoVidas.getObjects();
+            for (var i = 0; i < vidasArray.length; i++) {
+                var vida = new Vida(this, cc.p(vidasArray[i]["x"], vidasArray[i]["y"]));
+                this.vidas.push(vida);
+            }
+
+        }
+        else if(nivel == 2){
+            //Implementar para el nivel 2
+        }
+        else if(nivel == 3){
+            //Implementar para el nivel 3
+        }
     },
     collisionJugadorConPincho: function () {
         // Al pincharse, el jugador pierde directamente
