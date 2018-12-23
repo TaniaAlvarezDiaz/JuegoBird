@@ -391,6 +391,71 @@ var GameLayer = cc.Layer.extend({
             }
         }
     },
+    cargarNubesBlancas: function () {
+        // Cargar nubes blancas
+        var grupoNubesBlancas = this.mapa.getObjectGroup("NubesBlancas");
+        var nubesBlancasArray = grupoNubesBlancas.getObjects();
+        for (var i = 0; i < nubesBlancasArray.length; i++) {
+            var nube = new NubeBlanca(this, cc.p(nubesBlancasArray[i]["x"], nubesBlancasArray[i]["y"]));
+            this.enemigos.push(nube);
+            /*var nube = new Obstaculo(this, cc.p(nubesBlancasArray[i]["x"], nubesBlancasArray[i]["y"], "#Animación-Nube-Est_01.png", "Animación-Nube-Est_0", 7, true, nivel));
+            this.enemigos.push(nube);*/
+        }
+    },
+    cargarNubesNegras: function () {
+        // Cargar nubes negras
+        var grupoNubesNegra = this.mapa.getObjectGroup("NubesNegras");
+        var nubesNegrasArray = grupoNubesNegra.getObjects();
+        for (var i = 0; i < nubesNegrasArray.length; i++) {
+            var nube = new EnemigoDisparador(this, cc.p(nubesNegrasArray[i]["x"], nubesNegrasArray[i]["y"]), "#Animación-Nube-Ataque_01.png", "Animación-Nube-Ataque_0", 8);
+            this.enemigosConDisparo.push(nube);
+        }
+    },
+    cargarTroncos: function () {
+        //Cargar árboles (troncos)
+        var grupoTroncos = this.mapa.getObjectGroup("Troncos");
+        var troncosArray = grupoTroncos.getObjects();
+        /*for (var i = 0; i < troncosArray.length; i++) {
+            var tronco = new Obstaculo(this, cc.p(troncosArray[i]["x"], troncosArray[i]["y"], res.tronco_png , res.tronco_png, 1, false, nivel));
+            this.enemigos.push(tronco);
+        }*/
+    },
+    cargarDragones: function () {
+        //Cargar dragones
+        var grupoDragones = this.mapa.getObjectGroup("Dragones");
+        var dragonesArray = grupoDragones.getObjects();
+        for (var i = 0; i < dragonesArray.length; i++) {
+            var dragon = new EnemigoDisparador(this, cc.p(dragonesArray[i]["x"], dragonesArray[i]["y"]), "#dragon_01.png", "dragon_0", 3);
+            this.enemigosConDisparo.push(dragon);
+        }
+    },
+    cargarHuevosDeOro: function () {
+        // Cargar huevos de oro
+        var grupohuevos = this.mapa.getObjectGroup("Huevos");
+        var huevosArray = grupohuevos.getObjects();
+        for (var i = 0; i < huevosArray.length; i++) {
+            var huevo = new HuevoOro(this, cc.p(huevosArray[i]["x"], huevosArray[i]["y"]));
+            this.huevosOro.push(huevo);
+        }
+    },
+    cargarModosDeControl: function () {
+        // Cargar modos de control
+        var grupomodoControl = this.mapa.getObjectGroup("ModoControl");
+        var modoControlArray = grupomodoControl.getObjects();
+        for (var i = 0; i < modoControlArray.length; i++) {
+            var control = new ModoControl(this, cc.p(modoControlArray[i]["x"], modoControlArray[i]["y"]));
+            this.modosControl.push(control);
+        }
+    },
+    cargarVidas: function () {
+        // Cargar vidas
+        var grupoVidas = this.mapa.getObjectGroup("Vidas");
+        var vidasArray = grupoVidas.getObjects();
+        for (var i = 0; i < vidasArray.length; i++) {
+            var vida = new Vida(this, cc.p(vidasArray[i]["x"], vidasArray[i]["y"]));
+            this.vidas.push(vida);
+        }
+    },
     cargarMapa: function () {
         if(nivel == 1){
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
@@ -407,8 +472,6 @@ var GameLayer = cc.Layer.extend({
             this.imagenEnemigoParabola = res.kite_png;
             this.imagenEnemigoVolador = "bat_0";
             this.framesEnemigoVolador = 3;
-            //Meter en el array this.enemigosConDisparo los enemigos que tengan disparo
-            //Meter el resto de enemigos en this.enemigos
         }
         else if(nivel == 3){ //Cambiar para el nivel 3
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
@@ -447,65 +510,20 @@ var GameLayer = cc.Layer.extend({
             }
         }
         if(nivel == 1){ //Para el nivel cielo
-            // Cargar nubes blancas
-            var grupoNubesBlancas = this.mapa.getObjectGroup("NubesBlancas");
-            var nubesBlancasArray = grupoNubesBlancas.getObjects();
-            for (var i = 0; i < nubesBlancasArray.length; i++) {
-                var nube = new NubeBlanca(this, cc.p(nubesBlancasArray[i]["x"], nubesBlancasArray[i]["y"]));
-                this.enemigos.push(nube);
-                /*var nube = new Obstaculo(this, cc.p(nubesBlancasArray[i]["x"], nubesBlancasArray[i]["y"], "#Animación-Nube-Est_01.png", "Animación-Nube-Est_0", 7, true, nivel));
-                this.enemigos.push(nube);*/
-            }
-            // Cargar nubes negras
-            var grupoNubesNegra = this.mapa.getObjectGroup("NubesNegras");
-            var nubesNegrasArray = grupoNubesNegra.getObjects();
-            for (var i = 0; i < nubesNegrasArray.length; i++) {
-                var nube = new EnemigoDisparador(this, cc.p(nubesNegrasArray[i]["x"], nubesNegrasArray[i]["y"]), "#Animación-Nube-Ataque_01.png", "Animación-Nube-Ataque_0", 8);
-                this.enemigosConDisparo.push(nube);
-            }
+            this.cargarNubesBlancas();
+            this.cargarNubesNegras();
         }
         else if(nivel == 2){
-            //Cargar árboles (troncos)
-            var grupoTroncos = this.mapa.getObjectGroup("Troncos");
-            var troncosArray = grupoTroncos.getObjects();
-            /*for (var i = 0; i < troncosArray.length; i++) {
-                var tronco = new Obstaculo(this, cc.p(troncosArray[i]["x"], troncosArray[i]["y"], res.tronco_png , res.tronco_png, 1, false, nivel));
-                this.enemigos.push(tronco);
-            }*/
-
-            //Cargar dragones
-            var grupoDragones = this.mapa.getObjectGroup("Dragones");
-            var dragonesArray = grupoDragones.getObjects();
-            for (var i = 0; i < dragonesArray.length; i++) {
-                var dragon = new EnemigoDisparador(this, cc.p(dragonesArray[i]["x"], dragonesArray[i]["y"]), "#dragon_01.png", "dragon_0", 3);
-                this.enemigosConDisparo.push(dragon);
-            }
+            this.cargarTroncos();
+            this.cargarDragones();
         }
         else if(nivel == 3){
             //Implementar para el nivel 3
         }
-        // Cargar huevos de oro
-        var grupohuevos = this.mapa.getObjectGroup("Huevos");
-        var huevosArray = grupohuevos.getObjects();
-        for (var i = 0; i < huevosArray.length; i++) {
-            var huevo = new HuevoOro(this, cc.p(huevosArray[i]["x"], huevosArray[i]["y"]));
-            this.huevosOro.push(huevo);
-        }
-        // Cargar modos de control
-        var grupomodoControl = this.mapa.getObjectGroup("ModoControl");
-        var modoControlArray = grupomodoControl.getObjects();
-        for (var i = 0; i < modoControlArray.length; i++) {
-            var control = new ModoControl(this, cc.p(modoControlArray[i]["x"], modoControlArray[i]["y"]));
-            this.modosControl.push(control);
-        }
 
-        // Cargar vidas
-        var grupoVidas = this.mapa.getObjectGroup("Vidas");
-        var vidasArray = grupoVidas.getObjects();
-        for (var i = 0; i < vidasArray.length; i++) {
-            var vida = new Vida(this, cc.p(vidasArray[i]["x"], vidasArray[i]["y"]));
-            this.vidas.push(vida);
-        }
+        this.cargarHuevosDeOro();
+        this.cargarModosDeControl();
+        this.cargarVidas();
 
     },
     collisionSueloConJugador: function (arbiter, space) {
@@ -616,8 +634,34 @@ var GameLayer = cc.Layer.extend({
         this.jugador.turbos = 3;
         var capaControles = this.getParent().getChildByTag(idCapaControles);
         capaControles.actualizarInterfazVidas();
+        capaControles.borrarHuevos();
         this.jugador.estado = estadoSaltando;
         this.tiempoTurbo = 0;
+    },
+    recargarElementosComunes: function () {
+        // Eliminar huevos de oro
+        for (var i = 0; i < this.huevosOro.length; i++) {
+            this.huevosOro[i].eliminar();
+        }
+        this.huevosOro = [];
+        // Cargar huevos de oro
+        this.cargarHuevosDeOro();
+
+        // Eliminar modos de control
+        for (var i = 0; i < this.modosControl.length; i++) {
+            this.modosControl[i].eliminar();
+        }
+        this.modosControl = [];
+        // Cargar modos de control
+        this.cargarModosDeControl();
+
+        // Eliminar vidas
+        for (var i = 0; i < this.vidas.length; i++) {
+            this.vidas[i].eliminar();
+        }
+        this.vidas = [];
+        // Cargar vidas
+        this.cargarVidas();
     },
     recargarElementos: function () {
         if(nivel == 1){ //Para el nivel cielo
@@ -630,12 +674,7 @@ var GameLayer = cc.Layer.extend({
             }
             this.enemigos = [];
             // Cargar nubes blancas
-            var grupoNubesBlancas = this.mapa.getObjectGroup("NubesBlancas");
-            var nubesBlancasArray = grupoNubesBlancas.getObjects();
-            for (var i = 0; i < nubesBlancasArray.length; i++) {
-                var nube = new NubeBlanca(this, cc.p(nubesBlancasArray[i]["x"], nubesBlancasArray[i]["y"]));
-                this.enemigos.push(nube);
-            }
+            this.cargarNubesBlancas();
 
             // Eliminar nubes negras
             for (var i = 0; i < this.enemigosConDisparo.length; i++) {
@@ -643,60 +682,32 @@ var GameLayer = cc.Layer.extend({
             }
             this.enemigosConDisparo = [];
             // Cargar nubes negras
-            var grupoNubesNegra = this.mapa.getObjectGroup("NubesNegras");
-            var nubesNegrasArray = grupoNubesNegra.getObjects();
-            for (var i = 0; i < nubesNegrasArray.length; i++) {
-                var nube = new NubeNegra(this, cc.p(nubesNegrasArray[i]["x"], nubesNegrasArray[i]["y"]));
-                this.enemigosConDisparo.push(nube);
-            }
-
-            // Eliminar huevos de oro
-            for (var i = 0; i < this.huevosOro.length; i++) {
-                this.huevosOro[i].eliminar();
-            }
-            this.huevosOro = [];
-            // Cargar huevos de oro
-            var grupohuevos = this.mapa.getObjectGroup("Huevos");
-            var huevosArray = grupohuevos.getObjects();
-            for (var i = 0; i < huevosArray.length; i++) {
-                var huevo = new HuevoOro(this, cc.p(huevosArray[i]["x"], huevosArray[i]["y"]));
-                this.huevosOro.push(huevo);
-            }
-
-
-            // Eliminar modos de control
-            for (var i = 0; i < this.modosControl.length; i++) {
-                this.modosControl[i].eliminar();
-            }
-            this.modosControl= [];
-            // Cargar modos de control
-            var grupomodoControl = this.mapa.getObjectGroup("ModoControl");
-            var modoControlArray = grupomodoControl.getObjects();
-            for (var i = 0; i < modoControlArray.length; i++) {
-                var control = new ModoControl(this, cc.p(modoControlArray[i]["x"], modoControlArray[i]["y"]));
-                this.modosControl.push(control);
-            }
-
-            // Eliminar vidas
-            for (var i = 0; i < this.vidas.length; i++) {
-                this.vidas[i].eliminar();
-            }
-            this.vidas = [];
-            // Cargar vidas
-            var grupoVidas = this.mapa.getObjectGroup("Vidas");
-            var vidasArray = grupoVidas.getObjects();
-            for (var i = 0; i < vidasArray.length; i++) {
-                var vida = new Vida(this, cc.p(vidasArray[i]["x"], vidasArray[i]["y"]));
-                this.vidas.push(vida);
-            }
-
+           this.cargarNubesNegras();
         }
         else if(nivel == 2){
             //Implementar para el nivel 2
+
+            // Eliminar troncos
+            for (var i = 0; i < this.enemigos.length; i++) {
+                this.enemigos[i].eliminar();
+            }
+            this.enemigos = [];
+            //Cargar troncos
+            this.cargarTroncos();
+
+            // Eliminar dragones
+            for (var i = 0; i < this.enemigosConDisparo.length; i++) {
+                this.enemigosConDisparo[i].eliminar();
+            }
+            this.enemigosConDisparo = [];
+            //Cargar dragones
+            this.cargarDragones();
         }
         else if(nivel == 3){
             //Implementar para el nivel 3
         }
+
+        this.recargarElementosComunes();
     },
     collisionJugadorConPincho: function () {
         // Al pincharse, el jugador pierde directamente

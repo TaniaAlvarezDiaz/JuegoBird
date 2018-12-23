@@ -30,6 +30,10 @@ var ControlesLayer = cc.Layer.extend({
         this.huevos++;
         this.etiquetaHuevos.setString("Huevos: " + this.huevos);
     },
+    borrarHuevos: function () {
+        this.huevos = 0;
+        this.etiquetaHuevos.setString("Huevos: " + this.huevos);
+    },
     actualizarInterfazVidas: function () {
         var gameLayer = this.getParent().getChildByTag(idCapaJuego);
         this.etiquetaVidas.setString("Vidas: " + gameLayer.jugador.vidas);
