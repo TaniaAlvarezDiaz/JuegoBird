@@ -16,7 +16,7 @@ var RecolectableInmune = cc.Class.extend({
         // Crear forma circular
         var radio = this.sprite.getContentSize().width / 2;
         this.shape = new cp.CircleShape(body, radio , cp.vzero);
-        this.shape.setCollisionType(tipoHuevo);
+        this.shape.setCollisionType(tipoRecolectableInmune);
         // setSensor(true) no genera choques, es como un “fantasma”, nunca genera colisiones reales
         this.shape.setSensor(true);
         // Añadir forma estática al Space
