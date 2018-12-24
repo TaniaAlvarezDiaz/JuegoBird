@@ -1,4 +1,4 @@
-var HuevoOro = cc.Class.extend({
+var RecolectableInmune = cc.Class.extend({
     gameLayer:null,
     sprite:null,
     shape:null,
@@ -6,7 +6,7 @@ var HuevoOro = cc.Class.extend({
         this.gameLayer = gameLayer;
 
         // Crear Sprite
-        this.sprite = new cc.PhysicsSprite("#huevo_animacion_01.png");
+        this.sprite = new cc.PhysicsSprite("#apple_01.png");
         // Cuerpo estatico, no le afectan las fuerzas, gravedad, etc.
         var body = new cp.StaticBody();
         body.setPos(posicion);
@@ -27,8 +27,8 @@ var HuevoOro = cc.Class.extend({
 
         // Crear animación
         var framesAnimacion = [];
-        for (var i = 1; i <= 6; i++) {
-            var str = "huevo_animacion_0" + i + ".png";
+        for (var i = 1; i <= 2; i++) {
+            var str = "apple_0" + i + ".png";
             var frame = cc.spriteFrameCache.getSpriteFrame(str);
             framesAnimacion.push(frame);
         }

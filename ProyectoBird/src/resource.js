@@ -19,6 +19,8 @@ var res = {
     picotazoSticker: "res/Sticker_Picotazo.png",
     jugador_inmune_png : "res/pajaro_inmune.png",
     jugador_inmune_plist : "res/pajaro_inmune.plist",
+    recolectable_inmune_png : "res/apple.png",
+    recolectable_inmune_plist : "res/apple.plist",
 
     //Nivel cielo//
     jugador_png: "res/NivelCielo/pajaro.png",
