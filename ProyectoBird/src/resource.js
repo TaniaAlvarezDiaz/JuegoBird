@@ -15,8 +15,10 @@ var res = {
     boton_turbo_png: "res/boton_turbo.png",
     pincho: "res/pincho.png",
 
-    modoControl: "res/CambiarModoControl.jpg",
+    modoControl: "res/CambiarModoControl.png",
     picotazoSticker: "res/Sticker_Picotazo.png",
+    jugador_inmune_png : "res/pajaro_inmune.png",
+    jugador_inmune_plist : "res/pajaro_inmune.plist",
 
     //Nivel cielo//
     jugador_png: "res/NivelCielo/pajaro.png",

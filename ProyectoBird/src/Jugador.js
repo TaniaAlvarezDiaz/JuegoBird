@@ -4,6 +4,7 @@ var estadoDisparando = 4;
 var estadoSinDisparar = 5;
 var estadoPicotazo = 6;
 var estadoSinPicotazo = 7;
+var estadoInmune = 8;
 
 var Jugador = cc.Class.extend({
     ctor: function (gameLayer, posicion) {
@@ -15,6 +16,7 @@ var Jugador = cc.Class.extend({
         this.picotazo = estadoSinPicotazo;
         this.tiempoInvulnerable = 0;
         this.cadenciaDisparo = 0;
+        this.tiempoInmune = 0;
 
         // Crear Sprite - Cuerpo y forma
         this.sprite = new cc.PhysicsSprite("#bird_01.png");
@@ -77,6 +79,17 @@ var Jugador = cc.Class.extend({
         var animacionImpactado = new cc.Animation(framesAnimacionImpactado, 0.2);
         this.aImpactado = new cc.Repeat(new cc.Animate(animacionImpactado),1);
         this.aImpactado.retain();
+
+        //Animación inmune
+        var framesAnimacionInmune = [];
+        for (var i = 1; i <= 3; i++) {
+            var str = "pajaro_inmune_0" + i + ".png";
+            var frame = cc.spriteFrameCache.getSpriteFrame(str);
+            framesAnimacionInmune.push(frame);
+        }
+        var animacionInmune = new cc.Animation(framesAnimacionInmune, 0.2);
+        this.aInmune = new cc.RepeatForever(new cc.Animate(animacionInmune), 2);
+        this.aInmune.retain();
 
         // Animaión actual
         this.animacion = this.aSaltar;
@@ -142,6 +155,9 @@ var Jugador = cc.Class.extend({
         if (this.cadenciaDisparo > 0 ){
             this.cadenciaDisparo--;
         }
+        if (this.tiempoInmune > 0) {
+            this.tiempoInmune--;
+        }
         switch (this.estado) {
             case estadoImpactado:
                 this.finAnimacionImpactado();
@@ -161,6 +177,18 @@ var Jugador = cc.Class.extend({
                     this.animacion = this.aSaltar;
                     this.sprite.stopAllActions();
                     this.sprite.runAction(this.animacion);
+                }
+                break;
+            case estadoInmune:
+                if (this.animacion != this.aInmune) {
+                    this.animacion = this.aInmune;
+                    this.sprite.stopAllActions();
+                    this.sprite.runAction(
+                        cc.Sequence(
+                            this.animacion,
+                            cc.callFunc(this.finAnimacionInmune(), this)
+                        )
+                    );
                 }
                 break;
         }
@@ -192,11 +220,25 @@ var Jugador = cc.Class.extend({
             this.estado = estadoSaltando;
         }
     },
+    inmune: function () {
+        if (this.tiempoInmune <= 0) {
+            this.tiempoInmune = 200;
+            this.estado = estadoInmune;
+        }
+    },
+    finAnimacionInmune: function () {
+      if (this.estado == estadoInmune) {
+          this.estado = estadoSaltando;
+      }
+    },
     sumarVida: function () {
         this.vidas++;
     },
     restarVida: function () {
-        this.vidas--;
+        //Si ya no esta inmune
+        if (this.tiempoInmune <= 0) {
+            this.vidas--;
+        }
     },
     impulsar: function () {
         this.turbos--;

@@ -9,6 +9,7 @@ var tipoDisparoJugador = 9;
 var tipoDisparoEnemigo = 10;
 var tipoModoControl = 11;
 var tipoHuevo = 12;
+var tipoRecolectableInmune = 13;
 
 var nivel = 1;
 
@@ -26,6 +27,7 @@ var GameLayer = cc.Layer.extend({
         cc.spriteFrameCache.addSpriteFrames(res.vida_plist);
         cc.spriteFrameCache.addSpriteFrames(res.jugador_saltar_plist);
         cc.spriteFrameCache.addSpriteFrames(res.jugador_impactado_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.jugador_inmune_plist);
         // nivel cielo
         cc.spriteFrameCache.addSpriteFrames(res.nubeBlanca_plist);
         cc.spriteFrameCache.addSpriteFrames(res.nubeNegra_plist);
@@ -49,10 +51,12 @@ var GameLayer = cc.Layer.extend({
         this.enemigosConDisparo = [];
         this.enemigosVoladores = [];
         this.huevosOro = [];
+        this.recolectablesInmune = [];
         this.disparosJugador = [];
         this.disparosEnemigo = [];
         this.huevosEliminar = [];
         this.vidasEliminar = [];
+        this.recolectablesInmuneEliminar = [];
         this.enemigosEliminar = [];
         this.disparosEnemigosEliminar = [];
         this.modosControlEliminar = [];
@@ -104,6 +108,10 @@ var GameLayer = cc.Layer.extend({
         // Jugador y vida
         this.space.addCollisionHandler(tipoJugador, tipoVida,
             null, this.collisionJugadorConVida.bind(this), null, null);
+
+        //Juegador y recolectable inmune
+        this.space.addCollisionHandler(tipoJugador, tipoRecolectableInmune,
+            null, this.collisionJugadorConRecolectableInmune.bind(this), null, null);
 
         //Enemigo y jugador (y con pictazo)
         this.space.addCollisionHandler(tipoEnemigo, tipoJugador,
@@ -295,6 +303,18 @@ var GameLayer = cc.Layer.extend({
             this.restaurarJugador();
         }
 
+        // Eliminar recolectables inmunes
+        for (var i = 0; i < this.recolectablesInmuneEliminar.length; i++) {
+            var shape = this.recolectablesInmuneEliminar[i];
+            for (var j = 0; j < this.recolectablesInmune.length; j++) {
+                if (this.recolectablesInmune[j].shape === shape) {
+                    this.recolectablesInmune[j].eliminar();
+                    this.recolectablesInmune.splice(j, 1);
+                }
+            }
+        }
+        this.recolectablesInmuneEliminar = [];
+
         // Eliminar huevos
         for (var i = 0; i < this.huevosEliminar.length; i++) {
             var shape = this.huevosEliminar[i];
@@ -438,6 +458,15 @@ var GameLayer = cc.Layer.extend({
             this.huevosOro.push(huevo);
         }
     },
+    cargarRecolectablesInmune: function () {
+        //Cargar recolectables inmune
+        var grupoRecolectablesInmune = this.mapa.getObjectGroup("RecolectablesInmune");
+        var recolectablesInmuneArray = grupoRecolectablesInmune.getObjects();
+        for (var i = 0; i < recolectablesInmuneArray.length; i++) {
+            var recInmune = new RecolectableInmune(this, cc.p(recolectablesInmuneArray[i]["x"], recolectablesInmuneArray[i]["y"]));
+            this.recolectablesInmune.push(recInmune);
+        }
+    },
     cargarModosDeControl: function () {
         // Cargar modos de control
         var grupomodoControl = this.mapa.getObjectGroup("ModoControl");
@@ -524,6 +553,7 @@ var GameLayer = cc.Layer.extend({
         this.cargarHuevosDeOro();
         this.cargarModosDeControl();
         this.cargarVidas();
+        this.cargarRecolectablesInmune();
 
     },
     collisionSueloConJugador: function (arbiter, space) {
@@ -613,6 +643,11 @@ var GameLayer = cc.Layer.extend({
         this.jugador.sumarVida();
         this.notificarCambioVidas();
     },
+    collisionJugadorConRecolectableInmune: function (arbiter, space) {
+        var shapes = arbiter.getShapes();
+        this.recolectablesInmune.push(shapes[1]);
+        this.jugador.inmune();
+    },
     collisionModoControlConJugador: function (arbiter, space) {
         if(this.modoControl == true){
             this.modoControl = false;
@@ -639,6 +674,14 @@ var GameLayer = cc.Layer.extend({
         this.tiempoTurbo = 0;
     },
     recargarElementosComunes: function () {
+        //Eliminar recolectables inmune
+        for (var i = 0; i < this.recolectablesInmune.length; i++) {
+            this.recolectablesInmune[i].eliminar();
+        }
+        this.recolectablesInmune = [];
+        //Cargar recolectables inmune
+        this.cargarRecolectablesInmune();
+
         // Eliminar huevos de oro
         for (var i = 0; i < this.huevosOro.length; i++) {
             this.huevosOro[i].eliminar();
