@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>pez_01.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{99,65}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{99,65}}</string>
+				<key>sourceSize</key>
+				<string>{99,65}</string>
+			</dict>
+
+			<key>pez_02.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,66},{98,65}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{98,65}}</string>
+				<key>sourceSize</key>
+				<string>{98,65}</string>
+			</dict>
+
+			<key>pez_03.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,198},{97,67}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{97,67}}</string>
+				<key>sourceSize</key>
+				<string>{97,67}</string>
+			</dict>
+
+			<key>pez_04.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,334},{95,67}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{95,67}}</string>
+				<key>sourceSize</key>
+				<string>{95,67}</string>
+			</dict>
+
+			<key>pez_05.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,266},{97,67}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{97,67}}</string>
+				<key>sourceSize</key>
+				<string>{97,67}</string>
+			</dict>
+
+			<key>pez_06.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,132},{98,65}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{98,65}}</string>
+				<key>sourceSize</key>
+				<string>{98,65}</string>
+			</dict>
+
+		</dict>
+
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>size</key>
+			<string>{128,512}</string>
+			<key>textureFileName</key>
+			<string>pez.png</string>
+			</dict>
+		</dict>
+</plist>
