@@ -16,6 +16,12 @@ var ControlesLayer = cc.Layer.extend({
         this.etiquetaVidas.fillStyle = new cc.Color(0, 0, 0, 0);
         this.addChild(this.etiquetaVidas);
 
+        // Contador Turbos
+        this.etiquetaTurbos = new cc.LabelTTF("Turbos: 3", "Helvetica", 20);
+        this.etiquetaTurbos.setPosition(cc.p(size.width - size.width / 2, size.height - 20));
+        this.etiquetaTurbos.fillStyle = new cc.Color(0, 0, 0, 0);
+        this.addChild(this.etiquetaTurbos);
+
         // Picotazo sticker
         this.picotazoSticker = cc.Sprite.create(res.picotazoSticker);
         this.picotazoSticker.setPosition(cc.p(size.width * 0.92,  size.height - 80));
@@ -37,6 +43,10 @@ var ControlesLayer = cc.Layer.extend({
     actualizarInterfazVidas: function () {
         var gameLayer = this.getParent().getChildByTag(idCapaJuego);
         this.etiquetaVidas.setString("Vidas: " + gameLayer.jugador.vidas);
+    },
+    actualizarInterfazTurbos: function () {
+        var gameLayer = this.getParent().getChildByTag(idCapaJuego);
+        this.etiquetaTurbos.setString("Turbos: " + gameLayer.jugador.turbos);
     },
     addStickerPicotazo: function () {
         this.addChild(this.picotazoSticker);
