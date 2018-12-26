@@ -77,6 +77,8 @@ var GameLayer = cc.Layer.extend({
         this.numIteraccionesDisparos = 0;
         this.numIteraccionesParabolas = 0;
         this.numIteraccionesEnemigosVoladores = 0;
+        this.record = 0;
+        this.tiempoRefrescarRecord = 0.5;
 
         this.jugador = new Jugador(this, cc.p(50, 150));
 
@@ -154,6 +156,18 @@ var GameLayer = cc.Layer.extend({
     },
     update: function (dt) {
         this.procesarControles();
+
+        // Record
+        var posicionActual = Math.floor(this.jugador.body.p.x / 32);
+        if (posicionActual > this.record) {
+            this.record = posicionActual;
+        }
+        if (this.tiempoRefrescarRecord < 0) {
+            this.notificarCambioRecord();
+            this.tiempoRefrescarRecord = 0.5;
+        } else {
+            this.tiempoRefrescarRecord = this.tiempoRefrescarRecord - dt;
+        }
 
         // Control del tiempo del turbo
         if (this.tiempoTurbo > 0) {
@@ -669,6 +683,11 @@ var GameLayer = cc.Layer.extend({
         var capaControles =
             this.getParent().getChildByTag(idCapaControles);
         capaControles.actualizarInterfazTurbos();
+    },
+    notificarCambioRecord: function () {
+        var capaControles =
+            this.getParent().getChildByTag(idCapaControles);
+        capaControles.actualizarInterfazRecord();
     },
     restaurarJugador: function () {
         this.jugador.body.p = cc.p(50, 150);

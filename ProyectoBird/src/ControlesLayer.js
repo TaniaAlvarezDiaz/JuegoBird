@@ -22,6 +22,12 @@ var ControlesLayer = cc.Layer.extend({
         this.etiquetaTurbos.fillStyle = new cc.Color(0, 0, 0, 0);
         this.addChild(this.etiquetaTurbos);
 
+        // Contador Record
+        this.etiquetaRecord = new cc.LabelTTF("Record: 0", "Helvetica", 20);
+        this.etiquetaRecord.setPosition(cc.p(size.width - ((size.width/6)*4), size.height - 20));
+        this.etiquetaRecord.fillStyle = new cc.Color(0, 0, 0, 0);
+        this.addChild(this.etiquetaRecord);
+
         // Picotazo sticker
         this.picotazoSticker = cc.Sprite.create(res.picotazoSticker);
         this.picotazoSticker.setPosition(cc.p(size.width * 0.92,  size.height - 80));
@@ -47,6 +53,10 @@ var ControlesLayer = cc.Layer.extend({
     actualizarInterfazTurbos: function () {
         var gameLayer = this.getParent().getChildByTag(idCapaJuego);
         this.etiquetaTurbos.setString("Turbos: " + gameLayer.jugador.turbos);
+    },
+    actualizarInterfazRecord: function () {
+        var gameLayer = this.getParent().getChildByTag(idCapaJuego);
+        this.etiquetaRecord.setString("Record: " + gameLayer.record);
     },
     addStickerPicotazo: function () {
         this.addChild(this.picotazoSticker);
