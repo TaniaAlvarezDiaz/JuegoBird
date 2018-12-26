@@ -19,7 +19,7 @@
         "src/Enemigo.js",
         "src/Vida.js",
         "src/Pincho.js",
-        "src/Obstaculo.js",
+        "src/Tronco.js",
         "src/NubeBlanca.js",
         "src/EnemigoDisparador.js",
         "src/HuevoOro.js",

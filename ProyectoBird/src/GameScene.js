@@ -421,8 +421,6 @@ var GameLayer = cc.Layer.extend({
         for (var i = 0; i < nubesBlancasArray.length; i++) {
             var nube = new NubeBlanca(this, cc.p(nubesBlancasArray[i]["x"], nubesBlancasArray[i]["y"]));
             this.enemigos.push(nube);
-            /*var nube = new Obstaculo(this, cc.p(nubesBlancasArray[i]["x"], nubesBlancasArray[i]["y"], "#Animación-Nube-Est_01.png", "Animación-Nube-Est_0", 7, true, nivel));
-            this.enemigos.push(nube);*/
         }
     },
     cargarNubesNegras: function () {
@@ -438,10 +436,10 @@ var GameLayer = cc.Layer.extend({
         //Cargar árboles (troncos)
         var grupoTroncos = this.mapa.getObjectGroup("Troncos");
         var troncosArray = grupoTroncos.getObjects();
-        /*for (var i = 0; i < troncosArray.length; i++) {
-            var tronco = new Obstaculo(this, cc.p(troncosArray[i]["x"], troncosArray[i]["y"], res.tronco_png , res.tronco_png, 1, false, nivel));
+        for (var i = 0; i < troncosArray.length; i++) {
+            var tronco = new Tronco(this, cc.p(troncosArray[i]["x"], troncosArray[i]["y"]));
             this.enemigos.push(tronco);
-        }*/
+        }
     },
     cargarDragones: function () {
         //Cargar dragones
@@ -505,7 +503,7 @@ var GameLayer = cc.Layer.extend({
         }
     },
     cargarMapa: function () {
-        if(nivel == 1){
+        if(nivel == 2){
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
             this.imagenDisparoJugador = res.boomerang_png;
             this.imagenDisparoEnemigo = res.rayo_png;
@@ -513,7 +511,7 @@ var GameLayer = cc.Layer.extend({
             this.imagenEnemigoVolador = "animacion_buitre_0";
             this.framesEnemigoVolador = 8;
         }
-        else if(nivel == 2){ //Cambiar para el nivel 2
+        else if(nivel == 1){ //Cambiar para el nivel 2
             this.mapa = new cc.TMXTiledMap(res.mapaBosque_tmx);
             this.imagenDisparoJugador = res.arrow_png;
             this.imagenDisparoEnemigo = res.fire_png;
@@ -555,11 +553,11 @@ var GameLayer = cc.Layer.extend({
                 this.space.addStaticShape(shapeLimite);
             }
         }
-        if(nivel == 1){ //Para el nivel cielo
+        if(nivel == 2){ //Para el nivel cielo
             this.cargarNubesBlancas();
             this.cargarNubesNegras();
         }
-        else if(nivel == 2){
+        else if(nivel == 1){
             this.cargarTroncos();
             this.cargarDragones();
         }
@@ -726,7 +724,7 @@ var GameLayer = cc.Layer.extend({
         this.cargarVidas();
     },
     recargarElementos: function () {
-        if(nivel == 1){ //Para el nivel cielo
+        if(nivel == 2){ //Para el nivel cielo
 
             // Elementos a restaurar en el nivel cielo: Nubes blancas, nubes negras, huevos, vidas, modos de control
 
@@ -746,7 +744,7 @@ var GameLayer = cc.Layer.extend({
             // Cargar nubes negras
            this.cargarNubesNegras();
         }
-        else if(nivel == 2){
+        else if(nivel == 1){
             //Implementar para el nivel 2
 
             // Eliminar troncos
@@ -773,7 +771,7 @@ var GameLayer = cc.Layer.extend({
                 this.enemigos[i].eliminar();
             }
             this.enemigos = [];
-            // Cargar nubes blancas
+            // Cargar anzuelos
             this.cargarAnzuelos();
 
             // Eliminar submarinos

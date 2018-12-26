@@ -14,9 +14,9 @@ var Jugador = cc.Class.extend({
         this.estado = estadoSaltando;
         this.disparo = estadoSinDisparar;
         this.picotazo = estadoSinPicotazo;
+        this.tiempoInmune = 0;
         this.tiempoInvulnerable = 0;
         this.cadenciaDisparo = 0;
-        this.tiempoInmune = 0;
 
         // Crear Sprite - Cuerpo y forma
         this.sprite = new cc.PhysicsSprite("#bird_01.png");
@@ -88,7 +88,7 @@ var Jugador = cc.Class.extend({
             framesAnimacionInmune.push(frame);
         }
         var animacionInmune = new cc.Animation(framesAnimacionInmune, 0.2);
-        this.aInmune = new cc.RepeatForever(new cc.Animate(animacionInmune));
+        this.aInmune = new cc.Repeat(new cc.Animate(animacionInmune), 1);
         this.aInmune.retain();
 
         // Animaión actual
@@ -183,13 +183,12 @@ var Jugador = cc.Class.extend({
                 if (this.animacion != this.aInmune) {
                     this.animacion = this.aInmune;
                     this.sprite.stopAllActions();
-                    //this.sprite.runAction(this.animacion);
-                    this.sprite.runAction(
+                   /* this.sprite.runAction(
                         cc.Sequence(
                             this.animacion,
                             cc.callFunc(this.finAnimacionInmune(), this)
                         )
-                    );
+                    );*/
                 }
                 break;
         }
@@ -205,8 +204,8 @@ var Jugador = cc.Class.extend({
         }*/
     },
     impactado: function () {
-        if (this.tiempoInmune <= 0) {
-            this.tiempoInmune = 200;
+        if (this.estado != estadoInmune) {
+
             if (this.tiempoInvulnerable <= 0) {
                 this.tiempoInvulnerable = 100;
                 this.estado = estadoImpactado;
@@ -214,6 +213,7 @@ var Jugador = cc.Class.extend({
                     this.restarVida();
                 }
             }
+
         }
 
         /*if (this.estado !== estadoImpactado) {

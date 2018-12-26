@@ -48,7 +48,7 @@ var res = {
     mapaBosque_tmx: "res/NivelBosque/mapaBosque.tmx",
     tilesNidoBosque_png : "res/NivelBosque/nido_tiles.png",
     huevoNidoBosque_png : "res/NivelBosque/huevoNido.png",
-    tilesBosque_png : "res/NivelBosque/cielo_tiles.png",
+    tilesBosque_png : "res/NivelBosque/bosque_tiles.png",
     dragon_png : "res/NivelBosque/dragon.png",
     dragon_plist : "res/NivelBosque/dragon.plist",
     bat_png : "res/NivelBosque/bat.png",
