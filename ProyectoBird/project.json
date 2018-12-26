@@ -29,7 +29,9 @@
         "src/EndGameLayer.js",
         "src/EnemigoParabola.js",
         "src/EnemigoVolador.js",
-        "src/RecolectableInmune.js"
+        "src/RecolectableInmune.js",
+        "src/Anzuelo.js",
+        "src/Submarino.js"
 
     ]
 }

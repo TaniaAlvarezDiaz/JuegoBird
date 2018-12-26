@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="15" tilewidth="32" tileheight="32" nextobjectid="76">
+ <tileset firstgid="1" name="fondo_marino_tiles" tilewidth="32" tileheight="32" tilecount="126" columns="14">
+  <image source="fondo_marino_tiles.png" width="448" height="288"/>
+ </tileset>
+ <tileset firstgid="127" name="tubo_bajo_agua_tiles" tilewidth="32" tileheight="32" tilecount="10" columns="5">
+  <image source="tubo_bajo_agua_tiles.png" width="160" height="64"/>
+ </tileset>
+ <tileset firstgid="137" name="huevoNido" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="huevoNido.png" width="32" height="35"/>
+ </tileset>
+ <layer name="FondoMaritimo" width="500" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztw0ENAAAMA6EzVf/WZmJPSFg1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVdWHB/MTERc=
+  </data>
+ </layer>
+ <layer name="FondoPeces" width="500" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztnN2OGyEMhc+jnLb3bd7/6ZpcrBpNB7CNbUyWTxpplQUbbP4GzACHw+FwOBw+lcei/Hf5rr89Gr/fwefz4/n8fD6/DLqv/H4+fxzkWNLOQoxt0aqfJK8ES31buiW+WAlhs9lsu77aJbON9cpByOyhLe9Iblb9JXpWjaue9MpAjH2cUYcKduqhGbuudZH277vfW3q97FXR7oTP3KWV00vf8sPqOW3Gf95ti/jffi1Zd2mv6bVrtyhfRMgl+m2zp/O9ziM53njYYna95PUeEbV2luQfzRFWOZ5cZbfKoy2DdkzoyZDk0cjVpI0gcj7JmOs9ym+REWk3Ir9NWMeDTFavfV5UXL+upIJPXljLsbr8q/V7scNaeOad2iM9oVtj9tJbaJXRYuPRPjwxruuqtl9pDI/eT49mtS2JGDtFyY0iui8RvudkWpkHH1b310OfKP8QNfraqH5EbDlnxskI3+zWH3cpb+S+UBUbED77oxa81xuZNvXWNSPPM0ZJmm6WWT1RvtacZ0v/71GGdwjZmeVdOi13Mqz1HZVndg/hLr81PmiWng+l9dTsp0vO5q7pWrJ6+bP2W7R6iBpr01Y5pPZs5e8ROe9V3luWtvkXRFxs6Wys2ohVPvDSG+mnLNuM+tjKfjKKzdOWTeOvnZid+74jRPx7Q4a9iRrrgy+qvP97Ip0biXxfWHR6nWlm4X2nYVeImHpZ9gasaXclI7bZE+Iz+4CWyvPRp8R49O7USPcBRmVaGWevRWrfHcaREZ5tqWJfXbX2qLYfKUknlfVo/C3Np7WN556r5r5gJoSt3Vlj2yPap7dfpXdmtDoscnrl6umKhKg9j76I7uvvRMQ1z6S3yiHi7qplj3PSfZbMc7Vq67Ysn2TaePV8OqLiuUi2XqL+/FG9HRG62JHV9SFq3ilYbZcviLp9gsi7e11tjnwRFYvo+Y0Oj/Raue9k+Y3w/e6U9/fspLru7JXVHjx0HvoQeeO5x/raa5yqOH6/IOL94f3Ni1Xf4Tj8Y9VdeQue3/nU6vM8D7iD8Nun1hLpt91jWTVyifgxeKRD2ma9948/zc89LGdzhG/8qTRPT+/uzMZiaecTrQxibcxx9l2omT05r3dHazwaMXc2lB0XqLEtkXvHwnqfgPB/z9fK9H4X3OX9xLs9Sfuhh70jvg9R8V0mWidh/5a+NG82xJq9Q+tcQeSd95y90cPhcDgc9uEvWKKH2Q==
+  </data>
+ </layer>
+ <layer name="Tubo" width="500" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztzqEBwDAAw7B+3pw+OtyAEAkZ+hwAAAAAAAAAAAAAAAAAeHPXAwBALesBAKCW9QAAUMt6AACoZT0AANSyHgAAalkPAAC1rAcAgFp+/QEU5wSA
+  </data>
+ </layer>
+ <layer name="HuevoObjetivo" width="500" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztzjENAAAMA6Dan+uZaNIHFJAAAAAAAAAAAAAAAMDGrQMAAAAAAAAAAAAAAAAAAAAAANQ9HqYAig==
+  </data>
+ </layer>
+ <objectgroup name="Limites">
+  <object id="2" x="3" y="479">
+   <polyline points="0,0 0,-480 15867,-478 15870,1"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Anzuelos">
+  <object id="3" x="432" y="94" width="50" height="50"/>
+  <object id="17" x="1083" y="342" width="50" height="50"/>
+  <object id="18" x="1795" y="377" width="50" height="50"/>
+  <object id="19" x="2183" y="61" width="50" height="50"/>
+  <object id="20" x="2810" y="311" width="50" height="50"/>
+  <object id="21" x="3329" y="82" width="50" height="50"/>
+  <object id="22" x="3736" y="350" width="50" height="50"/>
+  <object id="23" x="4493" y="150" width="50" height="50"/>
+  <object id="24" x="4840" y="362" width="50" height="50"/>
+  <object id="25" x="5486" y="194" width="50" height="50"/>
+  <object id="26" x="6557" y="318" width="50" height="50"/>
+  <object id="27" x="7412" y="48" width="50" height="50"/>
+  <object id="28" x="8001" y="203" width="50" height="50"/>
+  <object id="29" x="8741" y="367" width="50" height="50"/>
+  <object id="30" x="9299" y="64" width="50" height="50"/>
+  <object id="31" x="10292" y="358" width="50" height="50"/>
+  <object id="32" x="10985" y="42" width="50" height="50"/>
+  <object id="33" x="12010" y="303" width="50" height="50"/>
+  <object id="34" x="12850" y="358" width="50" height="50"/>
+  <object id="35" x="13493" y="68" width="50" height="50"/>
+  <object id="37" x="14634" y="60" width="50" height="50"/>
+  <object id="38" x="15510" y="372" width="50" height="50"/>
+ </objectgroup>
+ <objectgroup name="Submarinos">
+  <object id="10" x="848" y="44" width="100" height="80"/>
+  <object id="40" x="2447" y="141" width="100" height="80"/>
+  <object id="41" x="3145" y="205" width="100" height="80"/>
+  <object id="42" x="4076" y="56" width="100" height="80"/>
+  <object id="43" x="5072" y="70" width="100" height="80"/>
+  <object id="45" x="5976" y="48" width="100" height="80"/>
+  <object id="46" x="7133" y="265" width="100" height="80"/>
+  <object id="47" x="8509" y="67" width="100" height="80"/>
+  <object id="48" x="9812" y="141" width="100" height="80"/>
+  <object id="50" x="11410" y="120" width="100" height="80"/>
+  <object id="51" x="12532" y="74" width="100" height="80"/>
+  <object id="52" x="14067" y="202" width="100" height="80"/>
+  <object id="53" x="15275" y="54" width="100" height="80"/>
+ </objectgroup>
+ <objectgroup name="Huevos">
+  <object id="11" x="1312" y="161" width="40" height="50"/>
+  <object id="55" x="2241" y="359" width="40" height="50"/>
+  <object id="56" x="3575" y="195" width="40" height="50"/>
+  <object id="57" x="4245" y="324" width="40" height="50"/>
+  <object id="58" x="5799" y="355" width="40" height="50"/>
+  <object id="59" x="6898" y="40" width="40" height="50"/>
+  <object id="60" x="7806" y="387" width="40" height="50"/>
+  <object id="61" x="8993" y="50" width="40" height="50"/>
+  <object id="62" x="10535" y="83" width="40" height="50"/>
+  <object id="63" x="11607" y="368" width="40" height="50"/>
+  <object id="64" x="12951" y="57" width="40" height="50"/>
+  <object id="65" x="14385" y="366" width="40" height="50"/>
+  <object id="66" x="15168" y="251" width="40" height="50"/>
+ </objectgroup>
+ <objectgroup name="ModoControl">
+  <object id="13" x="1885" y="142" width="40" height="40"/>
+  <object id="67" x="5193" y="365" width="40" height="40"/>
+  <object id="68" x="8408" y="338" width="40" height="40"/>
+  <object id="69" x="10808" y="348" width="40" height="40"/>
+  <object id="70" x="13351" y="334" width="40" height="40"/>
+ </objectgroup>
+ <objectgroup name="Vidas">
+  <object id="15" x="2907" y="74" width="40" height="30"/>
+  <object id="71" x="4779" y="182" width="40" height="30"/>
+  <object id="72" x="6347" y="108" width="40" height="30"/>
+  <object id="73" x="9144" y="277" width="40" height="30"/>
+  <object id="74" x="11329" y="335" width="40" height="30"/>
+  <object id="75" x="14761" y="244" width="40" height="30"/>
+ </objectgroup>
+</map>

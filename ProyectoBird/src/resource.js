@@ -55,6 +55,22 @@ var res = {
     tronco_png : "res/NivelBosque/tronco.png",
     kite_png : "res/NivelBosque/kite.png",
 
+
+
+    // Nivel Agua
+    tilesAgua: "res/NivelAgua/fondo_marino_tiles.png",
+    tilesTubo: "res/NivelAgua/tubo_bajo_agua_tiles.png",
+    tilesHuevoNidoBajoAgua: "res/NivelAgua/huevoNido.png",
+    mapaAgua_tmx: "res/NivelAgua/FondoMaritimoMapa.tmx",
+    anzuelo_png: "res/NivelAgua/anzuelo.png",
+    ballena_png: "res/NivelAgua/ballena.png",
+    burbuja_png: "res/NivelAgua/burbuja.png",
+    pez_png: "res/NivelAgua/pez.png",
+    pez_plist: "res/NivelAgua/pez.plist",
+    submarino_png: "res/NivelAgua/submarino.png",
+    torpedo_png: "res/NivelAgua/torpedo.png",
+
+
 };
 
 var g_resources = [];

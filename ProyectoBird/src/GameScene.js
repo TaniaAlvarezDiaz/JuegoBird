@@ -37,6 +37,8 @@ var GameLayer = cc.Layer.extend({
         // nivel bosque
         cc.spriteFrameCache.addSpriteFrames(res.bat_plist);
         cc.spriteFrameCache.addSpriteFrames(res.dragon_plist);
+        //nivel agua
+        cc.spriteFrameCache.addSpriteFrames(res.pez_plist);
 
         // Inicializar Space
         this.space = new cp.Space();
@@ -450,6 +452,22 @@ var GameLayer = cc.Layer.extend({
             this.enemigosConDisparo.push(dragon);
         }
     },
+    cargarAnzuelos: function () {
+        var grupoAnzuelos = this.mapa.getObjectGroup("Anzuelos");
+        var anzuelosArray = grupoAnzuelos.getObjects();
+        for (var i = 0; i < anzuelosArray.length; i++) {
+            var anzuelo = new Anzuelo(this, cc.p(anzuelosArray[i]["x"], anzuelosArray[i]["y"]));
+            this.enemigos.push(anzuelo);
+        }
+    },
+    cargarSubmarinos: function () {
+        var grupoSubmarinos = this.mapa.getObjectGroup("Submarinos");
+        var submarinosArray = grupoSubmarinos.getObjects();
+        for (var i = 0; i < submarinosArray.length; i++) {
+            var submarino = new Submarino(this, cc.p(submarinosArray[i]["x"], submarinosArray[i]["y"]));
+            this.enemigosConDisparo.push(submarino);
+        }
+    },
     cargarHuevosDeOro: function () {
         // Cargar huevos de oro
         var grupohuevos = this.mapa.getObjectGroup("Huevos");
@@ -504,12 +522,12 @@ var GameLayer = cc.Layer.extend({
             this.framesEnemigoVolador = 3;
         }
         else if(nivel == 3){ //Cambiar para el nivel 3
-            this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
-            this.imagenDisparoJugador = res.boomerang_png
-            this.imagenDisparoEnemigo = res.rayo_png;
-            this.imagenEnemigoParabola = res.pelota;
-            this.imagenEnemigoVolador = "animacion_buitre_0";
-            this.framesEnemigoVolador = 8;
+            this.mapa = new cc.TMXTiledMap(res.mapaAgua_tmx);
+            this.imagenDisparoJugador = res.burbuja_png;
+            this.imagenDisparoEnemigo = res.torpedo_png;
+            this.imagenEnemigoParabola = res.ballena_png;
+            this.imagenEnemigoVolador = "pez_0";
+            this.framesEnemigoVolador = 6;
             //Meter en el array this.enemigosConDisparo los enemigos que tengan disparo
             //Meter el resto de enemigos en this.enemigos
         }
@@ -549,6 +567,8 @@ var GameLayer = cc.Layer.extend({
         }
         else if(nivel == 3){
             //Implementar para el nivel 3
+            this.cargarAnzuelos();
+            this.cargarSubmarinos();
         }
 
         this.cargarHuevosDeOro();
@@ -749,6 +769,23 @@ var GameLayer = cc.Layer.extend({
         }
         else if(nivel == 3){
             //Implementar para el nivel 3
+
+            // Eliminar anzuelos
+            for (var i = 0; i < this.enemigos.length; i++) {
+                this.enemigos[i].eliminar();
+            }
+            this.enemigos = [];
+            // Cargar nubes blancas
+            this.cargarAnzuelos();
+
+            // Eliminar submarinos
+            for (var i = 0; i < this.enemigosConDisparo.length; i++) {
+                this.enemigosConDisparo[i].eliminar();
+            }
+            this.enemigosConDisparo = [];
+            // Cargar nubes negras
+            this.cargarSubmarinos();
+
         }
 
         this.recargarElementosComunes();

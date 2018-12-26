@@ -25,7 +25,7 @@ var EnemigoVolador = cc.Class.extend({
             var frame = cc.spriteFrameCache.getSpriteFrame(str);
             framesAnimacion.push(frame);
         }
-        var animacion = new cc.Animation(framesAnimacion, 0.2);
+        var animacion = new cc.Animation(framesAnimacion, 0.1);
         var actionAnimacionBucle =
             new cc.RepeatForever(new cc.Animate(animacion));
         // ejecutar la animación
