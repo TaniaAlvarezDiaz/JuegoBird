@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="15" tilewidth="32" tileheight="32" nextobjectid="17">
+ <tileset firstgid="1" name="fondo_marino_tiles" tilewidth="32" tileheight="32" tilecount="126" columns="14">
+  <image source="fondo_marino_tiles.png" width="448" height="288"/>
+ </tileset>
+ <tileset firstgid="127" name="tubo_bajo_agua_tiles" tilewidth="32" tileheight="32" tilecount="10" columns="5">
+  <image source="tubo_bajo_agua_tiles.png" width="160" height="64"/>
+ </tileset>
+ <tileset firstgid="137" name="huevoNido" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="huevoNido.png" width="32" height="35"/>
+ </tileset>
+ <layer name="FondoMaritimo" width="500" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztw0ENAAAMA6EzVf/WZmJPSFg1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVdWHB/MTERc=
+  </data>
+ </layer>
+ <layer name="FondoPeces" width="500" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt10ENACAMBMFKwr86FPCElnYmOQ2biwAAeG8dBgDkNFGHAaA3rQeAfHoMADVpNAAAAPTj7wPAPToLAAAA9fnvAAAA8B9/HgBm0X4AAACm2R3LAwE=
+  </data>
+ </layer>
+ <layer name="Tubo" width="500" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztzqEBwDAAw7B+3pw+OtyAEAkZ+hwAAAAAAAAAAAAAAAAAeHPXAwBALesBAKCW9QAAUMt6AACoZT0AANSyHgAAalkPAAC1rAcAgFp+/QEU5wSA
+  </data>
+ </layer>
+ <layer name="HuevoObjetivo" width="500" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztzjENAAAMA6Dan+uZaNIHFJAAAAAAAAAAAAAAAMDGrQMAAAAAAAAAAAAAAAAAAAAAANQ9HqYAig==
+  </data>
+ </layer>
+ <objectgroup name="Limites">
+  <object id="2" x="3" y="479">
+   <polyline points="0,0 0,-480 15867,-478 15870,1"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Anzuelos">
+  <object id="3" x="337" y="54" width="55" height="37"/>
+  <object id="4" x="570" y="52" width="55" height="37"/>
+ </objectgroup>
+ <objectgroup name="Submarinos">
+  <object id="8" x="942" y="49" width="71" height="42"/>
+  <object id="10" x="773" y="50" width="71" height="42"/>
+ </objectgroup>
+ <objectgroup name="Huevos">
+  <object id="11" x="1127" y="46" width="64" height="43"/>
+  <object id="12" x="1289" y="45" width="64" height="43"/>
+ </objectgroup>
+ <objectgroup name="ModoControl">
+  <object id="13" x="1475" y="50" width="66" height="39"/>
+  <object id="14" x="1641" y="49" width="66" height="39"/>
+ </objectgroup>
+ <objectgroup name="Vidas">
+  <object id="15" x="1817" y="49" width="78" height="38"/>
+  <object id="16" x="1977" y="49" width="78" height="38"/>
+ </objectgroup>
+</map>

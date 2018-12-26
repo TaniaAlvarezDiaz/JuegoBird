@@ -54,7 +54,10 @@ var res = {
 
 
     // Nivel Agua
-    mapaAgua_tmx: "res/NivelAgua/AguaMapa.tmx",
+    tilesAgua: "res/NivelAgua/fondo_marino_tiles.png",
+    tilesTubo: "res/NivelAgua/tubo_bajo_agua_tiles.png",
+    tilesHuevoNidoBajoAgua: "res/NivelAgua/huevoNido.png",
+    mapaAgua_tmx: "res/NivelAgua/FondoMaritimoMapa.tmx",
     anzuelo_png: "res/NivelAgua/anzuelo.png",
     ballena_png: "res/NivelAgua/ballena.png",
     burbuja_png: "res/NivelAgua/burbuja.png",
