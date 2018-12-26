@@ -528,8 +528,6 @@ var GameLayer = cc.Layer.extend({
             this.imagenEnemigoParabola = res.ballena_png;
             this.imagenEnemigoVolador = "pez_0";
             this.framesEnemigoVolador = 6;
-            //Meter en el array this.enemigosConDisparo los enemigos que tengan disparo
-            //Meter el resto de enemigos en this.enemigos
         }
         // Añadirlo a la Layer
         this.addChild(this.mapa);

@@ -22,7 +22,7 @@ var res = {
     recolectable_inmune_png : "res/apple.png",
     recolectable_inmune_plist : "res/apple.plist",
 
-    //Nivel cielo//
+    //Nivel cielo
     jugador_png: "res/NivelCielo/pajaro.png",
     jugador_plist: "res/NivelCielo/pajaro.plist",
     jugador_impactado_png: "res/pajaro_impactado.png",
@@ -44,8 +44,11 @@ var res = {
     boomerang_png: "res/NivelCielo/Boomerang.png",
     boton_siguiente: "res/boton_siguiente.png",
 
-    //Nivel bosque//
+    //Nivel bosque
     mapaBosque_tmx: "res/NivelBosque/mapaBosque.tmx",
+    tilesNidoBosque_png : "res/NivelBosque/nido_tiles.png",
+    huevoNidoBosque_png : "res/NivelBosque/huevoNido.png",
+    tilesBosque_png : "res/NivelBosque/cielo_tiles.png",
     dragon_png : "res/NivelBosque/dragon.png",
     dragon_plist : "res/NivelBosque/dragon.plist",
     bat_png : "res/NivelBosque/bat.png",
@@ -54,8 +57,6 @@ var res = {
     fire_png : "res/NivelBosque/fire.png",
     tronco_png : "res/NivelBosque/tronco.png",
     kite_png : "res/NivelBosque/kite.png",
-
-
 
     // Nivel Agua
     tilesAgua: "res/NivelAgua/fondo_marino_tiles.png",
