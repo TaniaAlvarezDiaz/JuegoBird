@@ -6,13 +6,13 @@ var ControlesLayer = cc.Layer.extend({
         // Contador Huevos
         this.huevos = 0;
         this.etiquetaHuevos = new cc.LabelTTF("Huevos: 0", "Helvetica", 20);
-        this.etiquetaHuevos.setPosition(cc.p(size.width - 80, size.height - 20));
+        this.etiquetaHuevos.setPosition(cc.p(size.width - size.width / 6, size.height - 20));
         this.etiquetaHuevos.fillStyle = new cc.Color(0, 0, 0, 0);
         this.addChild(this.etiquetaHuevos);
 
         // Contador Vidas
         this.etiquetaVidas = new cc.LabelTTF("Vidas: 5", "Helvetica", 20);
-        this.etiquetaVidas.setPosition(cc.p(size.width - size.width / 4, size.height - 20));
+        this.etiquetaVidas.setPosition(cc.p(size.width - ((size.width/6)*2), size.height - 20));
         this.etiquetaVidas.fillStyle = new cc.Color(0, 0, 0, 0);
         this.addChild(this.etiquetaVidas);
 

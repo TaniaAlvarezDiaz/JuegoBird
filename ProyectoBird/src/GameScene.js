@@ -39,7 +39,14 @@ var GameLayer = cc.Layer.extend({
 
         // Inicializar Space
         this.space = new cp.Space();
-        this.space.gravity = cp.v(0, -350);
+        if (nivel === 1) {
+            this.space.gravity = cp.v(0, -300); // Cuando más arriba, menor es la fuerza de la gravedad
+        } else if (nivel === 2) {
+            this.space.gravity = cp.v(0, -350);
+        } else if (nivel === 3) {
+            this.space.gravity = cp.v(0, -250); // Bajo el agua un cuerpo se hunde lentamente
+        }
+
 
         // Depuración
         //this.depuracion = new cc.PhysicsDebugNode(this.space);
