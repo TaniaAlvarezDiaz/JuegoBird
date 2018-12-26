@@ -42,7 +42,14 @@ var GameLayer = cc.Layer.extend({
 
         // Inicializar Space
         this.space = new cp.Space();
-        this.space.gravity = cp.v(0, -350);
+        if (nivel === 1) {
+            this.space.gravity = cp.v(0, -300); // Cuando más arriba, menor es la fuerza de la gravedad
+        } else if (nivel === 2) {
+            this.space.gravity = cp.v(0, -350);
+        } else if (nivel === 3) {
+            this.space.gravity = cp.v(0, -250); // Bajo el agua un cuerpo se hunde lentamente
+        }
+
 
         // Depuración
         //this.depuracion = new cc.PhysicsDebugNode(this.space);
@@ -75,6 +82,8 @@ var GameLayer = cc.Layer.extend({
         this.numIteraccionesDisparos = 0;
         this.numIteraccionesParabolas = 0;
         this.numIteraccionesEnemigosVoladores = 0;
+        this.record = 0;
+        this.tiempoRefrescarRecord = 0.5;
 
         this.jugador = new Jugador(this, cc.p(50, 150));
 
@@ -118,11 +127,11 @@ var GameLayer = cc.Layer.extend({
 
         //Enemigo y jugador (y con pictazo)
         this.space.addCollisionHandler(tipoEnemigo, tipoJugador,
-            null, null, this.collisionEnemigoConJugador.bind(this), null);
+            null, this.collisionEnemigoConJugador.bind(this), null, null);
 
         //DisparoEnemigo y jugador
         this.space.addCollisionHandler(tipoDisparoEnemigo, tipoJugador,
-            null, null, this.collisionDisparoEnemigoConJugador.bind(this), null);
+            null, this.collisionDisparoEnemigoConJugador.bind(this), null, null);
 
         //DisparoJugador y enemigo
         this.space.addCollisionHandler(tipoDisparoJugador, tipoEnemigo,
@@ -134,7 +143,7 @@ var GameLayer = cc.Layer.extend({
 
         //Cambiar modo de juego
         this.space.addCollisionHandler(tipoModoControl, tipoJugador,
-            null, null, this.collisionModoControlConJugador.bind(this), null);
+            null, this.collisionModoControlConJugador.bind(this), null, null);
 
         // Jugador y pinchos
         /*this.space.addCollisionHandler(tipoJugador, tipoPincho,
@@ -156,6 +165,18 @@ var GameLayer = cc.Layer.extend({
     },
     update: function (dt) {
         this.procesarControles();
+
+        // Record
+        var posicionActual = Math.floor(this.jugador.body.p.x / 32);
+        if (posicionActual > this.record) {
+            this.record = posicionActual;
+        }
+        if (this.tiempoRefrescarRecord < 0) {
+            this.notificarCambioRecord();
+            this.tiempoRefrescarRecord = 0.5;
+        } else {
+            this.tiempoRefrescarRecord = this.tiempoRefrescarRecord - dt;
+        }
 
         // Control del tiempo del turbo
         if (this.tiempoTurbo > 0) {
@@ -598,32 +619,42 @@ var GameLayer = cc.Layer.extend({
 
     },
     collisionEnemigoConJugador: function (arbiter, space) {
-        if(this.jugador.picotazo != estadoPicotazo){
-            this.jugador.impactado();
-            console.log("IMPACTADO");
+        if (this.tiempoTurbo > 0) {
             var shapes = arbiter.getShapes();
             this.enemigosEliminar.push(shapes[0]);
-            if (this.jugador.vidas === 0) {
-                this.restaurarJugador();
+        } else {
+            if(this.jugador.picotazo != estadoPicotazo){
+                this.jugador.impactado();
+                console.log("IMPACTADO");
+                var shapes = arbiter.getShapes();
+                this.enemigosEliminar.push(shapes[0]);
+                if (this.jugador.vidas === 0) {
+                    this.restaurarJugador();
+                }
+                else{
+                    this.notificarCambioVidas();
+                }
             }
-            else{
-                this.notificarCambioVidas();
+            else if(this.jugador.picotazo == estadoPicotazo){
+                // Eliminar al enemigo
+                var shapes = arbiter.getShapes();
+                this.enemigosEliminar.push(shapes[0]);
             }
-        }
-        else if(this.jugador.picotazo == estadoPicotazo){
-            // Eliminar al enemigo
-            var shapes = arbiter.getShapes();
-            this.enemigosEliminar.push(shapes[0]);
         }
     },
     collisionDisparoEnemigoConJugador: function (arbiter, space) {
-        this.jugador.impactado();
-        var shapes = arbiter.getShapes();
-        this.disparosEnemigosEliminar.push(shapes[0]);
-        if (this.jugador.vidas == 0) {
-            this.restaurarJugador();
+        if (this.tiempoTurbo > 0) {
+            var shapes = arbiter.getShapes();
+            this.disparosEnemigosEliminar.push(shapes[0]);
         } else {
-            this.notificarCambioVidas();
+            this.jugador.impactado();
+            var shapes = arbiter.getShapes();
+            this.disparosEnemigosEliminar.push(shapes[0]);
+            if (this.jugador.vidas == 0) {
+                this.restaurarJugador();
+            } else {
+                this.notificarCambioVidas();
+            }
         }
     },
     collisionDisparoJugadorConEnemigo: function (arbiter, space) {
@@ -680,12 +711,23 @@ var GameLayer = cc.Layer.extend({
             this.getParent().getChildByTag(idCapaControles);
         capaControles.actualizarInterfazVidas();
     },
+    notificarCambioTurbos: function () {
+        var capaControles =
+            this.getParent().getChildByTag(idCapaControles);
+        capaControles.actualizarInterfazTurbos();
+    },
+    notificarCambioRecord: function () {
+        var capaControles =
+            this.getParent().getChildByTag(idCapaControles);
+        capaControles.actualizarInterfazRecord();
+    },
     restaurarJugador: function () {
         this.jugador.body.p = cc.p(50, 150);
         this.jugador.vidas = 5;
         this.jugador.turbos = 3;
         var capaControles = this.getParent().getChildByTag(idCapaControles);
         capaControles.actualizarInterfazVidas();
+        capaControles.actualizarInterfazTurbos();
         capaControles.borrarHuevos();
         this.jugador.estado = estadoSaltando;
         this.tiempoTurbo = 0;
@@ -814,6 +856,13 @@ var GameLayer = cc.Layer.extend({
                 case 83:
                     // picotazo - tecla S
                     controles.picotazo = 1;
+                    break;
+                case 65:
+                    // Turbo - tecla A
+                    if (this.jugador.turbos > 0) {
+                        this.jugador.impulsar();
+                        this.notificarCambioTurbos();
+                    }
                     break;
             }
         }

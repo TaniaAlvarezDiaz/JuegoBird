@@ -6,15 +6,27 @@ var ControlesLayer = cc.Layer.extend({
         // Contador Huevos
         this.huevos = 0;
         this.etiquetaHuevos = new cc.LabelTTF("Huevos: 0", "Helvetica", 20);
-        this.etiquetaHuevos.setPosition(cc.p(size.width - 80, size.height - 20));
+        this.etiquetaHuevos.setPosition(cc.p(size.width - size.width / 6, size.height - 20));
         this.etiquetaHuevos.fillStyle = new cc.Color(0, 0, 0, 0);
         this.addChild(this.etiquetaHuevos);
 
         // Contador Vidas
         this.etiquetaVidas = new cc.LabelTTF("Vidas: 5", "Helvetica", 20);
-        this.etiquetaVidas.setPosition(cc.p(size.width - size.width / 4, size.height - 20));
+        this.etiquetaVidas.setPosition(cc.p(size.width - ((size.width/6)*2), size.height - 20));
         this.etiquetaVidas.fillStyle = new cc.Color(0, 0, 0, 0);
         this.addChild(this.etiquetaVidas);
+
+        // Contador Turbos
+        this.etiquetaTurbos = new cc.LabelTTF("Turbos: 3", "Helvetica", 20);
+        this.etiquetaTurbos.setPosition(cc.p(size.width - size.width / 2, size.height - 20));
+        this.etiquetaTurbos.fillStyle = new cc.Color(0, 0, 0, 0);
+        this.addChild(this.etiquetaTurbos);
+
+        // Contador Record
+        this.etiquetaRecord = new cc.LabelTTF("Record: 0", "Helvetica", 20);
+        this.etiquetaRecord.setPosition(cc.p(size.width - ((size.width/6)*4), size.height - 20));
+        this.etiquetaRecord.fillStyle = new cc.Color(0, 0, 0, 0);
+        this.addChild(this.etiquetaRecord);
 
         // Picotazo sticker
         this.picotazoSticker = cc.Sprite.create(res.picotazoSticker);
@@ -37,6 +49,14 @@ var ControlesLayer = cc.Layer.extend({
     actualizarInterfazVidas: function () {
         var gameLayer = this.getParent().getChildByTag(idCapaJuego);
         this.etiquetaVidas.setString("Vidas: " + gameLayer.jugador.vidas);
+    },
+    actualizarInterfazTurbos: function () {
+        var gameLayer = this.getParent().getChildByTag(idCapaJuego);
+        this.etiquetaTurbos.setString("Turbos: " + gameLayer.jugador.turbos);
+    },
+    actualizarInterfazRecord: function () {
+        var gameLayer = this.getParent().getChildByTag(idCapaJuego);
+        this.etiquetaRecord.setString("Record: " + gameLayer.record);
     },
     addStickerPicotazo: function () {
         this.addChild(this.picotazoSticker);
