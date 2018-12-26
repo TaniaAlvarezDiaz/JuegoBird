@@ -646,7 +646,7 @@ var GameLayer = cc.Layer.extend({
     },
     collisionJugadorConRecolectableInmune: function (arbiter, space) {
         var shapes = arbiter.getShapes();
-        this.recolectablesInmune.push(shapes[1]);
+        this.recolectablesInmuneEliminar.push(shapes[1]);
         this.jugador.inmune();
     },
     collisionModoControlConJugador: function (arbiter, space) {

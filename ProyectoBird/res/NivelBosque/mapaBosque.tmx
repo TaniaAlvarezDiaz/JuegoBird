@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="15" tilewidth="32" tileheight="32" nextobjectid="19">
+ <tileset firstgid="1" name="cielo_tiles" tilewidth="32" tileheight="32" tilecount="55" columns="5">
+  <image source="cielo_tiles.png" width="160" height="352"/>
+ </tileset>
+ <tileset firstgid="56" name="nido_tiles" tilewidth="32" tileheight="32" tilecount="45" columns="5">
+  <image source="nido_tiles.png" width="160" height="288"/>
+ </tileset>
+ <tileset firstgid="101" name="huevoNido" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="huevoNido.png" width="32" height="35"/>
+ </tileset>
+ <layer name="Fondo" width="500" height="15" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJzt2DsOgCAQQEG8B/c/p60xRBTWH0wxFVnZ7qlLSmkBAAAAAADC5A/sAAD0+VLPc8HbOwHAH7R0847elp6n6QBw3lGfS9/MeXcWtUNtv9ZzAJjJUbtrMxF3t96j5QDQr7fpV2Zb3jkAgHOe6vl2RscBIJa+AsAY/P8GgHHoOQAAAAAAM1gBaqkj8g==
+  </data>
+ </layer>
+ <layer name="FondoNido" width="500" height="15" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJzt1UtOQgEURMG3LRBRUEEF/AAi4P73YW8B7uCGpCo58571MAAAt2aUxukuTZq3AAA192naPQIAKHvoHgAAlD13DwAALvaYZmmengZ/DgC36CUt0jK9prfeOQDAFd7TKq3TJn30zgEArvCZvtJ32qZd7xwAoGiffrpHAABlh+4BAEDZb/cAAKDs2D0AACg7dQ8AAMrO3QMAgLK/9A8SQApj
+  </data>
+ </layer>
+ <layer name="HuevoNido" width="500" height="15" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztzjENAAAMA6CanX8LM9GkDyggAQAAAAAAAAAAAACAjVsHAAAAAAAAAAAAAAAAAAAAAACoezkgAGY=
+  </data>
+ </layer>
+ <objectgroup name="Limites" visible="0">
+  <object id="2" x="15968" y="478">
+   <polyline points="0,0 1,-197 -36,-234 -123,-237 -139,-272 -136,-291 2,-290 2,-373 2,-415 -50,-441 -84,-477 -15966,-479 -15967,-3"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Troncos">
+  <object id="3" x="1155" y="95" width="29" height="33"/>
+  <object id="4" x="1465" y="239" width="30" height="25"/>
+  <object id="5" x="1690" y="195" width="32" height="34"/>
+ </objectgroup>
+ <objectgroup name="Dragones">
+  <object id="6" x="1320" y="44" width="26" height="28"/>
+  <object id="7" x="1239" y="364" width="29" height="31"/>
+ </objectgroup>
+ <objectgroup name="Huevos">
+  <object id="8" x="1440" y="147" width="22" height="27"/>
+  <object id="9" x="1688" y="99" width="24" height="31"/>
+  <object id="10" x="1683" y="334" width="25" height="27"/>
+ </objectgroup>
+ <objectgroup name="NidoSuelo">
+  <object id="11" x="15974" y="397" width="23" height="21"/>
+ </objectgroup>
+ <objectgroup name="ModoControl">
+  <object id="12" x="358" y="70" width="39" height="32"/>
+  <object id="13" x="545" y="326" width="116" height="64"/>
+ </objectgroup>
+ <objectgroup name="Vidas">
+  <object id="14" x="563" y="125" width="28" height="29"/>
+  <object id="15" x="371" y="289" width="36" height="36"/>
+  <object id="16" x="693" y="53" width="24" height="17"/>
+ </objectgroup>
+ <objectgroup name="RecolectablesInmune">
+  <object id="17" x="751" y="322" width="34" height="32"/>
+  <object id="18" x="1305" y="188" width="43" height="32"/>
+ </objectgroup>
+</map>

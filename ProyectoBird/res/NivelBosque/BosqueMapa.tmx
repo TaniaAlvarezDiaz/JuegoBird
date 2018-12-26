@@ -11,7 +11,7 @@
  </tileset>
  <layer name="Fondo" width="500" height="15">
   <data encoding="base64" compression="zlib">
-   eJztw0ENAAAMA6Grf9MzsSckrJqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq6sMDsYMdTQ==
+   eJzt17EJAEAIBMGzCvvv9It4BJEJJt90K0kBAAAAAAAAAADAMb2gAQAAAPjj7wEAAGCO7wYAAAAAAAAAAAAAYNIDw8Mdjw==
   </data>
  </layer>
  <layer name="FondoNido" width="500" height="15">

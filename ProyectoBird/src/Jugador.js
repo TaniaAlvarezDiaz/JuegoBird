@@ -88,7 +88,7 @@ var Jugador = cc.Class.extend({
             framesAnimacionInmune.push(frame);
         }
         var animacionInmune = new cc.Animation(framesAnimacionInmune, 0.2);
-        this.aInmune = new cc.RepeatForever(new cc.Animate(animacionInmune), 2);
+        this.aInmune = new cc.RepeatForever(new cc.Animate(animacionInmune));
         this.aInmune.retain();
 
         // Animaión actual
@@ -183,6 +183,7 @@ var Jugador = cc.Class.extend({
                 if (this.animacion != this.aInmune) {
                     this.animacion = this.aInmune;
                     this.sprite.stopAllActions();
+                    //this.sprite.runAction(this.animacion);
                     this.sprite.runAction(
                         cc.Sequence(
                             this.animacion,
@@ -204,13 +205,17 @@ var Jugador = cc.Class.extend({
         }*/
     },
     impactado: function () {
-        if (this.tiempoInvulnerable <= 0) {
-            this.tiempoInvulnerable = 100;
-            this.estado = estadoImpactado;
-            if (this.vidas > 0) {
-                this.restarVida();
+        if (this.tiempoInmune <= 0) {
+            this.tiempoInmune = 200;
+            if (this.tiempoInvulnerable <= 0) {
+                this.tiempoInvulnerable = 100;
+                this.estado = estadoImpactado;
+                if (this.vidas > 0) {
+                    this.restarVida();
+                }
             }
         }
+
         /*if (this.estado !== estadoImpactado) {
             this.estado = estadoImpactado;
         }*/
@@ -224,10 +229,11 @@ var Jugador = cc.Class.extend({
         if (this.tiempoInmune <= 0) {
             this.tiempoInmune = 200;
             this.estado = estadoInmune;
+            console.log("IMNUNE");
         }
     },
     finAnimacionInmune: function () {
-      if (this.estado == estadoInmune) {
+      if (this.estado === estadoInmune) {
           this.estado = estadoSaltando;
       }
     },
@@ -235,10 +241,7 @@ var Jugador = cc.Class.extend({
         this.vidas++;
     },
     restarVida: function () {
-        //Si ya no esta inmune
-        if (this.tiempoInmune <= 0) {
-            this.vidas--;
-        }
+        this.vidas--;
     },
     impulsar: function () {
         this.turbos--;

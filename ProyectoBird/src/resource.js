@@ -45,7 +45,7 @@ var res = {
     boton_siguiente: "res/boton_siguiente.png",
 
     //Nivel bosque//
-    mapaBosque_tmx: "res/NivelBosque/BosqueMapa.tmx",
+    mapaBosque_tmx: "res/NivelBosque/mapaBosque.tmx",
     dragon_png : "res/NivelBosque/dragon.png",
     dragon_plist : "res/NivelBosque/dragon.plist",
     bat_png : "res/NivelBosque/bat.png",
