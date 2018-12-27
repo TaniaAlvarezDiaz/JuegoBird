@@ -15,6 +15,9 @@ var EnemigoParabola = cc.Class.extend({
         this.shape.setCollisionType(tipoEnemigo);
         gameLayer.space.addShape(this.shape);
         gameLayer.addChild(this.sprite,10);
+        this.tipo = "enemigoParabolico";
+        this.clonado = false;
+        this.permiteClonacion = false;
         this.body.applyImpulse(cp.v(velocidadX, velocidadY), cp.v(0, 0));
     },
     eliminar: function (){
