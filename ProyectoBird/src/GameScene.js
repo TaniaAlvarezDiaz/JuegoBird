@@ -230,8 +230,24 @@ var GameLayer = cc.Layer.extend({
             var velocidadX = Math.round(Math.random());
             var velocidadY = Math.floor(Math.random() *(3000 - 2000) + 2000);
             var enemigoParabola = new EnemigoParabola(this,this.imagenEnemigoParabola,cc.p(r,-20),arrayVelocidad[velocidadX],velocidadY);
+            enemigoParabola.permiteClonacion = true;
             this.enemigos.push(enemigoParabola);
             this.numIteraccionesParabolas = 0;
+        }
+
+        // Clonación de enemigos con parábolas, el enemigo original desaparece y genera dos clones
+        for (var i = 0; i < this.enemigos.length; i++) {
+            var enemigo = this.enemigos[i];
+            if (enemigo.tipo && enemigo.tipo === "enemigoParabolico" && !enemigo.clonado && enemigo.permiteClonacion && enemigo.body.p.y > 150) {
+                enemigo.clonado = true;
+                //console.log("Generar clones");
+                this.enemigosEliminar.push(enemigo.shape);
+                var direccionEnemigo = enemigo.body.vx / Math.abs(enemigo.body.vx); // Izq: -1, Dcha: 1
+                var primerClon = new EnemigoParabola(this,this.imagenEnemigoParabola,cc.p(enemigo.body.p.x, enemigo.body.p.y + 25),enemigo.body.vx + 500 * direccionEnemigo,enemigo.body.vy + 1000);
+                var segundoClon = new EnemigoParabola(this,this.imagenEnemigoParabola,cc.p(enemigo.body.p.x, enemigo.body.p.y - 25),enemigo.body.vx + 200 * direccionEnemigo,enemigo.body.vy + 600);
+                this.enemigos.push(primerClon);
+                this.enemigos.push(segundoClon);
+            }
         }
 
         //Crear y actualizar enemigos que vuelan
