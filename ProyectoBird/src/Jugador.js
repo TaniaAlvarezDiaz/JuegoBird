@@ -4,7 +4,6 @@ var estadoDisparando = 4;
 var estadoSinDisparar = 5;
 var estadoPicotazo = 6;
 var estadoSinPicotazo = 7;
-var estadoInmune = 8;
 
 var Jugador = cc.Class.extend({
     ctor: function (gameLayer, posicion) {
@@ -87,7 +86,7 @@ var Jugador = cc.Class.extend({
             var frame = cc.spriteFrameCache.getSpriteFrame(str);
             framesAnimacionInmune.push(frame);
         }
-        var animacionInmune = new cc.Animation(framesAnimacionInmune, 0.2);
+        var animacionInmune = new cc.Animation(framesAnimacionInmune, 0.4);
         this.aInmune = new cc.Repeat(new cc.Animate(animacionInmune), 1);
         this.aInmune.retain();
 
@@ -173,22 +172,16 @@ var Jugador = cc.Class.extend({
                 }*/
                 break;
             case estadoSaltando:
-                if (this.animacion != this.aSaltar) {
-                    this.animacion = this.aSaltar;
-                    this.sprite.stopAllActions();
-                    this.sprite.runAction(this.animacion);
-                }
-                break;
-            case estadoInmune:
-                if (this.animacion != this.aInmune) {
+                if (this.tiempoInmune > 0) {
                     this.animacion = this.aInmune;
                     this.sprite.stopAllActions();
-                   /* this.sprite.runAction(
-                        cc.Sequence(
-                            this.animacion,
-                            cc.callFunc(this.finAnimacionInmune(), this)
-                        )
-                    );*/
+                    this.sprite.runAction(this.animacion);
+                }else {
+                    if (this.animacion != this.aSaltar) {
+                        this.animacion = this.aSaltar;
+                        this.sprite.stopAllActions();
+                        this.sprite.runAction(this.animacion);
+                    }
                 }
                 break;
         }
@@ -204,7 +197,7 @@ var Jugador = cc.Class.extend({
         }*/
     },
     impactado: function () {
-        if (this.estado != estadoInmune) {
+        if (this.tiempoInmune <= 0) {
 
             if (this.tiempoInvulnerable <= 0) {
                 this.tiempoInvulnerable = 100;
@@ -215,10 +208,6 @@ var Jugador = cc.Class.extend({
             }
 
         }
-
-        /*if (this.estado !== estadoImpactado) {
-            this.estado = estadoImpactado;
-        }*/
     },
     finAnimacionImpactado: function () {
         if (this.estado === estadoImpactado) {
@@ -228,14 +217,7 @@ var Jugador = cc.Class.extend({
     inmune: function () {
         if (this.tiempoInmune <= 0) {
             this.tiempoInmune = 200;
-            this.estado = estadoInmune;
-            console.log("IMNUNE");
         }
-    },
-    finAnimacionInmune: function () {
-      if (this.estado === estadoInmune) {
-          this.estado = estadoSaltando;
-      }
     },
     sumarVida: function () {
         this.vidas++;

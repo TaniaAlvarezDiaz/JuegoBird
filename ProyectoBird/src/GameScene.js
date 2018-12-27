@@ -602,19 +602,11 @@ var GameLayer = cc.Layer.extend({
         //this.jugador.estado = estadoSaltando;
     },
     collisionJugadorConHuevo: function (arbiter, space) {
-        // Emisión de partículas
-        /*this._emitter.setEmissionRate(5);
-        this.tiempoEfecto = 3;
-
-        // Impulso extra
-        this.jugador.body.applyImpulse(cp.v(300, 0), cp.v(0, 0));*/
-
         // Marcar el huevo para eliminarla
         var shapes = arbiter.getShapes();
         // shapes[0] es el jugador
         this.huevosEliminar.push(shapes[1]);
-        var capaControles =
-            this.getParent().getChildByTag(idCapaControles);
+        var capaControles = this.getParent().getChildByTag(idCapaControles);
         capaControles.agregarHuevos();
 
     },
@@ -658,9 +650,9 @@ var GameLayer = cc.Layer.extend({
         }
     },
     collisionDisparoJugadorConEnemigo: function (arbiter, space) {
-    var shapes = arbiter.getShapes();
-    this.disparosEnemigosEliminar.push(shapes[0]);
-    this.enemigosEliminar.push(shapes[1]);
+        var shapes = arbiter.getShapes();
+        this.disparosEnemigosEliminar.push(shapes[0]);
+        this.enemigosEliminar.push(shapes[1]);
     },
     collisionDisparoEnemigoConDisparoJugador: function (arbiter, space) {
         var shapes = arbiter.getShapes();
@@ -695,6 +687,7 @@ var GameLayer = cc.Layer.extend({
         var shapes = arbiter.getShapes();
         this.recolectablesInmuneEliminar.push(shapes[1]);
         this.jugador.inmune();
+        console.log("INMUNE");
     },
     collisionModoControlConJugador: function (arbiter, space) {
         if(this.modoControl == true){
