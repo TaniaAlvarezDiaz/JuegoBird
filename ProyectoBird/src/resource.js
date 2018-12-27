@@ -66,6 +66,10 @@ var res = {
     submarino_png: "res/NivelAgua/submarino.png",
     torpedo_png: "res/NivelAgua/torpedo.png",
 
+    // Sonidos
+    sonido_turbo_mp3 : "res/sonido_turbo.mp3",
+    sonido_sumar_vida_mp3: "res/sonido_sumar_vida.mp3",
+
 
 };
 

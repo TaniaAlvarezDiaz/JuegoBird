@@ -193,12 +193,14 @@ var Jugador = cc.Class.extend({
         }
     },
     sumarVida: function () {
+        cc.audioEngine.playEffect(res.sonido_sumar_vida_mp3);
         this.vidas++;
     },
     restarVida: function () {
         this.vidas--;
     },
     impulsar: function () {
+        cc.audioEngine.playEffect(res.sonido_turbo_mp3);
         this.turbos--;
         this.gameLayer.tiempoTurbo = 1;
         this.body.applyImpulse(cp.v(6000, 0), cp.v(0, 0));
