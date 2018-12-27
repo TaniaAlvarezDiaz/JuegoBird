@@ -75,7 +75,7 @@ var Jugador = cc.Class.extend({
             var frame = cc.spriteFrameCache.getSpriteFrame(str);
             framesAnimacionImpactado.push(frame);
         }
-        var animacionImpactado = new cc.Animation(framesAnimacionImpactado, 0.2);
+        var animacionImpactado = new cc.Animation(framesAnimacionImpactado, 0.4);
         this.aImpactado = new cc.Repeat(new cc.Animate(animacionImpactado),1);
         this.aImpactado.retain();
 
@@ -177,11 +177,18 @@ var Jugador = cc.Class.extend({
                     this.sprite.stopAllActions();
                     this.sprite.runAction(this.animacion);
                 }else {
-                    if (this.animacion != this.aSaltar) {
-                        this.animacion = this.aSaltar;
+                   /* if (this.tiempoInvulnerable > 0) {
+                        this.animacion = this.aImpactado;
                         this.sprite.stopAllActions();
                         this.sprite.runAction(this.animacion);
-                    }
+                    }else {*/
+                        if (this.animacion != this.aSaltar) {
+                            this.animacion = this.aSaltar;
+                            this.sprite.stopAllActions();
+                            this.sprite.runAction(this.animacion);
+                        }
+                   // }
+
                 }
                 break;
         }
