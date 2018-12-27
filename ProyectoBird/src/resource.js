@@ -73,6 +73,7 @@ var res = {
     // Sonidos
     sonido_turbo_mp3 : "res/sonido_turbo.mp3",
     sonido_sumar_vida_mp3: "res/sonido_sumar_vida.mp3",
+    sonido_recoger_huevo_mp3 : "res/sonido_recoger_huevo.mp3",
 
 
 };
