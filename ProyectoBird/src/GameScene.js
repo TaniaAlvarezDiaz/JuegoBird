@@ -1,15 +1,13 @@
 var tipoLimite = 1;
 var tipoJugador = 2;
 var tipoEnemigo = 4;
-var tipoEnemigoDerecha = 5;
-var tipoEnemigoIzquierda = 6;
-var tipoPieJugador = 7;
-var tipoVida = 8;
-var tipoDisparoJugador = 9;
-var tipoDisparoEnemigo = 10;
-var tipoModoControl = 11;
-var tipoHuevo = 12;
-var tipoRecolectableInmune = 13;
+var tipoPieJugador = 5;
+var tipoVida = 6;
+var tipoDisparoJugador = 7;
+var tipoDisparoEnemigo = 8;
+var tipoModoControl = 9;
+var tipoHuevo = 10;
+var tipoRecolectableInmune = 11;
 
 var nivel = 1;
 
@@ -25,7 +23,6 @@ var GameLayer = cc.Layer.extend({
         // Zona de cache
         cc.spriteFrameCache.addSpriteFrames(res.jugador_plist);
         cc.spriteFrameCache.addSpriteFrames(res.vida_plist);
-        cc.spriteFrameCache.addSpriteFrames(res.jugador_saltar_plist);
         cc.spriteFrameCache.addSpriteFrames(res.jugador_impactado_plist);
         cc.spriteFrameCache.addSpriteFrames(res.jugador_inmune_plist);
         cc.spriteFrameCache.addSpriteFrames(res.recolectable_inmune_plist);
@@ -102,16 +99,6 @@ var GameLayer = cc.Layer.extend({
 
         // Zona de escuchadores de colisiones
 
-        // Suelo y Jugador (en lugar de con toda la caja que envuelve al jugador, solo tendré en cuenta el "pie")
-        /*this.space.addCollisionHandler(tipoSuelo, tipoJugador,
-            null, null, this.collisionSueloConJugador.bind(this), this.finCollisionSueloConJugador.bind(this));*/
-
-        // Suelo y pie del jugador
-        /*this.space.addCollisionHandler(tipoSuelo, tipoPieJugador,
-            null, null, this.collisionSueloConJugador.bind(this), this.finCollisionSueloConJugador.bind(this));*/
-        this.space.addCollisionHandler(tipoLimite, tipoPieJugador,
-            null, this.collisionSueloConJugador.bind(this), null, this.finCollisionSueloConJugador.bind(this));
-
         // Jugador y huevo
         // IMPORTANTE: Invocamos el método antes de resolver la colisión (realmente no habrá colisión por la propiedad SENSOR del Huevo).
         this.space.addCollisionHandler(tipoJugador, tipoHuevo,
@@ -144,22 +131,6 @@ var GameLayer = cc.Layer.extend({
         //Cambiar modo de juego
         this.space.addCollisionHandler(tipoModoControl, tipoJugador,
             null, this.collisionModoControlConJugador.bind(this), null, null);
-
-        // Jugador y pinchos
-        /*this.space.addCollisionHandler(tipoJugador, tipoPincho,
-            null, this.collisionJugadorConPincho.bind(this), null, null);*/
-
-        // Nota: Las colisiones de las patas las he hecho de manera distinta al guión.
-        // En el guión se gestionaba en el Enemigo, pero solamente afectaba al último enemigo que se colocaba,
-        // ya que el manejador se machacaba cada vez que se creaba un nuevo enemigo.
-
-        // Pata izquierda del enemigo con el suelo
-        this.space.addCollisionHandler(tipoLimite, tipoEnemigoIzquierda,
-            null, null, null, this.enemigoNoSueloIzquierda.bind(this));
-
-        // Pata derecha del enemigo con el suelo
-        this.space.addCollisionHandler(tipoLimite, tipoEnemigoDerecha,
-            null, null, null, this.enemigoNoSueloDerecha.bind(this));
 
         return true;
     },
@@ -590,7 +561,7 @@ var GameLayer = cc.Layer.extend({
                 this.space.addStaticShape(shapeLimite);
             }
         }
-        if(nivel == 1){ //Para el nivel cielo
+        if(nivel == 1){
             this.cargarNubesBlancas();
             this.cargarNubesNegras();
         }
@@ -599,7 +570,6 @@ var GameLayer = cc.Layer.extend({
             this.cargarDragones();
         }
         else if(nivel == 3){
-            //Implementar para el nivel 3
             this.cargarAnzuelos();
             this.cargarSubmarinos();
         }
@@ -610,16 +580,9 @@ var GameLayer = cc.Layer.extend({
         this.cargarRecolectablesInmune();
 
     },
-    collisionSueloConJugador: function (arbiter, space) {
-        this.jugador.tocaSuelo();
-    },
-    finCollisionSueloConJugador: function (arbiter, space) {
-        this.jugador.dejaDeTocarSuelo();
-        //this.jugador.estado = estadoSaltando;
-    },
     collisionJugadorConHuevo: function (arbiter, space) {
         cc.audioEngine.playEffect(res.sonido_recoger_huevo_mp3);
-        // Marcar el huevo para eliminarla
+        // Marcar el huevo para eliminarlo
         var shapes = arbiter.getShapes();
         // shapes[0] es el jugador
         this.huevosEliminar.push(shapes[1]);
@@ -634,7 +597,6 @@ var GameLayer = cc.Layer.extend({
         } else {
             if(this.jugador.picotazo != estadoPicotazo){
                 this.jugador.impactado();
-                console.log("IMPACTADO");
                 var shapes = arbiter.getShapes();
                 this.enemigosEliminar.push(shapes[0]);
                 if (this.jugador.vidas === 0) {
@@ -676,24 +638,6 @@ var GameLayer = cc.Layer.extend({
         this.disparosEnemigosEliminar.push(shapes[0]);
         this.disparosEnemigosEliminar.push(shapes[1]);
     },
-    enemigoNoSueloDerecha: function (arbiter, space) {
-        var shapes = arbiter.getShapes();
-        var pataDerecha = shapes[1];
-        for (var i = 0; i < this.enemigos.length; i++) {
-            if (pataDerecha === this.enemigos[i].shapeDercha) {
-                this.enemigos[i].orientacion = -1;
-            }
-        }
-    },
-    enemigoNoSueloIzquierda: function (arbiter, space) {
-        var shapes = arbiter.getShapes();
-        var pataIzquierda = shapes[1];
-        for (var i = 0; i < this.enemigos.length; i++) {
-            if (pataIzquierda === this.enemigos[i].shapeIzquierda) {
-                this.enemigos[i].orientacion = 1;
-            }
-        }
-    },
     collisionJugadorConVida: function (arbiter, space) {
         var shapes = arbiter.getShapes();
         this.vidasEliminar.push(shapes[1]);
@@ -704,7 +648,6 @@ var GameLayer = cc.Layer.extend({
         var shapes = arbiter.getShapes();
         this.recolectablesInmuneEliminar.push(shapes[1]);
         this.jugador.inmune();
-        console.log("INMUNE");
     },
     collisionModoControlConJugador: function (arbiter, space) {
         if(this.modoControl == true){
@@ -776,10 +719,7 @@ var GameLayer = cc.Layer.extend({
         this.cargarVidas();
     },
     recargarElementos: function () {
-        if(nivel == 1){ //Para el nivel cielo
-
-            // Elementos a restaurar en el nivel cielo: Nubes blancas, nubes negras, huevos, vidas, modos de control
-
+        if(nivel == 1){
             // Eliminar nubes blancas
             for (var i = 0; i < this.enemigos.length; i++) {
                 this.enemigos[i].eliminar();
@@ -833,10 +773,6 @@ var GameLayer = cc.Layer.extend({
         }
 
         this.recargarElementosComunes();
-    },
-    collisionJugadorConPincho: function () {
-        // Al pincharse, el jugador pierde directamente
-        this.restaurarJugador();
     },
     procesarKeyPressed:function(keyCode){
         var posicion = teclas.indexOf(keyCode);

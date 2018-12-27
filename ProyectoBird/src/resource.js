@@ -2,31 +2,22 @@ var res = {
     HelloWorld_png: "res/HelloWorld.png",
     CloseNormal_png: "res/CloseNormal.png",
     CloseSelected_png: "res/CloseSelected.png",
+    pantalla_inicio_png: "res/pantallaInicio.png",
     boton_jugar_png: "res/boton_jugar.png",
-    menu_png: "res/menu.png",
-    tiles32_png: "res/tiles32.png",
-    mapa1_tmx: "res/mapa1.tmx",
-    jugador_caminar_png: "res/jugador_caminar.png",
-    jugador_caminar_plist: "res/jugador_caminar.plist",
-    jugador_saltar_png: "res/jugador_saltar.png",
-    jugador_saltar_plist: "res/jugador_saltar.plist",
     vida_png: "res/vida.png",
     vida_plist: "res/vida.plist",
-    boton_turbo_png: "res/boton_turbo.png",
-    pincho: "res/pincho.png",
-
     modoControl: "res/CambiarModoControl.png",
     picotazoSticker: "res/Sticker_Picotazo.png",
     jugador_inmune_png : "res/pajaro_inmune.png",
     jugador_inmune_plist : "res/pajaro_inmune.plist",
     recolectable_inmune_png : "res/apple.png",
     recolectable_inmune_plist : "res/apple.plist",
+    jugador_impactado_png: "res/pajaro_impactado.png",
+    jugador_impactado_plist: "res/pajaro_impactado.plist",
 
     //Nivel cielo
     jugador_png: "res/NivelCielo/pajaro.png",
     jugador_plist: "res/NivelCielo/pajaro.plist",
-    jugador_impactado_png: "res/pajaro_impactado.png",
-    jugador_impactado_plist: "res/pajaro_impactado.plist",
     tilesNido_png: "res/NivelCielo/nido_tiles.png",
     tilesCielo_png: "res/NivelCielo/cielo_tiles.png",
     huevoNido_png: "res/NivelCielo/huevoNido.png",
@@ -74,6 +65,7 @@ var res = {
     sonido_turbo_mp3 : "res/sonido_turbo.mp3",
     sonido_sumar_vida_mp3: "res/sonido_sumar_vida.mp3",
     sonido_recoger_huevo_mp3 : "res/sonido_recoger_huevo.mp3",
+    sonido_explosion_mp3 : "res/sonido_explosion.mp3",
 
 
 };

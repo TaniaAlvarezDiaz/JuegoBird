@@ -25,17 +25,12 @@ var Jugador = cc.Class.extend({
             this.sprite.getContentSize().width,
             this.sprite.getContentSize().height));
         this.body.setPos(posicion);
-        //body.w_limit = 0.02;
         this.body.setAngle(0);
         this.sprite.setBody(this.body);
 
         // Se añade el cuerpo al espacio
         gameLayer.space.addBody(this.body);
 
-        // Forma (La he hecho circular en lugar de cuadrada, debido a que cuando se inclinaba el jugador, la polyshape no tocaba el suelo)
-        /*this.shape = new cp.BoxShape(this.body,
-            this.sprite.getContentSize().width,
-            this.sprite.getContentSize().height);*/
         var radio = this.sprite.getContentSize().width / 2;
         this.shape = new cp.CircleShape(this.body, radio, cp.vzero);
 
@@ -192,16 +187,6 @@ var Jugador = cc.Class.extend({
                 }
                 break;
         }
-    },
-    tocaSuelo: function () {
-        /*if (this.estado === estadoSaltando) {
-            this.estado = estadoCaminando;
-        }*/
-    },
-    dejaDeTocarSuelo: function () {
-       /* if (this.estado === estadoCaminando) {
-            this.estado = estadoSaltando;
-        }*/
     },
     impactado: function () {
         if (this.tiempoInmune <= 0) {
