@@ -7,29 +7,29 @@
 			<key>apple_01.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,0},{63,62}}</string>
+				<string>{{0,40},{39,40}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{63,62}}</string>
+				<string>{{0,0},{39,40}}</string>
 				<key>sourceSize</key>
-				<string>{63,62}</string>
+				<string>{39,40}</string>
 			</dict>
 
 			<key>apple_02.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,63},{62,62}}</string>
+				<string>{{0,0},{40,39}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,0},{62,62}}</string>
+				<string>{{0,0},{40,39}}</string>
 				<key>sourceSize</key>
-				<string>{62,62}</string>
+				<string>{40,39}</string>
 			</dict>
 
 		</dict>
