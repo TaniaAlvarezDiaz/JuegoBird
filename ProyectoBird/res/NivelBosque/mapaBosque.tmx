@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="15" tilewidth="32" tileheight="32" nextobjectid="112">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="15" tilewidth="32" tileheight="32" nextobjectid="124">
  <tileset firstgid="1" name="huevoNido" tilewidth="32" tileheight="32" tilecount="1" columns="1">
   <image source="huevoNido.png" width="32" height="35"/>
  </tileset>
@@ -188,6 +188,36 @@
    <ellipse/>
   </object>
   <object id="111" x="12937" y="259.5" width="20" height="17">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup name="RecolectablesCongelar">
+  <object id="112" x="1496.97" y="415.743" width="50" height="44" rotation="-34.0043"/>
+  <object id="113" x="3532" y="238" width="50" height="44" rotation="-34.0043"/>
+  <object id="114" x="6473" y="216" width="50" height="44" rotation="-34.0043"/>
+  <object id="115" x="9958" y="294" width="50" height="44" rotation="-34.0043"/>
+  <object id="116" x="12570" y="322" width="50" height="44" rotation="-34.0043"/>
+ </objectgroup>
+ <objectgroup name="Bombas">
+  <object id="117" x="2693" y="202" width="27" height="28">
+   <ellipse/>
+  </object>
+  <object id="118" x="4561.5" y="387" width="27" height="28">
+   <ellipse/>
+  </object>
+  <object id="119" x="7145.5" y="345" width="27" height="28">
+   <ellipse/>
+  </object>
+  <object id="120" x="8260.5" y="66" width="27" height="28">
+   <ellipse/>
+  </object>
+  <object id="121" x="11465.5" y="211" width="27" height="28">
+   <ellipse/>
+  </object>
+  <object id="122" x="13496.5" y="156" width="27" height="28">
+   <ellipse/>
+  </object>
+  <object id="123" x="14187.5" y="271" width="27" height="28">
    <ellipse/>
   </object>
  </objectgroup>

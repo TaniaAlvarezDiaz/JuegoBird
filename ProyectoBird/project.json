@@ -29,7 +29,9 @@
         "src/EnemigoVolador.js",
         "src/RecolectableInmune.js",
         "src/Anzuelo.js",
-        "src/Submarino.js"
+        "src/Submarino.js",
+        "src/EnemigoExplosivo.js",
+        "src/RecolectableCongelar.js"
 
     ]
 }

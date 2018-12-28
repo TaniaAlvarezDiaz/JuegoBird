@@ -1,5 +1,6 @@
 var tipoLimite = 1;
 var tipoJugador = 2;
+var tipoEnemigoExplosivo = 3;
 var tipoEnemigo = 4;
 var tipoVida = 5;
 var tipoDisparoJugador = 6;
@@ -7,6 +8,7 @@ var tipoDisparoEnemigo = 7;
 var tipoModoControl = 8;
 var tipoHuevo = 9;
 var tipoRecolectableInmune = 10;
+var tipoRecolectableCongelar = 11;
 
 var nivel = 1;
 
@@ -25,6 +27,7 @@ var GameLayer = cc.Layer.extend({
         cc.spriteFrameCache.addSpriteFrames(res.jugador_impactado_plist);
         cc.spriteFrameCache.addSpriteFrames(res.jugador_inmune_plist);
         cc.spriteFrameCache.addSpriteFrames(res.recolectable_inmune_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.enemigo_bomba_plist);
         // nivel cielo
         cc.spriteFrameCache.addSpriteFrames(res.nubeBlanca_plist);
         cc.spriteFrameCache.addSpriteFrames(res.nubeNegra_plist);
@@ -80,6 +83,10 @@ var GameLayer = cc.Layer.extend({
         this.numIteraccionesEnemigosVoladores = 0;
         this.record = 0;
         this.tiempoRefrescarRecord = 0.5;
+        this.recolectablesCongelar = [];
+        this.recolectablesCongelarEliminar = [];
+        this.enemigosExplosivos = [];
+        this.enemigosExplosivosEliminar = [];
 
         this.jugador = new Jugador(this, cc.p(50, 150));
 
@@ -107,9 +114,13 @@ var GameLayer = cc.Layer.extend({
         this.space.addCollisionHandler(tipoJugador, tipoVida,
             null, this.collisionJugadorConVida.bind(this), null, null);
 
-        //Juegador y recolectable inmune
+        //Jugador y recolectable inmune
         this.space.addCollisionHandler(tipoJugador, tipoRecolectableInmune,
             null, this.collisionJugadorConRecolectableInmune.bind(this), null, null);
+
+        //Jugador y recolectable congelar
+        this.space.addCollisionHandler(tipoJugador, tipoRecolectableCongelar,
+            null, this.collisionJugadorConRecolectableCongelar.bind(this), null, null);
 
         //Enemigo y jugador (y con pictazo)
         this.space.addCollisionHandler(tipoEnemigo, tipoJugador,
@@ -184,6 +195,32 @@ var GameLayer = cc.Layer.extend({
                     tipoDisparoEnemigo, this.imagenDisparoEnemigo);
                 this.disparosEnemigo.push(d);
                 this.numIteraccionesDisparos = 0;
+            }
+        }
+
+        // Explosion enemigos
+        for (var i = 0; i < this.enemigosExplosivos.length; i++) {
+            var posEnemigo = this.enemigosExplosivos[i].sprite.getPosition();
+            //Si esta en pantalla
+            var posXInicio = this.jugador.body.p.x - this.getContentSize().width/4;
+            var posXFin = posXInicio + this.getContentSize().width;
+            if (posEnemigo.x > posXInicio && posEnemigo.x < posXFin) {
+                //Si esta cerca el jugador
+                var distanciaExplosion = cc.pSub(posEnemigo, this.jugador.body.p);
+                if (distanciaExplosion.x < 100 && distanciaExplosion.y > -100){
+                    this.enemigosExplosivos[i].explotar();
+                    this.jugador.impactado();
+                    if (this.jugador.vidas === 0) {
+                        this.restaurarJugador();
+                    }
+                    else{
+                        this.notificarCambioVidas();
+                    }
+                    this.enemigosExplosivos[i].eliminar();
+                    this.enemigosExplosivos.splice(i, 1);
+                }
+            }else {
+                this.enemigosExplosivosEliminar.push(this.enemigosExplosivos[i]);
             }
         }
 
@@ -325,6 +362,18 @@ var GameLayer = cc.Layer.extend({
         }
         this.recolectablesInmuneEliminar = [];
 
+        // Eliminar recolectables congelar
+        for (var i = 0; i < this.recolectablesCongelarEliminar.length; i++) {
+            var shape = this.recolectablesCongelarEliminar[i];
+            for (var j = 0; j < this.recolectablesCongelar.length; j++) {
+                if (this.recolectablesCongelar[j].shape === shape) {
+                    this.recolectablesCongelar[j].eliminar();
+                    this.recolectablesCongelar.splice(j, 1);
+                }
+            }
+        }
+        this.recolectablesCongelarEliminar = [];
+
         // Eliminar huevos
         for (var i = 0; i < this.huevosEliminar.length; i++) {
             var shape = this.huevosEliminar[i];
@@ -348,6 +397,18 @@ var GameLayer = cc.Layer.extend({
             }
         }
         this.vidasEliminar = [];
+
+        // Eliminar enemigos explosivos
+        for (var i = 0; i < this.enemigosExplosivosEliminar.length; i++) {
+            var shape = this.enemigosExplosivosEliminar[i];
+            for (var j = 0; j < this.enemigosExplosivos.length; j++) {
+                if (this.enemigosExplosivos[j].shape === shape) {
+                    this.enemigosExplosivos[j].eliminar();
+                    this.enemigosExplosivos.splice(j, 1);
+                }
+            }
+        }
+        this.enemigosExplosivosEliminar = [];
 
         // Eliminar enemigos
         for (var i = 0; i < this.enemigosEliminar.length; i++) {
@@ -491,6 +552,15 @@ var GameLayer = cc.Layer.extend({
             this.recolectablesInmune.push(recInmune);
         }
     },
+    cargarRecolectablesCongelar: function() {
+        //Cargar recolectables congelar
+        var grupoRecolectablesCongelar = this.mapa.getObjectGroup("RecolectablesCongelar");
+        var recolectablesCongelarArray = grupoRecolectablesCongelar.getObjects();
+        for (var i = 0; i < recolectablesCongelarArray.length; i++) {
+            var recCongelar = new RecolectableCongelar(this, cc.p(recolectablesCongelarArray[i]["x"], recolectablesCongelarArray[i]["y"]));
+            this.recolectablesCongelar.push(recCongelar);
+        }
+    },
     cargarModosDeControl: function () {
         // Cargar modos de control
         var grupomodoControl = this.mapa.getObjectGroup("ModoControl");
@@ -507,6 +577,15 @@ var GameLayer = cc.Layer.extend({
         for (var i = 0; i < vidasArray.length; i++) {
             var vida = new Vida(this, cc.p(vidasArray[i]["x"], vidasArray[i]["y"]));
             this.vidas.push(vida);
+        }
+    },
+    cargarEnemigosExplosivos: function () {
+        // Cargar bombas
+        var grupoBombas = this.mapa.getObjectGroup("Bombas");
+        var bombasArray = grupoBombas.getObjects();
+        for (var i = 0; i < bombasArray.length; i++) {
+            var bomba = new EnemigoExplosivo(this, cc.p(bombasArray[i]["x"], bombasArray[i]["y"]));
+            this.enemigosExplosivos.push(bomba);
         }
     },
     cargarMapa: function () {
@@ -577,6 +656,8 @@ var GameLayer = cc.Layer.extend({
         this.cargarModosDeControl();
         this.cargarVidas();
         this.cargarRecolectablesInmune();
+        this.cargarRecolectablesCongelar();
+        this.cargarEnemigosExplosivos();
 
     },
     collisionJugadorConHuevo: function (arbiter, space) {
@@ -648,6 +729,13 @@ var GameLayer = cc.Layer.extend({
         this.recolectablesInmuneEliminar.push(shapes[1]);
         this.jugador.inmune();
     },
+    collisionJugadorConRecolectableCongelar: function (arbiter, space) {
+        var shapes = arbiter.getShapes();
+        this.recolectablesCongelarEliminar.push(shapes[1]);
+        //Completar
+        //cp.Space.sleepTimeThreshold
+        console.log("congelados");
+    },
     collisionModoControlConJugador: function (arbiter, space) {
         if(this.modoControl == true){
             this.modoControl = false;
@@ -693,6 +781,14 @@ var GameLayer = cc.Layer.extend({
         //Cargar recolectables inmune
         this.cargarRecolectablesInmune();
 
+        //Eliminar recolectables congelar
+        for (var i = 0; i < this.recolectablesCongelar.length; i++) {
+            this.recolectablesCongelar[i].eliminar();
+        }
+        this.recolectablesCongelar = [];
+        //Cargar recolectables congelar
+        this.cargarRecolectablesCongelar();
+
         // Eliminar huevos de oro
         for (var i = 0; i < this.huevosOro.length; i++) {
             this.huevosOro[i].eliminar();
@@ -716,6 +812,14 @@ var GameLayer = cc.Layer.extend({
         this.vidas = [];
         // Cargar vidas
         this.cargarVidas();
+
+        // Eliminar bombas
+        for (var i = 0; i < this.enemigosExplosivos.length; i++) {
+            this.enemigosExplosivos[i].eliminar();
+        }
+        this.enemigosExplosivos = [];
+        //Cargar enemigos explosivos
+        this.cargarEnemigosExplosivos();
     },
     recargarElementos: function () {
         if(nivel == 1){

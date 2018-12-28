@@ -12,8 +12,11 @@ var res = {
     jugador_inmune_plist : "res/pajaro_inmune.plist",
     recolectable_inmune_png : "res/apple.png",
     recolectable_inmune_plist : "res/apple.plist",
+    recolectable_congelar_png : "res/freeze_icon.png",
     jugador_impactado_png: "res/pajaro_impactado.png",
     jugador_impactado_plist: "res/pajaro_impactado.plist",
+    enemigo_bomba_png : "res/enemy_bomb.png",
+    enemigo_bomba_plist : "res/enemy_bomb.plist",
 
     //Nivel cielo
     jugador_png: "res/NivelCielo/pajaro.png",

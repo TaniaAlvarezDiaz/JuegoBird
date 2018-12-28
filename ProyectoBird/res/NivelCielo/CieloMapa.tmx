@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="15" tilewidth="32" tileheight="32" nextobjectid="207">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="15" tilewidth="32" tileheight="32" nextobjectid="219">
  <tileset firstgid="1" name="cielo_tiles" tilewidth="32" tileheight="32" tilecount="55" columns="5">
   <image source="cielo_tiles.png" width="160" height="352"/>
  </tileset>
@@ -190,5 +190,31 @@
   <object id="204" x="6199" y="233" width="42" height="36"/>
   <object id="205" x="6452" y="51" width="42" height="36"/>
   <object id="206" x="6680" y="336" width="42" height="36"/>
+ </objectgroup>
+ <objectgroup name="RecolectablesCongelar">
+  <object id="207" x="2311" y="61" width="21" height="19"/>
+  <object id="208" x="4929.5" y="215.5" width="21" height="19"/>
+  <object id="209" x="6681.5" y="72.5" width="21" height="19"/>
+  <object id="210" x="8429.5" y="257.5" width="21" height="19"/>
+  <object id="211" x="10662.5" y="53.5" width="21" height="19"/>
+  <object id="212" x="11620.5" y="216.5" width="21" height="19"/>
+  <object id="213" x="14996.5" y="191.5" width="21" height="19"/>
+ </objectgroup>
+ <objectgroup name="Bombas">
+  <object id="214" x="1502" y="304" width="40" height="38">
+   <ellipse/>
+  </object>
+  <object id="215" x="5945" y="284" width="40" height="38">
+   <ellipse/>
+  </object>
+  <object id="216" x="7430" y="290" width="40" height="38">
+   <ellipse/>
+  </object>
+  <object id="217" x="9242" y="113" width="40" height="38">
+   <ellipse/>
+  </object>
+  <object id="218" x="13856" y="54" width="40" height="38">
+   <ellipse/>
+  </object>
  </objectgroup>
 </map>
