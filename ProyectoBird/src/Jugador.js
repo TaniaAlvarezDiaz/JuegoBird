@@ -21,11 +21,10 @@ var Jugador = cc.Class.extend({
         this.sprite = new cc.PhysicsSprite("#bird_01.png");
 
         // Cuerpo dinámico, SI le afectan las fuerzas
-        this.body = new cp.Body(5, cp.momentForBox(1,
+        this.body = new cp.Body(5, Infinity/*cp.momentForBox(1,
             this.sprite.getContentSize().width,
-            this.sprite.getContentSize().height));
+            this.sprite.getContentSize().height)*/);
         this.body.setPos(posicion);
-        this.body.setAngle(0);
         this.sprite.setBody(this.body);
 
         // Se añade el cuerpo al espacio
@@ -38,16 +37,6 @@ var Jugador = cc.Class.extend({
 
         // Forma dinámica
         gameLayer.space.addShape(this.shape);
-
-        // Polyshape situada ligeramente debajo del jugador (para que no pueda trepar)
-        var mitadAncho = this.sprite.getContentSize().width / 2;
-        var mitadAlto = this.sprite.getContentSize().height / 2;
-        this.shapeRadar = new cp.PolyShape(this.body,
-            [-mitadAncho + 10, -mitadAlto, mitadAncho - 10, -mitadAlto],
-            cp.v(0, 0));
-        this.shapeRadar.setSensor(true);
-        this.shapeRadar.setCollisionType(tipoPieJugador);
-        gameLayer.space.addShape(this.shapeRadar);
 
         // Añadir sprite a la capa
         gameLayer.addChild(this.sprite, 10);

@@ -7,7 +7,6 @@ var EnemigoVolador = cc.Class.extend({
         this.sprite = new cc.PhysicsSprite("#" + nomImagenSprite + "1.png");
         this.body = new cp.Body(5,Infinity);
         this.body.setPos(posicion);
-        this.body.setAngle(0);
         this.sprite.setBody(this.body);
         gameLayer.space.addBody(this.body);
         this.shape = new cp.BoxShape(this.body,

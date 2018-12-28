@@ -7,7 +7,6 @@ var EnemigoParabola = cc.Class.extend({
         this.sprite = new cc.PhysicsSprite(imagen);
         this.body = new cp.Body(5,Infinity);
         this.body.setPos(posicion);
-        this.body.setAngle(0);
         this.sprite.setBody(this.body);
         gameLayer.space.addBody(this.body);
         var radio = this.sprite.getContentSize().width / 2;

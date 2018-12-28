@@ -1,13 +1,12 @@
 var tipoLimite = 1;
 var tipoJugador = 2;
 var tipoEnemigo = 4;
-var tipoPieJugador = 5;
-var tipoVida = 6;
-var tipoDisparoJugador = 7;
-var tipoDisparoEnemigo = 8;
-var tipoModoControl = 9;
-var tipoHuevo = 10;
-var tipoRecolectableInmune = 11;
+var tipoVida = 5;
+var tipoDisparoJugador = 6;
+var tipoDisparoEnemigo = 7;
+var tipoModoControl = 8;
+var tipoHuevo = 9;
+var tipoRecolectableInmune = 10;
 
 var nivel = 1;
 
