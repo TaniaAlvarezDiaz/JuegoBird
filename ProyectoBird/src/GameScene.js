@@ -216,11 +216,8 @@ var GameLayer = cc.Layer.extend({
                     else{
                         this.notificarCambioVidas();
                     }
-                    this.enemigosExplosivos[i].eliminar();
-                    this.enemigosExplosivos.splice(i, 1);
+                    this.enemigosExplosivosEliminar.push(this.enemigosExplosivos[i].shape);
                 }
-            }else {
-                this.enemigosExplosivosEliminar.push(this.enemigosExplosivos[i]);
             }
         }
 
