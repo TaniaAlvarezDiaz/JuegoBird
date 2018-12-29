@@ -13,6 +13,7 @@ var RecolectableCongelar = cc.Class.extend({
             this.sprite.getContentSize().width,
             this.sprite.getContentSize().height);
         this.shape.setCollisionType(tipoRecolectableCongelar);
+        this.shape.setSensor(true);
         gameLayer.space.addStaticShape(this.shape);
         gameLayer.addChild(this.sprite,10);
 

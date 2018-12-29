@@ -211,7 +211,7 @@ var GameLayer = cc.Layer.extend({
             if (posEnemigo.x > posXInicio && posEnemigo.x < posXFin) {
                 //Si esta cerca el jugador
                 var distanciaExplosion = cc.pSub(posEnemigo, this.jugador.body.p);
-                if (distanciaExplosion.x < 100 && distanciaExplosion.y > -100){
+                if (distanciaExplosion.x < 100 && (distanciaExplosion.y > -100 && distanciaExplosion.y < 100)){
                     this.enemigosExplosivos[i].explotar();
                     this.jugador.impactado(2);
                     if (this.jugador.vidas <= 0) {
@@ -593,7 +593,7 @@ var GameLayer = cc.Layer.extend({
         }
     },
     cargarMapa: function () {
-        if(nivel == 2){
+        if(nivel == 1){
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
             this.imagenDisparoJugador = res.boomerang_png;
             this.imagenDisparoEnemigo = res.rayo_png;
@@ -601,7 +601,7 @@ var GameLayer = cc.Layer.extend({
             this.imagenEnemigoVolador = "animacion_buitre_0";
             this.framesEnemigoVolador = 8;
         }
-        else if(nivel == 1){
+        else if(nivel == 2){
             this.mapa = new cc.TMXTiledMap(res.mapaBosque_tmx);
             this.imagenDisparoJugador = res.arrow_png;
             this.imagenDisparoEnemigo = res.fire_png;
@@ -643,11 +643,11 @@ var GameLayer = cc.Layer.extend({
                 this.space.addStaticShape(shapeLimite);
             }
         }
-        if(nivel == 2){
+        if(nivel == 1){
             this.cargarNubesBlancas();
             this.cargarNubesNegras();
         }
-        else if(nivel == 1){
+        else if(nivel == 2){
             this.cargarTroncos();
             this.cargarDragones();
         }
@@ -831,7 +831,7 @@ var GameLayer = cc.Layer.extend({
         this.cargarEnemigosExplosivos();
     },
     recargarElementos: function () {
-        if(nivel == 2){
+        if(nivel == 1){
             // Eliminar nubes blancas
             for (var i = 0; i < this.enemigos.length; i++) {
                 this.enemigos[i].eliminar();
@@ -848,7 +848,7 @@ var GameLayer = cc.Layer.extend({
             // Cargar nubes negras
            this.cargarNubesNegras();
         }
-        else if(nivel == 1){
+        else if(nivel == 2){
             // Eliminar troncos
             for (var i = 0; i < this.enemigos.length; i++) {
                 this.enemigos[i].eliminar();
