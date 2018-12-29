@@ -250,7 +250,10 @@ var GameLayer = cc.Layer.extend({
                 enemigo.clonado = true;
                 //console.log("Generar clones");
                 this.enemigosEliminar.push(enemigo.shape);
-                var direccionEnemigo = enemigo.body.vx / Math.abs(enemigo.body.vx); // Izq: -1, Dcha: 1
+                var direccionEnemigo = 1; // Dcha por defecto
+                if (enemigo.body.vx < 0) {
+                    direccionEnemigo = -1; // Izq
+                }
                 var primerClon = new EnemigoParabola(this,this.imagenEnemigoParabola,cc.p(enemigo.body.p.x, enemigo.body.p.y + 25),enemigo.body.vx + 500 * direccionEnemigo,enemigo.body.vy + 1000);
                 var segundoClon = new EnemigoParabola(this,this.imagenEnemigoParabola,cc.p(enemigo.body.p.x, enemigo.body.p.y - 25),enemigo.body.vx + 200 * direccionEnemigo,enemigo.body.vy + 600);
                 this.enemigos.push(primerClon);
