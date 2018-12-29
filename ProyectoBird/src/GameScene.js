@@ -134,6 +134,10 @@ var GameLayer = cc.Layer.extend({
         this.space.addCollisionHandler(tipoDisparoJugador, tipoEnemigo,
             null, null, this.collisionDisparoJugadorConEnemigo.bind(this), null);
 
+        //DisparoJugador y enemigoExplosivo
+        this.space.addCollisionHandler(tipoDisparoJugador, tipoEnemigoExplosivo,
+            null, null, this.collisionDisparoJugadorConEnemigoExplosivo.bind(this), null);
+
         //DisparoEnemigo y disparoJugador
         this.space.addCollisionHandler(tipoDisparoEnemigo, tipoDisparoJugador,
             null, null, this.collisionDisparoEnemigoConDisparoJugador.bind(this), null);
@@ -209,8 +213,8 @@ var GameLayer = cc.Layer.extend({
                 var distanciaExplosion = cc.pSub(posEnemigo, this.jugador.body.p);
                 if (distanciaExplosion.x < 100 && distanciaExplosion.y > -100){
                     this.enemigosExplosivos[i].explotar();
-                    this.jugador.impactado();
-                    if (this.jugador.vidas === 0) {
+                    this.jugador.impactado(2);
+                    if (this.jugador.vidas <= 0) {
                         this.restaurarJugador();
                     }
                     else{
@@ -586,7 +590,7 @@ var GameLayer = cc.Layer.extend({
         }
     },
     cargarMapa: function () {
-        if(nivel == 1){
+        if(nivel == 2){
             this.mapa = new cc.TMXTiledMap(res.mapaCielo_tmx);
             this.imagenDisparoJugador = res.boomerang_png;
             this.imagenDisparoEnemigo = res.rayo_png;
@@ -594,7 +598,7 @@ var GameLayer = cc.Layer.extend({
             this.imagenEnemigoVolador = "animacion_buitre_0";
             this.framesEnemigoVolador = 8;
         }
-        else if(nivel == 2){
+        else if(nivel == 1){
             this.mapa = new cc.TMXTiledMap(res.mapaBosque_tmx);
             this.imagenDisparoJugador = res.arrow_png;
             this.imagenDisparoEnemigo = res.fire_png;
@@ -636,11 +640,11 @@ var GameLayer = cc.Layer.extend({
                 this.space.addStaticShape(shapeLimite);
             }
         }
-        if(nivel == 1){
+        if(nivel == 2){
             this.cargarNubesBlancas();
             this.cargarNubesNegras();
         }
-        else if(nivel == 2){
+        else if(nivel == 1){
             this.cargarTroncos();
             this.cargarDragones();
         }
@@ -673,10 +677,10 @@ var GameLayer = cc.Layer.extend({
             this.enemigosEliminar.push(shapes[0]);
         } else {
             if(this.jugador.picotazo != estadoPicotazo){
-                this.jugador.impactado();
+                this.jugador.impactado(1);
                 var shapes = arbiter.getShapes();
                 this.enemigosEliminar.push(shapes[0]);
-                if (this.jugador.vidas === 0) {
+                if (this.jugador.vidas <= 0) {
                     this.restaurarJugador();
                 }
                 else{
@@ -695,10 +699,10 @@ var GameLayer = cc.Layer.extend({
             var shapes = arbiter.getShapes();
             this.disparosEnemigosEliminar.push(shapes[0]);
         } else {
-            this.jugador.impactado();
+            this.jugador.impactado(1);
             var shapes = arbiter.getShapes();
             this.disparosEnemigosEliminar.push(shapes[0]);
-            if (this.jugador.vidas == 0) {
+            if (this.jugador.vidas <= 0) {
                 this.restaurarJugador();
             } else {
                 this.notificarCambioVidas();
@@ -709,6 +713,11 @@ var GameLayer = cc.Layer.extend({
         var shapes = arbiter.getShapes();
         this.disparosEnemigosEliminar.push(shapes[0]);
         this.enemigosEliminar.push(shapes[1]);
+    },
+    collisionDisparoJugadorConEnemigoExplosivo: function (arbiter, space) {
+        var shapes = arbiter.getShapes();
+        this.disparosEnemigosEliminar.push(shapes[0]);
+        this.enemigosExplosivosEliminar.push(shapes[1]);
     },
     collisionDisparoEnemigoConDisparoJugador: function (arbiter, space) {
         var shapes = arbiter.getShapes();
@@ -819,7 +828,7 @@ var GameLayer = cc.Layer.extend({
         this.cargarEnemigosExplosivos();
     },
     recargarElementos: function () {
-        if(nivel == 1){
+        if(nivel == 2){
             // Eliminar nubes blancas
             for (var i = 0; i < this.enemigos.length; i++) {
                 this.enemigos[i].eliminar();
@@ -836,7 +845,7 @@ var GameLayer = cc.Layer.extend({
             // Cargar nubes negras
            this.cargarNubesNegras();
         }
-        else if(nivel == 2){
+        else if(nivel == 1){
             // Eliminar troncos
             for (var i = 0; i < this.enemigos.length; i++) {
                 this.enemigos[i].eliminar();

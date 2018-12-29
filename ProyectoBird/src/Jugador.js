@@ -177,14 +177,14 @@ var Jugador = cc.Class.extend({
                 break;
         }
     },
-    impactado: function () {
+    impactado: function (num) {
         if (this.tiempoInmune <= 0) {
 
             if (this.tiempoInvulnerable <= 0) {
                 this.tiempoInvulnerable = 100;
                 this.estado = estadoImpactado;
                 if (this.vidas > 0) {
-                    this.restarVida();
+                    this.restarVida(num);
                 }
             }
 
@@ -204,8 +204,8 @@ var Jugador = cc.Class.extend({
         cc.audioEngine.playEffect(res.sonido_sumar_vida_mp3);
         this.vidas++;
     },
-    restarVida: function () {
-        this.vidas--;
+    restarVida: function (num) {
+        this.vidas = this.vidas - num;
     },
     impulsar: function () {
         cc.audioEngine.playEffect(res.sonido_turbo_mp3);
