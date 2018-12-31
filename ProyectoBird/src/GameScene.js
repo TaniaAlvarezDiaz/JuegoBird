@@ -87,6 +87,7 @@ var GameLayer = cc.Layer.extend({
         this.recolectablesCongelarEliminar = [];
         this.enemigosExplosivos = [];
         this.enemigosExplosivosEliminar = [];
+        this.tiempoCongelacion = 0;
 
         this.jugador = new Jugador(this, cc.p(50, 150));
 
@@ -121,6 +122,10 @@ var GameLayer = cc.Layer.extend({
         //Jugador y recolectable congelar
         this.space.addCollisionHandler(tipoJugador, tipoRecolectableCongelar,
             null, this.collisionJugadorConRecolectableCongelar.bind(this), null, null);
+
+        //Jugador y bomba
+        this.space.addCollisionHandler(tipoJugador, tipoEnemigoExplosivo,
+            null, this.collisionJugadorConEnemigoExplosivo.bind(this), null, null);
 
         //Enemigo y jugador (y con pictazo)
         this.space.addCollisionHandler(tipoEnemigo, tipoJugador,
@@ -172,6 +177,12 @@ var GameLayer = cc.Layer.extend({
             this.tiempoTurbo = 0;
         }
 
+        if (this.tiempoCongelacion > 0) {
+            this.tiempoCongelacion--;
+        }else {
+            this.tiempoCongelacion = 0;
+        }
+
         this.jugador.actualizar();
 
         this.space.step(dt);
@@ -183,102 +194,105 @@ var GameLayer = cc.Layer.extend({
         var posY1 = this.jugador.body.p.y - this.getContentSize().height/4;
         var posY2 = posY1 + this.getContentSize().height;
 
-        // Generar disparos enemigo
-        this.numIteraccionesDisparos ++;
-        if (this.numIteraccionesDisparos > 75) {
-            var arrayEnemigosEnPantalla = [];
-            for(j=0; j < this.enemigosConDisparo.length; j++){
-                if(this.enemigosConDisparo[j].body.p.x < posX2 && this.enemigosConDisparo[j].body.p.x > posX1){
-                    arrayEnemigosEnPantalla.push(j);
-                }
-            }
-            if(arrayEnemigosEnPantalla[0] != undefined){
-                var r = Math.floor(Math.random() *(arrayEnemigosEnPantalla.length));
-                var enemigo = arrayEnemigosEnPantalla[r];
-                var d = new Disparo(this,cc.p(this.enemigosConDisparo[enemigo].body.p.x-35,this.enemigosConDisparo[enemigo].body.p.y),
-                    tipoDisparoEnemigo, this.imagenDisparoEnemigo);
-                this.disparosEnemigo.push(d);
-                this.numIteraccionesDisparos = 0;
-            }
-        }
+        if (this.tiempoCongelacion <= 0) {
 
-        // Explosion enemigos
-        for (var i = 0; i < this.enemigosExplosivos.length; i++) {
-            var posEnemigo = this.enemigosExplosivos[i].sprite.getPosition();
-            //Si esta en pantalla
-            var posXInicio = this.jugador.body.p.x - this.getContentSize().width/4;
-            var posXFin = posXInicio + this.getContentSize().width;
-            if (posEnemigo.x > posXInicio && posEnemigo.x < posXFin) {
-                //Si esta cerca el jugador
-                var distanciaExplosion = cc.pSub(posEnemigo, this.jugador.body.p);
-                if (distanciaExplosion.x < 100 && (distanciaExplosion.y > -100 && distanciaExplosion.y < 100)){
-                    this.enemigosExplosivos[i].explotar();
-                    this.jugador.impactado(2);
-                    if (this.jugador.vidas <= 0) {
-                        this.restaurarJugador();
+            // Generar disparos enemigo
+            this.numIteraccionesDisparos ++;
+            if (this.numIteraccionesDisparos > 75) {
+                var arrayEnemigosEnPantalla = [];
+                for(j=0; j < this.enemigosConDisparo.length; j++){
+                    if(this.enemigosConDisparo[j].body.p.x < posX2 && this.enemigosConDisparo[j].body.p.x > posX1){
+                        arrayEnemigosEnPantalla.push(j);
                     }
-                    else{
-                        this.notificarCambioVidas();
+                }
+                if(arrayEnemigosEnPantalla[0] != undefined){
+                    var r = Math.floor(Math.random() *(arrayEnemigosEnPantalla.length));
+                    var enemigo = arrayEnemigosEnPantalla[r];
+                    var d = new Disparo(this,cc.p(this.enemigosConDisparo[enemigo].body.p.x-35,this.enemigosConDisparo[enemigo].body.p.y),
+                        tipoDisparoEnemigo, this.imagenDisparoEnemigo);
+                    this.disparosEnemigo.push(d);
+                    this.numIteraccionesDisparos = 0;
+                }
+            }
+
+            //Generar enemigos con parabolas (escoge aleatoriamente velocidades para X e Y -> diferentes parabolas)
+            this.numIteraccionesParabolas ++;
+            if (this.numIteraccionesParabolas > 175) {
+                //numero random del eje X, entre el limite de la pantalla y el jugador
+                var r = Math.floor(Math.random() *(posX2 - (this.jugador.body.p.x + 150)) + (this.jugador.body.p.x + 150));
+                var arrayVelocidad = [];
+                var velocidadX_menos = Math.floor(Math.random() *(1500 - 600) + 600);
+                var velocidadX_mas = Math.floor(Math.random() *(1500 - 600) + 600);
+                arrayVelocidad.push(-velocidadX_menos);
+                arrayVelocidad.push(velocidadX_mas);
+                var velocidadX = Math.round(Math.random());
+                var velocidadY = Math.floor(Math.random() *(3000 - 2000) + 2000);
+                var enemigoParabola = new EnemigoParabola(this,this.imagenEnemigoParabola,cc.p(r,-20),arrayVelocidad[velocidadX],velocidadY);
+                enemigoParabola.permiteClonacion = true;
+                this.enemigos.push(enemigoParabola);
+                this.numIteraccionesParabolas = 0;
+            }
+
+            // Clonación de enemigos con parábolas, el enemigo original desaparece y genera dos clones
+            for (var i = 0; i < this.enemigos.length; i++) {
+                var enemigo = this.enemigos[i];
+                if (enemigo.tipo && enemigo.tipo === "enemigoParabolico" && !enemigo.clonado && enemigo.permiteClonacion && enemigo.body.p.y > 150) {
+                    enemigo.clonado = true;
+                    //console.log("Generar clones");
+                    this.enemigosEliminar.push(enemigo.shape);
+                    var direccionEnemigo = 1; // Dcha por defecto
+                    if (enemigo.body.vx < 0) {
+                        direccionEnemigo = -1; // Izq
                     }
-                    this.enemigosExplosivosEliminar.push(this.enemigosExplosivos[i].shape);
+                    var primerClon = new EnemigoParabola(this,this.imagenEnemigoParabola,cc.p(enemigo.body.p.x, enemigo.body.p.y + 25),enemigo.body.vx + 500 * direccionEnemigo,enemigo.body.vy + 1000);
+                    var segundoClon = new EnemigoParabola(this,this.imagenEnemigoParabola,cc.p(enemigo.body.p.x, enemigo.body.p.y - 25),enemigo.body.vx + 200 * direccionEnemigo,enemigo.body.vy + 600);
+                    this.enemigos.push(primerClon);
+                    this.enemigos.push(segundoClon);
                 }
             }
-        }
 
-        //Generar enemigos con parabolas (escoge aleatoriamente velocidades para X e Y -> diferentes parabolas)
-        this.numIteraccionesParabolas ++;
-        if (this.numIteraccionesParabolas > 175) {
-            //numero random del eje X, entre el limite de la pantalla y el jugador
-            var r = Math.floor(Math.random() *(posX2 - (this.jugador.body.p.x + 150)) + (this.jugador.body.p.x + 150));
-            var arrayVelocidad = [];
-            var velocidadX_menos = Math.floor(Math.random() *(1500 - 600) + 600);
-            var velocidadX_mas = Math.floor(Math.random() *(1500 - 600) + 600);
-            arrayVelocidad.push(-velocidadX_menos);
-            arrayVelocidad.push(velocidadX_mas);
-            var velocidadX = Math.round(Math.random());
-            var velocidadY = Math.floor(Math.random() *(3000 - 2000) + 2000);
-            var enemigoParabola = new EnemigoParabola(this,this.imagenEnemigoParabola,cc.p(r,-20),arrayVelocidad[velocidadX],velocidadY);
-            enemigoParabola.permiteClonacion = true;
-            this.enemigos.push(enemigoParabola);
-            this.numIteraccionesParabolas = 0;
-        }
-
-        // Clonación de enemigos con parábolas, el enemigo original desaparece y genera dos clones
-        for (var i = 0; i < this.enemigos.length; i++) {
-            var enemigo = this.enemigos[i];
-            if (enemigo.tipo && enemigo.tipo === "enemigoParabolico" && !enemigo.clonado && enemigo.permiteClonacion && enemigo.body.p.y > 150) {
-                enemigo.clonado = true;
-                //console.log("Generar clones");
-                this.enemigosEliminar.push(enemigo.shape);
-                var direccionEnemigo = 1; // Dcha por defecto
-                if (enemigo.body.vx < 0) {
-                    direccionEnemigo = -1; // Izq
+            //Crear y actualizar enemigos que vuelan
+            this.numIteraccionesEnemigosVoladores ++;
+            if (this.numIteraccionesEnemigosVoladores > 200) {
+                var volador = new EnemigoVolador(this,cc.p(this.jugador.body.p.x +this.getContentSize().width,this.jugador.body.p.y),
+                    this.imagenEnemigoVolador, this.framesEnemigoVolador);
+                this.enemigosVoladores.push(volador);
+                this.numIteraccionesEnemigosVoladores = 0;
+            }
+            for(i=0; i < this.enemigosVoladores.length; i++) {
+                if (this.numIteraccionesEnemigosVoladores > 50) {
+                    this.enemigosVoladores[i].actualizar(0,50);
                 }
-                var primerClon = new EnemigoParabola(this,this.imagenEnemigoParabola,cc.p(enemigo.body.p.x, enemigo.body.p.y + 25),enemigo.body.vx + 500 * direccionEnemigo,enemigo.body.vy + 1000);
-                var segundoClon = new EnemigoParabola(this,this.imagenEnemigoParabola,cc.p(enemigo.body.p.x, enemigo.body.p.y - 25),enemigo.body.vx + 200 * direccionEnemigo,enemigo.body.vy + 600);
-                this.enemigos.push(primerClon);
-                this.enemigos.push(segundoClon);
+                else{
+                    this.enemigosVoladores[i].actualizar(-40, 10);
+                }
+                if(this.enemigosVoladores[i].body.p.x < posX1){ //Si esta fuera de la pantalla
+                    this.enemigosVoladores[i].eliminar();
+                    this.enemigosVoladores.splice(i, 1);
+                }
             }
-        }
 
-        //Crear y actualizar enemigos que vuelan
-        this.numIteraccionesEnemigosVoladores ++;
-        if (this.numIteraccionesEnemigosVoladores > 200) {
-            var volador = new EnemigoVolador(this,cc.p(this.jugador.body.p.x +this.getContentSize().width,this.jugador.body.p.y),
-                this.imagenEnemigoVolador, this.framesEnemigoVolador);
-            this.enemigosVoladores.push(volador);
-            this.numIteraccionesEnemigosVoladores = 0;
-        }
-        for(i=0; i < this.enemigosVoladores.length; i++) {
-            if (this.numIteraccionesEnemigosVoladores > 50) {
-                this.enemigosVoladores[i].actualizar(0,50);
-            }
-            else{
-                this.enemigosVoladores[i].actualizar(-40, 10);
-            }
-            if(this.enemigosVoladores[i].body.p.x < posX1){ //Si esta fuera de la pantalla
-                this.enemigosVoladores[i].eliminar();
-                this.enemigosVoladores.splice(i, 1);
+            // Explosion enemigos
+            for (var i = 0; i < this.enemigosExplosivos.length; i++) {
+                var posEnemigo = this.enemigosExplosivos[i].sprite.getPosition();
+                //Si esta en pantalla
+                var posXInicio = this.jugador.body.p.x - this.getContentSize().width/4;
+                var posXFin = posXInicio + this.getContentSize().width;
+                if (posEnemigo.x > posXInicio && posEnemigo.x < posXFin) {
+                    //Si esta cerca el jugador
+                    var distanciaExplosion = cc.pSub(posEnemigo, this.jugador.body.p);
+                    if (distanciaExplosion.x < 100 && (distanciaExplosion.y > -100 && distanciaExplosion.y < 100)){
+                        this.enemigosExplosivos[i].explotar();
+                        this.jugador.impactado(2);
+                        if (this.jugador.vidas <= 0) {
+                            this.restaurarJugador();
+                        }
+                        else{
+                            this.notificarCambioVidas();
+                        }
+                        this.enemigosExplosivosEliminar.push(this.enemigosExplosivos[i].shape);
+                    }
+                }
             }
         }
 
@@ -674,26 +688,34 @@ var GameLayer = cc.Layer.extend({
         capaControles.agregarHuevos();
 
     },
-    collisionEnemigoConJugador: function (arbiter, space) {
-        if (this.tiempoTurbo > 0) {
+    collisionJugadorConEnemigoExplosivo: function (arbiter, space) {
+        if (this.tiempoCongelacion <= 0) {
             var shapes = arbiter.getShapes();
-            this.enemigosEliminar.push(shapes[0]);
-        } else {
-            if(this.jugador.picotazo != estadoPicotazo){
-                this.jugador.impactado(1);
+            this.enemigosExplosivosEliminar.push(shapes[1]);
+        }
+    },
+    collisionEnemigoConJugador: function (arbiter, space) {
+        if (this.tiempoCongelacion <= 0) {
+            if (this.tiempoTurbo > 0) {
                 var shapes = arbiter.getShapes();
                 this.enemigosEliminar.push(shapes[0]);
-                if (this.jugador.vidas <= 0) {
-                    this.restaurarJugador();
+            } else {
+                if(this.jugador.picotazo != estadoPicotazo){
+                    this.jugador.impactado(1);
+                    var shapes = arbiter.getShapes();
+                    this.enemigosEliminar.push(shapes[0]);
+                    if (this.jugador.vidas <= 0) {
+                        this.restaurarJugador();
+                    }
+                    else{
+                        this.notificarCambioVidas();
+                    }
                 }
-                else{
-                    this.notificarCambioVidas();
+                else if(this.jugador.picotazo == estadoPicotazo){
+                    // Eliminar al enemigo
+                    var shapes = arbiter.getShapes();
+                    this.enemigosEliminar.push(shapes[0]);
                 }
-            }
-            else if(this.jugador.picotazo == estadoPicotazo){
-                // Eliminar al enemigo
-                var shapes = arbiter.getShapes();
-                this.enemigosEliminar.push(shapes[0]);
             }
         }
     },
@@ -741,9 +763,9 @@ var GameLayer = cc.Layer.extend({
     collisionJugadorConRecolectableCongelar: function (arbiter, space) {
         var shapes = arbiter.getShapes();
         this.recolectablesCongelarEliminar.push(shapes[1]);
-        //Completar
-        //cp.Space.sleepTimeThreshold
-        console.log("congelados");
+        if (this.tiempoCongelacion <= 0) {
+            this.tiempoCongelacion = 500;
+        }
     },
     collisionModoControlConJugador: function (arbiter, space) {
         if(this.modoControl == true){
@@ -780,6 +802,7 @@ var GameLayer = cc.Layer.extend({
         capaControles.borrarHuevos();
         this.jugador.estado = estadoSaltando;
         this.tiempoTurbo = 0;
+        this.tiempoCongelacion = 0;
     },
     recargarElementosComunes: function () {
         //Eliminar recolectables inmune

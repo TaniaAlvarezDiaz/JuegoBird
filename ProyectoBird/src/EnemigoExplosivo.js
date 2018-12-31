@@ -72,7 +72,7 @@ var EnemigoExplosivo = cc.Class.extend({
 
     },
     explotar : function () {
-        this.sonidoId = cc.audioEngine.playEffect(res.sonido_explosion_mp3);
+        cc.audioEngine.playEffect(res.sonido_explosion_mp3);
         this.estado = estadoExplosivo;
         this.actualizar();
     }
