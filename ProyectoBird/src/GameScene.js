@@ -152,6 +152,10 @@ var GameLayer = cc.Layer.extend({
         this.space.addCollisionHandler(tipoModoControl, tipoJugador,
             null, this.collisionModoControlConJugador.bind(this), null, null);
 
+        //Musica de fondo
+        cc.audioEngine.playMusic(res.musicaBackground, true);
+        cc.audioEngine.setMusicVolume(0.25);
+
         return true;
     },
     update: function (dt) {
@@ -809,7 +813,6 @@ var GameLayer = cc.Layer.extend({
         this.jugador.estado = estadoSaltando;
         this.tiempoTurbo = 0;
         this.tiempoCongelacion = 0;
-        
         this.iniciarJuego = false;
     },
     recargarElementosComunes: function () {

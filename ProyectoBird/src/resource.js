@@ -69,6 +69,7 @@ var res = {
     sonido_sumar_vida_mp3: "res/sonido_sumar_vida.mp3",
     sonido_recoger_huevo_mp3 : "res/sonido_recoger_huevo.mp3",
     sonido_explosion_mp3 : "res/sonido_explosion.mp3",
+    musicaBackground : "res/Narnia.wav",
 
 
 };
