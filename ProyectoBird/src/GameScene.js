@@ -159,6 +159,28 @@ var GameLayer = cc.Layer.extend({
         return true;
     },
     update: function (dt) {
+        //Scroll
+        // Eje X
+        var camaraEjeX = this.jugador.body.p.x - this.getContentSize().width / 6;
+        if (camaraEjeX < 0) {
+            camaraEjeX = 0;
+        }
+        if (camaraEjeX > this.mapaAncho - this.getContentSize().width) {
+            camaraEjeX = this.mapaAncho - this.getContentSize().width;
+        }
+
+        //Eje Y
+        var camaraEjeY = this.jugador.body.p.y - this.getContentSize().height / 1.25;
+        if (camaraEjeY < 0) {
+            camaraEjeY = 0;
+        }
+        if (camaraEjeY > this.mapaAlto - this.getContentSize().height) {
+            camaraEjeY = this.mapaAlto - this.getContentSize().height;
+        }
+
+        // Mover la capa para que se vea al jugador
+        this.setPosition(cc.p(-camaraEjeX, -camaraEjeY));
+
         if(this.iniciarJuego == true) {
 
             this.procesarControles();
@@ -346,35 +368,11 @@ var GameLayer = cc.Layer.extend({
                 }
             }
 
-            // Scroll
-            // Eje X
-            var camaraEjeX = this.jugador.body.p.x - this.getContentSize().width / 6;
-            if (camaraEjeX < 0) {
-                camaraEjeX = 0;
-            }
-            if (camaraEjeX > this.mapaAncho - this.getContentSize().width) {
-                camaraEjeX = this.mapaAncho - this.getContentSize().width;
-            }
-
-            //Eje Y
-            var camaraEjeY = this.jugador.body.p.y - this.getContentSize().height / 1.25;
-            if (camaraEjeY < 0) {
-                camaraEjeY = 0;
-            }
-            if (camaraEjeY > this.mapaAlto - this.getContentSize().height) {
-                camaraEjeY = this.mapaAlto - this.getContentSize().height;
-            }
-
-            // Mover la capa para que se vea al jugador
-            this.setPosition(cc.p(-camaraEjeX, -camaraEjeY));
-
             // Caída, si cae vuelve a la posición inicial
             if (this.jugador.body.p.y < -100) {
                 // Se recargan todos elementos del nivel, para que se juege siempre en las mismas condiciones
                 this.recargarElementos();
                 this.restaurarJugador();
-
-
             }
 
             // Eliminar recolectables inmunes
