@@ -4,6 +4,7 @@ var res = {
     CloseSelected_png: "res/CloseSelected.png",
     pantalla_inicio_png: "res/pantallaInicio.png",
     boton_jugar_png: "res/boton_jugar.png",
+    boton_continuar_png: "res/boton_continuar.png",
     vida_png: "res/vida.png",
     vida_plist: "res/vida.plist",
     modoControl: "res/CambiarModoControl.png",
@@ -17,6 +18,7 @@ var res = {
     jugador_impactado_plist: "res/pajaro_impactado.plist",
     enemigo_bomba_png : "res/enemy_bomb.png",
     enemigo_bomba_plist : "res/enemy_bomb.plist",
+    info_png : "res/Info2.jpg",
 
     //Nivel cielo
     jugador_png: "res/NivelCielo/pajaro.png",

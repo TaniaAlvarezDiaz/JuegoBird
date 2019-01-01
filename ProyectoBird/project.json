@@ -31,7 +31,8 @@
         "src/Anzuelo.js",
         "src/Submarino.js",
         "src/EnemigoExplosivo.js",
-        "src/RecolectableCongelar.js"
+        "src/RecolectableCongelar.js",
+        "src/InfoLayer.js"
 
     ]
 }

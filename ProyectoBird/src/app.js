@@ -26,11 +26,10 @@ var MenuLayer = cc.Layer.extend({
         // Añado el menú a la escena
         this.addChild(menu);
 
-
         return true;
     },
     pulsarBotonJugar: function () {
-        cc.director.runScene(new GameScene());
+        cc.director.runScene(new InfoLayer());
     }
 
 });
