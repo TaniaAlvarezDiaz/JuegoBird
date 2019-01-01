@@ -181,9 +181,9 @@ var GameLayer = cc.Layer.extend({
         // Mover la capa para que se vea al jugador
         this.setPosition(cc.p(-camaraEjeX, -camaraEjeY));
 
-        if(this.iniciarJuego == true) {
+        this.procesarControles();
 
-            this.procesarControles();
+        if(this.iniciarJuego == true) {
 
             // Record
             var posicionActual = Math.floor(this.jugador.body.p.x / 32);
@@ -811,6 +811,7 @@ var GameLayer = cc.Layer.extend({
         this.jugador.estado = estadoSaltando;
         this.tiempoTurbo = 0;
         this.tiempoCongelacion = 0;
+        this.modoControl = true;
         this.iniciarJuego = false;
     },
     recargarElementosComunes: function () {
