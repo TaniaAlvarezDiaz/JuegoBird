@@ -5,6 +5,7 @@ var res = {
     pantalla_inicio_png: "res/pantallaInicio.png",
     boton_jugar_png: "res/boton_jugar.png",
     boton_continuar_png: "res/boton_continuar.png",
+    boton_VolverAJugar_png: "res/boton_VolverAJugar.png",
     vida_png: "res/vida.png",
     vida_plist: "res/vida.plist",
     modoControl: "res/CambiarModoControl.png",

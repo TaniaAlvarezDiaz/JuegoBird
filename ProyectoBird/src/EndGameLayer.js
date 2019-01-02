@@ -17,9 +17,21 @@ var EndGameLayer = cc.LayerColor.extend({
         this.addChild(this.etiquetaFelicidades);
 
         this.etiquetaFelicidades2 = new cc.LabelTTF("¡Has superado todos los niveles!", "Helvetica", 40);
-        this.etiquetaFelicidades2.setPosition(cc.p(size.width/2, size.height/2-100));
+        this.etiquetaFelicidades2.setPosition(cc.p(size.width/2, size.height/2+25));
         this.etiquetaFelicidades2.fillStyle = new cc.Color(255, 255, 255, 255);
         this.addChild(this.etiquetaFelicidades2);
 
+        var botonAgain = new cc.MenuItemSprite(
+            new cc.Sprite(res.boton_VolverAJugar_png),
+            new cc.Sprite(res.boton_VolverAJugar_png),
+            this.pulsarReiniciar, this);
+        var menu = new cc.Menu(botonAgain);
+        menu.setPosition(winSize.width / 2, winSize.height / 2 - 50);
+        this.addChild(menu);
+
+    },
+    pulsarReiniciar:function (sender) {
+        nivel = 1;
+        cc.director.runScene(new GameScene());
     }
 });

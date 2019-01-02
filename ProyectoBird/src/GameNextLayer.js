@@ -32,8 +32,6 @@ var GameNextLayer = cc.LayerColor.extend({
         this.addChild(menu);
     },
     pulsarReiniciar:function (sender) {
-        // Volver a ejecutar la escena Prinicpal
         cc.director.runScene(new GameScene());
-
     }
 });

@@ -496,11 +496,12 @@ var GameLayer = cc.Layer.extend({
             //Pasar al siguiente nivel
             if (this.jugador.body.p.x >= 0.99 * this.mapaAncho) {
                 if (nivel == 3) {
-                    //nivel = 1;
+                    this.recargarElementos();
                     cc.director.pause();
                     this.getParent().addChild(new EndGameLayer());
                 }
                 else {
+                    this.recargarElementos();
                     nivel++;
                     cc.director.pause();
                     this.getParent().addChild(new GameNextLayer());
