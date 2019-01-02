@@ -149,24 +149,17 @@ var Jugador = cc.Class.extend({
                     this.sprite.stopAllActions();
                     this.sprite.runAction(this.animacion);
                 }
-                if (this.tiempoInvulnerable > 0) {
+                else if (this.tiempoInvulnerable > 0) {
                     this.animacion = this.aImpactado;
                     this.sprite.stopAllActions();
                     this.sprite.runAction(this.animacion);
                 }
                 else {
-                   /* if (this.tiempoInvulnerable > 0) {
-                        this.animacion = this.aImpactado;
+                    if (this.animacion != this.aSaltar) {
+                        this.animacion = this.aSaltar;
                         this.sprite.stopAllActions();
                         this.sprite.runAction(this.animacion);
-                    }else {*/
-                        if (this.animacion != this.aSaltar) {
-                            this.animacion = this.aSaltar;
-                            this.sprite.stopAllActions();
-                            this.sprite.runAction(this.animacion);
-                        }
-                   // }
-
+                    }
                 }
                 break;
         }
@@ -175,17 +168,11 @@ var Jugador = cc.Class.extend({
         if (this.tiempoInmune <= 0) {
             if (this.tiempoInvulnerable <= 0) {
                 this.tiempoInvulnerable = 100;
-                //this.estado = estadoImpactado;
                 if (this.vidas > 0) {
                     this.restarVida(num);
                 }
             }
 
-        }
-    },
-    finAnimacionImpactado: function () {
-        if (this.estado === estadoImpactado) {
-            this.estado = estadoSaltando;
         }
     },
     inmune: function () {
