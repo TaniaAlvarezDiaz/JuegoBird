@@ -16,6 +16,7 @@ var Jugador = cc.Class.extend({
         this.tiempoInmune = 0;
         this.tiempoInvulnerable = 0;
         this.cadenciaDisparo = 0;
+        this.impacto = false;
 
         // Crear Sprite - Cuerpo y forma
         this.sprite = new cc.PhysicsSprite("#bird_01.png");
@@ -54,8 +55,8 @@ var Jugador = cc.Class.extend({
 
         //Animación impactado
         var framesAnimacionImpactado = [];
-        for (var i = 1; i <= 6; i++) {
-            var str = "bird_0" + i + ".png";
+        for (var i = 1; i <= 3; i++) {
+            var str = "bird_impactado_0" + i + ".png";
             var frame = cc.spriteFrameCache.getSpriteFrame(str);
             framesAnimacionImpactado.push(frame);
         }
@@ -142,25 +143,18 @@ var Jugador = cc.Class.extend({
             this.tiempoInmune--;
         }
         switch (this.estado) {
-            case estadoImpactado:
-                this.finAnimacionImpactado();
-                /*if (this.animacion != this.aImpactado) {
-                    console.log(this.estado);
-                    this.animacion = this.aImpactado;
-                    //this.sprite.stopAllActions();
-                    this.sprite.runAction(
-                        new cc.Sequence(
-                            this.animacion,
-                            new cc.CallFunc(this.finAnimacionImpactado, this))
-                    );
-                }*/
-                break;
             case estadoSaltando:
                 if (this.tiempoInmune > 0) {
                     this.animacion = this.aInmune;
                     this.sprite.stopAllActions();
                     this.sprite.runAction(this.animacion);
-                }else {
+                }
+                if (this.tiempoInvulnerable > 0) {
+                    this.animacion = this.aImpactado;
+                    this.sprite.stopAllActions();
+                    this.sprite.runAction(this.animacion);
+                }
+                else {
                    /* if (this.tiempoInvulnerable > 0) {
                         this.animacion = this.aImpactado;
                         this.sprite.stopAllActions();
@@ -179,10 +173,9 @@ var Jugador = cc.Class.extend({
     },
     impactado: function (num) {
         if (this.tiempoInmune <= 0) {
-
             if (this.tiempoInvulnerable <= 0) {
                 this.tiempoInvulnerable = 100;
-                this.estado = estadoImpactado;
+                //this.estado = estadoImpactado;
                 if (this.vidas > 0) {
                     this.restarVida(num);
                 }

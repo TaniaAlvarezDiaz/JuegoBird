@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="15" tilewidth="32" tileheight="32" nextobjectid="220">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="500" height="15" tilewidth="32" tileheight="32" nextobjectid="222">
  <tileset firstgid="1" name="cielo_tiles" tilewidth="32" tileheight="32" tilecount="55" columns="5">
   <image source="cielo_tiles.png" width="160" height="352"/>
  </tileset>
@@ -24,11 +24,6 @@
    eJztzjEBAAAIA6CVtX8FO+zRAxKQAAAAAAAAAAAAAAAAAEBnrgMAAAAAAAAAAAAAAAAAAAC8syPjAGY=
   </data>
  </layer>
- <objectgroup name="Limites">
-  <object id="22" x="0" y="480">
-   <polyline points="0,0 0,-480 15840,-480 15872,-480 15890.7,-480 15897.3,-469.333 15924,-466.667 15929.3,-448 15945.3,-438.667 15966.7,-437.333 15984,-441.333 15984,-396 15981.3,-332 15982.7,-265.333 15978.7,-233.333 15964,-240 15972,-249.333 15970.7,-262.667 15838.7,-265.333 15849.3,-217.333 15894.7,-218.667 15938.7,-209.333 15977.3,-174.667 15980,-126.667 15978.7,-45.3333 15976,0"/>
-  </object>
- </objectgroup>
  <objectgroup name="NubesBlancas">
   <object id="14" x="1415" y="134" width="42" height="36"/>
   <object id="15" x="1249" y="76" width="42" height="36"/>
@@ -215,6 +210,11 @@
   </object>
   <object id="218" x="13856" y="54" width="40" height="38">
    <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Limites">
+  <object id="221" x="2" y="476">
+   <polyline points="0,0 0,-476 15901,-476 15901,4"/>
   </object>
  </objectgroup>
 </map>
